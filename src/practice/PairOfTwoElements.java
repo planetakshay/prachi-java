@@ -24,15 +24,15 @@ public class PairOfTwoElements {
 	Set<Integer> pairSummation = new HashSet<Integer>();
 
 	List<Integer> data = new LinkedList<Integer>();
-	class pair{
+	class Pair{
 		int num1;
 		int num2;
-		pair(int num1,int num2){
+		Pair(int num1,int num2){
 			this.num1=num1;
 			this.num2=num2;
 		}
 	}
-	Map<Integer,List<pair>> pairMap = new HashMap<Integer,List<pair>>();
+	Map<Integer,List<Pair>> pairMap = new HashMap<Integer,List<Pair>>();
 	
 	public  void store(int num) {
 
@@ -43,13 +43,13 @@ public class PairOfTwoElements {
 				pairSummation.add(element + num);
 				
 				if(pairMap.containsKey(element+num)){
-					List<pair> pairs = pairMap.get(element+num);
-					pairs.add(new pair(element,num));
+					List<Pair> pairs = pairMap.get(element+num);
+					pairs.add(new Pair(element,num));
 					pairMap.put(element+num, pairs);	
 				}else{
 					
-					List<pair> pairs = new ArrayList<pair>();
-					pairs.add(new pair(element,num));
+					List<Pair> pairs = new ArrayList<Pair>();
+					pairs.add(new Pair(element,num));
 					pairMap.put(element+num, pairs);
 				}
 			}
@@ -62,7 +62,7 @@ public class PairOfTwoElements {
 		return pairSummation.contains(sum);
 	}
 	
-	public List<pair> getPairs(int sum){
+	public List<Pair> getPairs(int sum){
 		if(pairSummation.contains(sum)){
 			return pairMap.get(sum);
 		}
@@ -78,9 +78,9 @@ public class PairOfTwoElements {
 		}
 		
 		if(poe.test(10)){
-			List<pair> pairs = poe.getPairs(13);
+			List<Pair> pairs = poe.getPairs(13);
 			if(pairs!=null){
-				for(pair p : pairs){
+				for(Pair p : pairs){
 					System.out.println(p.num1+ " , " +p.num2);
 				}
 			}
