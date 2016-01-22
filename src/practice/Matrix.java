@@ -49,7 +49,7 @@ public class Matrix {
 
 		reset = matrix.resetValues(reset);
 
-		System.out.println();
+		System.out.println("Now printing Reset Values");
 
 		matrix.printMatrix(reset);
 	}
