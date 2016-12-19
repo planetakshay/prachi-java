@@ -58,4 +58,45 @@ public class Pascal {
 			System.out.println();
 		}
 	}
+	
+	void pascalTriangle(int n){
+    if(n <=0){
+        return;
+    }
+    List<List<Integer>> result = new ArrayList<List<Integer>>();
+    List<Integer> l = new ArrayList<Integer>();
+    l.add(1);
+    result.add(l);
+    System.out.println(l.get(0));
+    int count = 1;
+    while(count < n) {
+        List<Integer> previous = result.get(count - 1);
+        List<Integer> newList = new ArrayList<Integer>();
+        System.out.print(1);
+        newList.add(1);        
+        for(int i = 1; i < previous.size() ; i++){
+            int sum = previous.get(i) + previous.get(i-1);
+            System.out.print(sum);
+            newList.add(sum);
+        }
+        System.out.println(1);
+        newList.add(1);
+        result.add(newList);
+        count++;
+    }
+}
+
+
+
+n = 0
+n = -1
+n = 1
+n = 3
+
+count = 3
+previous = 
+newList = 
+1
+11
+121
 }
