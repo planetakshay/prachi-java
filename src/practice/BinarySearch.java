@@ -1,5 +1,7 @@
 package practice;
 
+import java.util.Arrays;
+
 /**
  * Example of binary search algorithm.
  * 
@@ -12,7 +14,7 @@ public class BinarySearch {
 
 		int[] array = { 89, 30, 40, 34, 30, 56, 81, 90, 65, 35 };
 
-		QuickSort.sort(array, 0, array.length - 1);
+		Arrays.sort(array, 0, array.length - 1);
 
 		int index = binarySearch(array, 0, array.length - 1, 89);
 
