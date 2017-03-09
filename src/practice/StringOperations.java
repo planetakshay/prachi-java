@@ -307,6 +307,8 @@ public class StringOperations {
 	 * Asked in ProofPoint interview - by Shalaka Sindkar
 	 * Postfix expressions using stack.
 	 * 
+	 * Also known as Reverse Polish Notation.
+	 * 
 	 * @param str
 	 * @return
 	 */
