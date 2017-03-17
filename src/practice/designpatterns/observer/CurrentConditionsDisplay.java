@@ -1,4 +1,4 @@
-package designpatterns.observer;
+package practice.designpatterns.observer;
 
 public class CurrentConditionsDisplay implements Observer, DisplayElement {
 
