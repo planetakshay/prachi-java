@@ -6,7 +6,6 @@ import java.util.Arrays;
  * Example of binary search algorithm.
  * 
  * @author Prachi
- * 
  */
 public class BinarySearch {
 
