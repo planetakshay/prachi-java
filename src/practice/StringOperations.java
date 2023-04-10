@@ -11,480 +11,464 @@ import java.util.List;
 
 public class StringOperations {
 
-	private static final char l_paren = '(';
-	private static final char r_paren = ')';
-	private static final char l_brace = '{';
-	private static final char r_brace = '}';
-	private static final char l_bracket = '[';
-	private static final char r_bracket = ']';
+    private static final char l_paren = '(';
+    private static final char r_paren = ')';
+    private static final char l_brace = '{';
+    private static final char r_brace = '}';
+    private static final char l_bracket = '[';
+    private static final char r_bracket = ']';
 
-	public static void main(String args[]) {
+    public static void main(String args[]) {
 
-		StringOperations stringOps = new StringOperations();
+        StringOperations stringOps = new StringOperations();
 
-		System.out.println(stringOps.countOccurenceRecursion("prachiakshay",
-				'a'));
+        System.out.println(stringOps.countOccurenceRecursion("prachiakshay", 'a'));
 
-		System.out.println(stringOps.countOccurrenceNoRecursion("prachiakshay",
-				'a'));
+        System.out.println(stringOps.countOccurrenceNoRecursion("prachiakshay", 'a'));
 
-		System.out.println(stringOps.isAnagram("prachi", "ihcarp"));
+        System.out.println(stringOps.isAnagram("prachi", "ihcarp"));
 
-		System.out.println("First Non Repeated Character: "
-				+ stringOps.firstNonRepeatedCharacter("above"));
+        System.out.println("First Non Repeated Character: " + stringOps.firstNonRepeatedCharacter("above"));
 
-		System.out.println("Its a number: " + stringOps.isNumeric("12345.3"));
-		System.out.println("Its a number: " + stringOps.isNumeric("12345"));
-		System.out.println("Its a number: " + stringOps.isNumeric("-12345"));
-		System.out.println("Its a number: "
-				+ stringOps.isNumeric("-12345.399977"));
-		System.out.println("Its a number: " + stringOps.isNumeric("sdfsdsfa"));
+        System.out.println("Its a number: " + stringOps.isNumeric("12345.3"));
+        System.out.println("Its a number: " + stringOps.isNumeric("12345"));
+        System.out.println("Its a number: " + stringOps.isNumeric("-12345"));
+        System.out.println("Its a number: " + stringOps.isNumeric("-12345.399977"));
+        System.out.println("Its a number: " + stringOps.isNumeric("sdfsdsfa"));
 
-		System.out.println("AAAAAAA: " + stringOps.countCharacters("AAAAAAA"));
+        System.out.println("AAAAAAA: " + stringOps.countCharacters("AAAAAAA"));
 
-		System.out.println("AAABBBCCCDDD: "
-				+ stringOps.countCharacters("AAABBBCCCDDD"));
+        System.out.println("AAABBBCCCDDD: " + stringOps.countCharacters("AAABBBCCCDDD"));
 
-		System.out.println("ABCDE: " + stringOps.countCharacters("ABCDE"));
+        System.out.println("ABCDE: " + stringOps.countCharacters("ABCDE"));
 
-		System.out.println("AABBCCDDE: "
-				+ stringOps.countCharacters("AABBCCDDE"));
+        System.out.println("AABBCCDDE: " + stringOps.countCharacters("AABBCCDDE"));
 
-		System.out.println("Is racecar palindrome? "
-				+ stringOps.isPalindrome("racecar"));
+        System.out.println("Is racecar palindrome? " + stringOps.isPalindrome("racecar"));
 
-		System.out.println("Is test palindrome? "
-				+ stringOps.isPalindrome("test"));
+        System.out.println("Is test palindrome? " + stringOps.isPalindrome("test"));
 
-		List<String> input = new ArrayList<String>();
+        List<String> input = new ArrayList<String>();
 
-		input.add("10");
-		input.add("4");
-		input.add("6");
-		input.add("+");
-		input.add("*");
-		input.add("3");
-		input.add("-");
+        input.add("10");
+        input.add("4");
+        input.add("6");
+        input.add("+");
+        input.add("*");
+        input.add("3");
+        input.add("-");
 
-		System.out.println("10 4 6 + * 3 - :" + stringOps.compute(input));
+        System.out.println("10 4 6 + * 3 - :" + stringOps.compute(input));
 
-		System.out.println("Longest substring with unique characters: "
-				+ stringOps.longestSubOfUniqueCharacters("SAMARTH"));
+        System.out.println("Longest substring with unique characters: " + stringOps.longestSubOfUniqueCharacters("SAMARTH"));
 
-		System.out.println("Longest substring with unique characters: "
-				+ stringOps
-						.longestSubOfUniqueCharacters("SAMARTHAKSHAYDEODHAR"));
+        System.out.println("Longest substring with unique characters: " + stringOps.longestSubOfUniqueCharacters("SAMARTHAKSHAYDEODHAR"));
 
-		System.out.println("Longest substring with unique characters: "
-				+ stringOps.longestSubOfUniqueCharacters("PRACHIDEODHAR"));
+        System.out.println("Longest substring with unique characters: " + stringOps.longestSubOfUniqueCharacters("PRACHIDEODHAR"));
 
-		System.out.println("Longest substring with unique characters: "
-				+ stringOps.longestSubOfUniqueCharacters("a123a45a6"));
+        System.out.println("Longest substring with unique characters: " + stringOps.longestSubOfUniqueCharacters("a123a45a6"));
 
-		System.out
-				.println(stringOps
-						.replaceUsWithThem("It usually rains when the bus comes to us"));
-		System.out.println(stringOps.isBalancedParanthesis("((((())))"));
+        System.out.println(stringOps.replaceUsWithThem("It usually rains when the bus comes to us"));
+        System.out.println(stringOps.isBalancedParanthesis("((((())))"));
 
-		System.out.println(stringOps
-				.isBalancedParanthesis("({[]})(([]))((({{{{}}}})))"));
+        System.out.println(stringOps.isBalancedParanthesis("({[]})(([]))((({{{{}}}})))"));
 
-		System.out.println(stringOps
-				.isBalancedParanthesis("a(b(c{d[e(f(g)h)i]j}k)l)m"));
+        System.out.println(stringOps.isBalancedParanthesis("a(b(c{d[e(f(g)h)i]j}k)l)m"));
 
-		System.out.println(stringOps
-				.isBalancedParanthesis("(())aa(({[aa(a(yyy)b)bb)])}bb{}[]"));
-	}
+        System.out.println(stringOps.isBalancedParanthesis("(())aa(({[aa(a(yyy)b)bb)])}bb{}[]"));
 
-	// case insensitive comparison.
+        System.out.println(stringOps.isBalancedParanthesis("]"));
+    }
 
-	public int countOccurrenceNoRecursion(String s, char c) {
+    // case insensitive comparison.
 
-		if (s != null) {
+    public int countOccurrenceNoRecursion(String s, char c) {
 
-			int occurrences = 0;
+        if (s != null) {
 
-			int index = 0;
+            int occurrences = 0;
 
-			while (index < s.length()) {
+            int index = 0;
 
-				if (s.charAt(index) == c) {
+            while (index < s.length()) {
 
-					occurrences++;
-				}
+                if (s.charAt(index) == c) {
 
-				index++;
-			}
+                    occurrences++;
+                }
 
-			return occurrences;
-		}
-		return 0;
-	}
+                index++;
+            }
 
-	public int countOccurenceRecursion(String s, char c) {
+            return occurrences;
+        }
+        return 0;
+    }
 
-		if (s.length() == 1) {
+    public int countOccurenceRecursion(String s, char c) {
 
-			if (s.charAt(0) == c) {
+        if (s.length() == 1) {
 
-				return 1;
-			} else {
+            if (s.charAt(0) == c) {
 
-				return 0;
-			}
-		}
+                return 1;
+            } else {
 
-		if (s.charAt(0) == c) {
+                return 0;
+            }
+        }
 
-			return 1 + countOccurenceRecursion(s.substring(1), c);
-		} else {
+        if (s.charAt(0) == c) {
 
-			return 0 + countOccurenceRecursion(s.substring(1), c);
-		}
-	}
+            return 1 + countOccurenceRecursion(s.substring(1), c);
+        } else {
 
-	/**
-	 * LinkedIn phone screen (Year 2011)
-	 * 
-	 * @param given
-	 * @return
-	 */
-	public boolean isNumeric(String given) {
+            return 0 + countOccurenceRecursion(s.substring(1), c);
+        }
+    }
 
-		// Regular expression for number strings - (\\+|-)?([0-9]+(\\.[0-9]+))
-		// An alternative regular expression - "[-+]?\\d+(\\.\\d+)?"
-		// Refer this website has many different ways of solving this problem. -
-		// http://rosettacode.org/wiki/Determine_if_a_string_is_numeric#Java
+    /**
+     * LinkedIn phone screen (Year 2011)
+     *
+     * @param given
+     * @return
+     */
+    public boolean isNumeric(String given) {
 
-		String // pattern = "(\\+|-)?([0-9]+((\\.[0-9]+)?))";
-		pattern = "[-+]?\\d+(\\.\\d+)?";
-		return given.matches(pattern);
-	}
+        // Regular expression for number strings - (\\+|-)?([0-9]+(\\.[0-9]+))
+        // An alternative regular expression - "[-+]?\\d+(\\.\\d+)?"
+        // Refer this website has many different ways of solving this problem. -
+        // http://rosettacode.org/wiki/Determine_if_a_string_is_numeric#Java
 
-	public boolean isAnagram(String str1, String str2) {
+        String // pattern = "(\\+|-)?([0-9]+((\\.[0-9]+)?))";
+                pattern = "[-+]?\\d+(\\.\\d+)?";
+        return given.matches(pattern);
+    }
 
-		char[] charSequenceStr1 = str1.toCharArray();
+    public boolean isAnagram(String str1, String str2) {
 
-		char[] charSequenceStr2 = str2.toCharArray();
+        char[] charSequenceStr1 = str1.toCharArray();
 
-		if (charSequenceStr1.length != charSequenceStr2.length) {
+        char[] charSequenceStr2 = str2.toCharArray();
 
-			return false;
-		}
+        if (charSequenceStr1.length != charSequenceStr2.length) {
 
-		Arrays.sort(charSequenceStr1);
+            return false;
+        }
 
-		Arrays.sort(charSequenceStr2);
+        Arrays.sort(charSequenceStr1);
 
-		return Arrays.equals(charSequenceStr1, charSequenceStr2);
-	}
+        Arrays.sort(charSequenceStr2);
 
-	/**
-	 * PayPal on-site
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public char firstNonRepeatedCharacter(String str) {
+        return Arrays.equals(charSequenceStr1, charSequenceStr2);
+    }
 
-		Map<Character, Integer> charFrequency = new HashMap<Character, Integer>();
+    /**
+     * PayPal on-site
+     *
+     * @param str
+     * @return
+     */
+    public char firstNonRepeatedCharacter(String str) {
 
-		
+        Map<Character, Integer> charFrequency = new HashMap<Character, Integer>();
 
-		for (int i = 0; i < str.length(); i++) {
-			int frequency = 0;
-			char c = str.charAt(i);
-			
-			if (charFrequency.containsKey(c)) {
 
-				frequency = charFrequency.get(c);
-			}
-			charFrequency.put(c, ++frequency);
-			
-		}
-		for (int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
+            int frequency = 0;
+            char c = str.charAt(i);
 
-			char c = str.charAt(i);
+            if (charFrequency.containsKey(c)) {
 
-			if (charFrequency.get(c) == 1) {
+                frequency = charFrequency.get(c);
+            }
+            charFrequency.put(c, ++frequency);
 
-				return c;
-			}
-		}
-		return '\0';
-	}
+        }
+        for (int i = 0; i < str.length(); i++) {
 
-	/**
-	 * HP - ArcSight on-site
-	 * 
-	 * @param input
-	 * @return
-	 */
-	public String countCharacters(String input) {
+            char c = str.charAt(i);
 
-		StringBuilder output = new StringBuilder();
+            if (charFrequency.get(c) == 1) {
 
-		String subStr = "";
+                return c;
+            }
+        }
+        return '\0';
+    }
 
-		int count = 1;
+    /**
+     * HP - ArcSight on-site
+     *
+     * @param input
+     * @return
+     */
+    public String countCharacters(String input) {
 
-		if (input == null || input.isEmpty()) {
+        StringBuilder output = new StringBuilder();
 
-			return input;
-		}
+        String subStr = "";
 
-		for (int i = 1; i < input.length(); i++) {
+        int count = 1;
 
-			if (input.charAt(i) == input.charAt(i - 1)) {
+        if (input == null || input.isEmpty()) {
 
-				count++;
-			} else {
+            return input;
+        }
 
-				subStr = "" + count + input.charAt(i - 1);
+        for (int i = 1; i < input.length(); i++) {
 
-				output.append(subStr);
+            if (input.charAt(i) == input.charAt(i - 1)) {
 
-				count = 1;
-			}
-		}
+                count++;
+            } else {
 
-		output.append("" + count + input.charAt(input.length() - 1));
+                subStr = "" + count + input.charAt(i - 1);
 
-		return output.toString();
-	}
+                output.append(subStr);
 
-	/**
-	 * This was asked in Amazon Phone Screen.(Year 2013). Kaboodle on-site (Year
-	 * 2007)
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public boolean isPalindrome(String str) {
+                count = 1;
+            }
+        }
 
-		if (str == null || str.isEmpty()) {
+        output.append("" + count + input.charAt(input.length() - 1));
 
-			return false;
-		}
+        return output.toString();
+    }
 
-		char[] array = str.toCharArray();
+    /**
+     * This was asked in Amazon Phone Screen.(Year 2013). Kaboodle on-site (Year
+     * 2007)
+     *
+     * @param str
+     * @return
+     */
+    public boolean isPalindrome(String str) {
 
-		int lastIndex = str.length() - 1;
+        if (str == null || str.isEmpty()) {
 
-		for (int i = 0; i <= lastIndex / 2; i++) {
+            return false;
+        }
 
-			if (array[i] != array[lastIndex - i]) {
+        char[] array = str.toCharArray();
 
-				return false;
-			}
-		}
+        int lastIndex = str.length() - 1;
 
-		return true;
-	}
+        for (int i = 0; i <= lastIndex / 2; i++) {
 
-	/**
-	 * I asked this question to a candidate interviewing with EA.
-	 * 
-	 * @param s1
-	 * @param s2
-	 * @return
-	 */
-	public boolean isRotation(String s1, String s2) {
+            if (array[i] != array[lastIndex - i]) {
 
-		if (s1 == null || s2 == null) {
+                return false;
+            }
+        }
 
-			return false;
-		}
-		if (s1.length() != s2.length()) {
+        return true;
+    }
 
-			return false;
-		}
-		String s1s1 = s1 + s1;
-		return s1s1.contains(s2.subSequence(0, s2.length()));
-	}
+    /**
+     * I asked this question to a candidate interviewing with EA.
+     *
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public boolean isRotation(String s1, String s2) {
 
-	/**
-	 * Asked in ProofPoint interview - by Shalaka Sindkar
-	 * Postfix expressions using stack.
-	 * 
-	 * Also known as Reverse Polish Notation.
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public Integer compute(List<String> str) {
+        if (s1 == null || s2 == null) {
 
-		Stack<Integer> stack = new Stack<Integer>();
+            return false;
+        }
+        if (s1.length() != s2.length()) {
 
-		if (str == null || str.isEmpty()) {
+            return false;
+        }
+        String s1s1 = s1 + s1;
+        return s1s1.contains(s2.subSequence(0, s2.length()));
+    }
 
-			return null;
-		}
+    /**
+     * Asked in ProofPoint interview - by Shalaka Sindkar
+     * Postfix expressions using stack.
+     * <p>
+     * Also known as Reverse Polish Notation.
+     *
+     * @param str
+     * @return
+     */
+    public Integer compute(List<String> str) {
 
-		for (String temp : str) {
+        Stack<Integer> stack = new Stack<Integer>();
 
-			try {
-				Integer number = Integer.parseInt(temp);
+        if (str == null || str.isEmpty()) {
 
-				if (number != null) {
-					stack.push(number);
-				}
-			} catch (NumberFormatException e) {
+            return null;
+        }
 
-				if (stack.size() >= 2) {
-					int second = stack.pop();
-					int first = stack.pop();
-					Integer result = calculate(first, second, temp.charAt(0));
-					stack.push(result);
-				}
-			}
-		}
+        for (String temp : str) {
 
-		if (stack.size() == 1) {
+            try {
+                Integer number = Integer.parseInt(temp);
 
-			return stack.pop();
-		}
+                if (number != null) {
+                    stack.push(number);
+                }
+            } catch (NumberFormatException e) {
 
-		return null;
-	}
+                if (stack.size() >= 2) {
+                    int second = stack.pop();
+                    int first = stack.pop();
+                    Integer result = calculate(first, second, temp.charAt(0));
+                    stack.push(result);
+                }
+            }
+        }
 
-	public Integer calculate(int first, int second, char ch) {
+        if (stack.size() == 1) {
 
-		Integer result = Integer.MIN_VALUE;
+            return stack.pop();
+        }
 
-		switch (ch) {
+        return null;
+    }
 
-		case '+':
-			result = first + second;
-			break;
-		case '-':
-			result = first - second;
-			break;
-		case '*':
-			result = first * second;
-			break;
-		case '/':
-			result = first / second;
-			break;
-		default:
-			result = null;
-		}
+    public Integer calculate(int first, int second, char ch) {
 
-		return result;
-	}
+        Integer result = Integer.MIN_VALUE;
 
-	/**
-	 * 
-	 * Find the longest substring having unique characters in a string Amazon
-	 * on-site.
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public String longestSubOfUniqueCharacters(String str) {
+        switch (ch) {
 
-		if (str == null || str.isEmpty()) {
+            case '+':
+                result = first + second;
+                break;
+            case '-':
+                result = first - second;
+                break;
+            case '*':
+                result = first * second;
+                break;
+            case '/':
+                result = first / second;
+                break;
+            default:
+                result = null;
+        }
 
-			return str;
-		}
+        return result;
+    }
 
-		Set<Character> characters = new HashSet<Character>();
+    /**
+     * Find the longest substring having unique characters in a string Amazon
+     * on-site.
+     *
+     * @param str
+     * @return
+     */
+    public String longestSubOfUniqueCharacters(String str) {
 
-		StringBuilder builder = new StringBuilder();
+        if (str == null || str.isEmpty()) {
 
-		String longestSoFar = "", potentialLongest = "";
+            return str;
+        }
 
-		for (char c : str.toCharArray()) {
+        Set<Character> characters = new HashSet<Character>();
 
-			if (!characters.contains(c)) {
+        StringBuilder builder = new StringBuilder();
 
-				builder.append(c);
+        String longestSoFar = "", potentialLongest = "";
 
-				characters.add(c);
+        for (char c : str.toCharArray()) {
 
-				if (builder.toString().length() > longestSoFar.length()) {
+            if (!characters.contains(c)) {
 
-					longestSoFar = builder.toString();
-				}
+                builder.append(c);
 
-			} else {
+                characters.add(c);
 
-				potentialLongest = builder.toString();
+                if (builder.toString().length() > longestSoFar.length()) {
 
-				if (potentialLongest.length() > longestSoFar.length()) {
+                    longestSoFar = builder.toString();
+                }
 
-					longestSoFar = potentialLongest;
-				}
+            } else {
 
-				builder = new StringBuilder(
-						potentialLongest.substring(potentialLongest.indexOf(c) + 1));
+                potentialLongest = builder.toString();
 
-				builder.append(c);
+                if (potentialLongest.length() > longestSoFar.length()) {
 
-			}
+                    longestSoFar = potentialLongest;
+                }
 
-		}
+                builder = new StringBuilder(potentialLongest.substring(potentialLongest.indexOf(c) + 1));
 
-		return longestSoFar;
-	}
+                builder.append(c);
 
-	/**
-	 * Read it from Career cups from Yahoo interview section.
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public String replaceUsWithThem(String str) {
+            }
 
-		String abc = str;
+        }
 
-		abc = abc.replaceAll("(^| )us($| )", " them ").trim();
+        return longestSoFar;
+    }
 
-		return abc;
-	}
+    /**
+     * Read it from Career cups from Yahoo interview section.
+     *
+     * @param str
+     * @return
+     */
+    public String replaceUsWithThem(String str) {
 
-	public boolean isBalancedParanthesis(String paranthesis) {
+        String abc = str;
 
-		Stack<Character> stack = new Stack<Character>();
+        abc = abc.replaceAll("(^| )us($| )", " them ").trim();
 
-		char[] paranArray = paranthesis.toCharArray();
+        return abc;
+    }
 
-		for (char in : paranArray) {
+    public boolean isBalancedParanthesis(String paranthesis) {
 
-			switch (in) {
-			case l_paren:
-				stack.push(in);
-				break;
-			case l_brace:
-				stack.push(in);
-				break;
-			case l_bracket:
-				stack.push(in);
-				break;
-			case r_paren:
-				if (stack.size() > 0) {
+        Stack<Character> stack = new Stack<Character>();
 
-					if (stack.pop() != l_paren)
-						return false;
-				}
-				break;
-			case r_brace:
-				if (stack.size() > 0) {
+        char[] paranArray = paranthesis.toCharArray();
 
-					if (stack.pop() != l_brace)
-						return false;
-				}
-				break;
-			case r_bracket:
-				if (stack.size() > 0) {
+        for (char in : paranArray) {
 
-					if (stack.pop() != l_bracket)
-						return false;
-				}
-				break;
-			default:
-			}
-		}
-		return stack.isEmpty();
-	}
+            switch (in) {
+                case l_paren:
+                    stack.push(in);
+                    break;
+                case l_brace:
+                    stack.push(in);
+                    break;
+                case l_bracket:
+                    stack.push(in);
+                    break;
+                case r_paren:
+                    if (stack.size() > 0) {
+
+                        if (stack.pop() != l_paren) return false;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case r_brace:
+                    if (stack.size() > 0) {
+
+                        if (stack.pop() != l_brace) return false;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case r_bracket:
+                    if (stack.size() > 0) {
+
+                        if (stack.pop() != l_bracket) return false;
+                    } else {
+                        return false;
+                    }
+                    break;
+                default:
+            }
+        }
+        return stack.isEmpty();
+    }
 }
