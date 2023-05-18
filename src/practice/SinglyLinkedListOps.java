@@ -4,527 +4,553 @@ import java.util.Stack;
 
 class List {
 
-	int data;
-	List next;
+    int data;
+    List next;
 
-	public List(int data) {
+    public List(int data) {
 
-		this.data = data;
-	}
+        this.data = data;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + data;
-		result = prime * result + ((next == null) ? 0 : next.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + data;
+        result = prime * result + ((next == null) ? 0 : next.hashCode());
+        return result;
+    }
 
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		List other = (List) obj;
-		if (data != other.data)
-			return false;
-		if (next == null) {
-			if (other.next != null)
-				return false;
-		} else if (!next.equals(other.next))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        List other = (List) obj;
+        if (data != other.data)
+            return false;
+        if (next == null) {
+            if (other.next != null)
+                return false;
+        } else if (!next.equals(other.next))
+            return false;
+        return true;
+    }
 
 }
 
 public class SinglyLinkedListOps {
 
-	public List addNodeBack(List head, int data) {
+    public List addNodeBack(List head, int data) {
 
-		List node = new List(data);
+        List node = new List(data);
 
-		if (head == null) {
+        if (head == null) {
 
-			head = node;
+            head = node;
 
-			return head;
-		}
+            return head;
+        }
 
-		List curr = head;
+        List curr = head;
 
-		while (curr.next != null) {
+        while (curr.next != null) {
 
-			curr = curr.next;
-		}
+            curr = curr.next;
+        }
 
-		curr.next = node;
+        curr.next = node;
 
-		return head;
-	}
+        return head;
+    }
 
-	public List removeNode(List head, int data) {
+    public List removeNode(List head, int data) {
 
-		if (head == null) {
+        if (head == null) {
 
-			return null;
-		}
+            return null;
+        }
 
-		List curr = head;
+        List curr = head;
 
-		List prev = null;
+        List prev = null;
 
-		while (curr != null) {
+        while (curr != null) {
 
-			if (curr.data == data) {
+            if (curr.data == data) {
 
-				curr = curr.next;
+                curr = curr.next;
 
-				if (prev == null) {
+                if (prev == null) {
 
-					prev = curr;
+                    prev = curr;
 
-				} else {
+                } else {
 
-					prev.next = curr;
-				}
+                    prev.next = curr;
+                }
 
-			} else {
+            } else {
 
-				prev = curr;
+                prev = curr;
 
-				curr = curr.next;
-			}
+                curr = curr.next;
+            }
 
-		}
+        }
 
-		return head;
-	}
+        return head;
+    }
 
-	public List reverse(List head) {
+    public List reverse(List head) {
 
-		List prev = null;
-		List curr = head;
-		List next = null;
+        List prev = null;
+        List curr = head;
+        List next = null;
 
-		while (curr != null) {
+        while (curr != null) {
 
-			next = curr.next;
+            next = curr.next;
 
-			curr.next = prev;
+            curr.next = prev;
 
-			prev = curr;
+            prev = curr;
 
-			curr = next;
-		}
+            curr = next;
+        }
 
-		return prev;
-	}
+        return prev;
+    }
 
-	public List reverseByGivenSize(List head, int limit) {
+    private int lengthOfLinkedList(List node) {
+        int length = 0;
+        while (node != null) {
+            ++length;
+            node = node.next;
+        }
+        return length;
+    }
 
-		List prev = null;
-		List curr = head;
-		List next = null;
+    public List reverseByGivenSize(List head, int limit) {
+        if (head == null || head.next == null) return head;
 
-		int count = 0;
+        int length = lengthOfLinkedList(head);
 
-		while (curr != null && count < limit) {
+        List dummyHead = new List(0);
+        dummyHead.next = head;
 
-			next = curr.next;
+        List pre = dummyHead;
+        List cur;
+        List nex;
 
-			curr.next = prev;
+        while (length >= limit) {
+            cur = pre.next;
+            nex = cur.next;
+            for (int i = 1; i < limit; i++) {
+                cur.next = nex.next;
+                nex.next = pre.next;
+                pre.next = nex;
+                nex = cur.next;
+            }
+            pre = cur;
+            length -= limit;
+        }
+        return dummyHead.next;
+    }
 
-			prev = curr;
+    public List reverseByGivenSizeOriginal(List head, int limit) {
 
-			curr = next;
+        if (head == null || head.next == null || limit == 1) {
+            return head;
+        }
 
-			count++;
-		}
+        List prev = null;
+        List curr = head;
+        List next = null;
 
-		if (next != null) {
+        int count = 0;
 
-			head.next = reverseByGivenSize(next, limit);
-		}
+        while (curr != null && count < limit) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
 
-		return prev;
-	}
+        if (next != null) {
+            head.next = reverseByGivenSize(next, limit);
+        }
 
-	public void print(List head) {
+        return prev;
+    }
 
-		List node = head;
+    public void print(List head) {
 
-		while (node != null) {
+        List node = head;
 
-			System.out.print(node.data);
+        while (node != null) {
 
-			if (node.next != null) {
+            System.out.print(node.data);
 
-				System.out.print("-->");
-			}
+            if (node.next != null) {
 
-			node = node.next;
-		}
-		System.out.println("\n");
-	}
+                System.out.print("-->");
+            }
 
-	public static void main(String args[]) {
+            node = node.next;
+        }
+        System.out.println("\n");
+    }
 
-		List head = null;
+    public static void main(String args[]) {
 
-		SinglyLinkedListOps opsObj = new SinglyLinkedListOps();
+        List head = null;
 
-		head = opsObj.addNodeBack(head, 2);
+        SinglyLinkedListOps opsObj = new SinglyLinkedListOps();
 
-		head = opsObj.addNodeBack(head, 4);
+        head = opsObj.addNodeBack(head, 2);
 
-		head = opsObj.addNodeBack(head, 8);
+        head = opsObj.addNodeBack(head, 4);
 
-		head = opsObj.addNodeBack(head, 16);
+        head = opsObj.addNodeBack(head, 8);
 
-		head = opsObj.addNodeBack(head, 32);
+        head = opsObj.addNodeBack(head, 16);
 
-		head = opsObj.addNodeBack(head, 64);
+        head = opsObj.addNodeBack(head, 32);
 
-		head = opsObj.addNodeBack(head, 128);
+        head = opsObj.addNodeBack(head, 64);
 
-		head = opsObj.addNodeBack(head, 256);
+        head = opsObj.addNodeBack(head, 128);
 
-		head = opsObj.addNodeBack(head, 512);
+        head = opsObj.addNodeBack(head, 256);
 
-		head = opsObj.addNodeBack(head, 1024);
+        head = opsObj.addNodeBack(head, 512);
 
-		opsObj.print(head);
+        head = opsObj.addNodeBack(head, 1024);
 
-		head = opsObj.removeNode(head, 16);
+        head = opsObj.addNodeBack(head, 2048);
 
-		opsObj.print(head);
+        System.out.println("Original LinkedList: ");
+        opsObj.print(head);
 
-		System.out.println(opsObj.hasLoop(head));
+		System.out.println("Remove Node: ");
+        head = opsObj.removeNode(head, 16);
+        opsObj.print(head);
 
-		List nThNode = opsObj.nThFromLast(head, 2);
+        System.out.println("Does Linked List has loop? " + (opsObj.hasLoop(head) ? "Yes" : "No"));
 
-		System.out.println("Nth Node is: " + nThNode.data);
+        List nThNode = opsObj.nThFromLast(head, 2);
+        System.out.println("Nth Node from end is: " + nThNode.data);
 
-		List nThNodeFromBeginning = opsObj.nThFromBeginning(head, 6);
+        List nThNodeFromBeginning = opsObj.nThFromBeginning(head, 6);
+        System.out.println("Nth Node from the beginning is: "
+                + nThNodeFromBeginning.data);
+        // head = opsObj.reverse(head);
+        opsObj.print(head);
 
-		System.out.println("Nth Node from the beginning is: "
-				+ nThNodeFromBeginning.data);
+        System.out.println("Reverse in the groups of k nodes: ");
+        head = opsObj.reverseByGivenSize(head, 4);
+        opsObj.print(head);
 
-		// head = opsObj.reverse(head);
+		System.out.println("Swap Kth Node: ");
+        head = opsObj.swapKthNode(head, 3);
+        opsObj.print(head);
+    }
 
-		opsObj.print(head);
+    /**
+     * Returns true if a linked list has a loop. False otherwise. If you want to
+     * return the node where the loop forms then return the node instead of the
+     * boolean values.
+     *
+     * @param first
+     * @return
+     */
+    boolean hasLoop(List first) {
 
-		head = opsObj.reverseByGivenSize(head, 3);
+        if (first == null) // list does not exist..so no loop either.
+            return false;
 
-		opsObj.print(head);
+        List slow, fast; // create two references.
 
-		head = opsObj.swapKthNode(head, 3);
+        slow = fast = first; // make both refer to the start of the list.
 
-		opsObj.print(head);
-	}
+        while (true) {
 
-	/**
-	 * Returns true if a linked list has a loop. False otherwise. If you want to
-	 * return the node where the loop forms then return the node instead of the
-	 * boolean values.
-	 * 
-	 * 
-	 * @param first
-	 * @return
-	 */
-	boolean hasLoop(List first) {
+            slow = slow.next; // 1 hop.
 
-		if (first == null) // list does not exist..so no loop either.
-			return false;
+            if (fast.next != null)
+                fast = fast.next.next; // 2 hops.
+            else
+                return false; // next node null => no loop.
 
-		List slow, fast; // create two references.
+            if (slow == null || fast == null) // if either hits null..no loop.
+                return false;
 
-		slow = fast = first; // make both refer to the start of the list.
+            if (slow == fast) // if the two ever meet...we must have a loop.
+                return true;
+        }
+    }
 
-		while (true) {
+    public List nThFromLast(List head, int n) {
 
-			slow = slow.next; // 1 hop.
+        if (head != null) {
 
-			if (fast.next != null)
-				fast = fast.next.next; // 2 hops.
-			else
-				return false; // next node null => no loop.
+            List temp = head;
+            List node = head;
 
-			if (slow == null || fast == null) // if either hits null..no loop.
-				return false;
+            for (int index = 0; index < n - 1; index++) {
 
-			if (slow == fast) // if the two ever meet...we must have a loop.
-				return true;
-		}
-	}
+                if (temp == null) {
 
-	public List nThFromLast(List head, int n) {
+                    return null;
+                }
+                temp = temp.next;
 
-		if (head != null) {
+            }
 
-			List temp = head;
-			List node = head;
+            if (temp == null) {
 
-			for (int index = 0; index < n - 1; index++) {
+                return null;
+            }
 
-				if (temp == null) {
+            while (temp.next != null) {
 
-					return null;
-				}
-				temp = temp.next;
+                node = node.next;
+                temp = temp.next;
+            }
 
-			}
+            return node;
 
-			if (temp == null) {
+        }
+        return null;
+    }
 
-				return null;
-			}
+    public List nThFromBeginning(List head, int n) {
 
-			while (temp.next != null) {
+        int count = 1;
 
-				node = node.next;
-				temp = temp.next;
-			}
+        List pointer = head;
 
-			return node;
+        while (count < n) {
 
-		}
-		return null;
-	}
+            if (pointer == null) {
 
-	public List nThFromBeginning(List head, int n) {
+                return null;
+            }
+            pointer = pointer.next;
 
-		int count = 1;
+            count++;
+        }
 
-		List pointer = head;
+        return pointer;
+    }
 
-		while (count < n) {
+    /**
+     * Swap Kth node from beginning of the singly linked list with the Kth node
+     * from the end of the singly linked list.
+     *
+     * @param head
+     * @param k
+     * @return
+     */
 
-			if (pointer == null) {
+    public List swapKthNode(List head, int k) {
 
-				return null;
-			}
-			pointer = pointer.next;
+        if (head == null) {
 
-			count++;
-		}
+            return null;
+        }
 
-		return pointer;
-	}
+        List kthFromStart = head;
+        List kthFromEnd = head;
 
-	/**
-	 * Swap Kth node from beginning of the singly linked list with the Kth node
-	 * from the end of the singly linked list.
-	 * 
-	 * @param head
-	 * @param k
-	 * @return
-	 */
+        int count = 1;
 
-	public List swapKthNode(List head, int k) {
+        while (count < k) {
 
-		if (head == null) {
+            if (kthFromStart == null) {
 
-			return null;
-		}
+                return null;
+            }
+            kthFromStart = kthFromStart.next;
+            count++;
+        }
 
-		List kthFromStart = head;
-		List kthFromEnd = head;
+        List temp = kthFromStart;
 
-		int count = 1;
+        while (temp != null) {
 
-		while (count < k) {
+            temp = temp.next;
+            kthFromEnd = kthFromEnd.next;
+        }
 
-			if (kthFromStart == null) {
+        if (kthFromStart != null && kthFromEnd != null) {
 
-				return null;
-			}
-			kthFromStart = kthFromStart.next;
-			count++;
-		}
+            int buffer = kthFromStart.data;
+            kthFromStart.data = kthFromEnd.data;
+            kthFromEnd.data = buffer;
+        }
 
-		List temp = kthFromStart;
+        return head;
+    }
 
-		while (temp != null) {
+    /**
+     * @param l1
+     * @param l2
+     * @return Returns if there is a common node between two LinkedLists. The
+     * current approach is to push both the linked list's node to two
+     * separate stacks and then pop them out and compare both popped
+     * nodes. If they are equal then return the node else return null.
+     */
+    public List hasCommonNode(List l1, List l2) {
 
-			temp = temp.next;
-			kthFromEnd = kthFromEnd.next;
-		}
+        if (l1 == null || l2 == null) {
 
-		if (kthFromStart != null && kthFromEnd != null) {
+            return null;
+        }
 
-			int buffer = kthFromStart.data;
-			kthFromStart.data = kthFromEnd.data;
-			kthFromEnd.data = buffer;
-		}
+        List head1 = l1;
+        List head2 = l2;
 
-		return head;
-	}
+        Stack<List> stack1 = new Stack<List>();
 
-	/**
-	 * 
-	 * @param l1
-	 * @param l2
-	 * @return
-	 * 
-	 *         Returns if there is a common node between two LinkedLists. The
-	 *         current approach is to push both the linked list's node to two
-	 *         separate stacks and then pop them out and compare both popped
-	 *         nodes. If they are equal then return the node else return null.
-	 */
-	public List hasCommonNode(List l1, List l2) {
+        Stack<List> stack2 = new Stack<List>();
 
-		if (l1 == null || l2 == null) {
+        while (head1 != null) {
 
-			return null;
-		}
+            stack1.push(head1);
 
-		List head1 = l1;
-		List head2 = l2;
+            head1 = head1.next;
+        }
 
-		Stack<List> stack1 = new Stack<List>();
+        while (head2 != null) {
 
-		Stack<List> stack2 = new Stack<List>();
+            stack2.push(head2);
 
-		while (head1 != null) {
+            head2 = head2.next;
+        }
 
-			stack1.push(head1);
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
 
-			head1 = head1.next;
-		}
+            List node1 = stack1.pop();
+            List node2 = stack2.pop();
 
-		while (head2 != null) {
+            if (node1.equals(node2)) {
 
-			stack2.push(head2);
+                return node1;
+            }
+        }
 
-			head2 = head2.next;
-		}
+        return null;
+    }
 
-		while (!stack1.isEmpty() || !stack2.isEmpty()) {
+    /**
+     * @param l1
+     * @param l2
+     * @return If there is a common node between two link lists, then their last
+     * nodes should be same. Just compare the last node of both the link
+     * lists.
+     */
+    public boolean commonNode(List l1, List l2) {
 
-			List node1 = stack1.pop();
-			List node2 = stack2.pop();
+        if (l1 == null || l2 == null) {
 
-			if (node1.equals(node2)) {
+            return false;
+        }
+        List head1 = l1;
+        List head2 = l2;
 
-				return node1;
-			}
-		}
+        while (head1.next != null) {
 
-		return null;
-	}
+            head1 = head1.next;
+        }
 
-	/**
-	 * 
-	 * @param l1
-	 * @param l2
-	 * @return
-	 * 
-	 *         If there is a common node between two link lists, then their last
-	 *         nodes should be same. Just compare the last node of both the link
-	 *         lists.
-	 */
-	public boolean commonNode(List l1, List l2) {
+        while (head2.next != null) {
 
-		if (l1 == null || l2 == null) {
+            head2 = head2.next;
+        }
 
-			return false;
-		}
-		List head1 = l1;
-		List head2 = l2;
+        if (head1 == head2) {
 
-		while (head1.next != null) {
+            return true;
+        }
 
-			head1 = head1.next;
-		}
+        return false;
+    }
 
-		while (head2.next != null) {
+    /**
+     * @param head1
+     * @param head2
+     * @return Yahoo on-site. Given two linked lists, return the node if there
+     * is any common node between them else return null.
+     */
+    public List mergeNode(List head1, List head2) {
 
-			head2 = head2.next;
-		}
+        if (head1 == null || head2 == null) {
 
-		if (head1 == head2) {
+            return null;
+        }
 
-			return true;
-		}
+        int len1 = 0;
 
-		return false;
-	}
+        int len2 = 0;
 
-	/**
-	 * 
-	 * @param head1
-	 * @param head2
-	 * @return Yahoo on-site. Given two linked lists, return the node if there
-	 *         is any common node between them else return null.
-	 */
-	public List mergeNode(List head1, List head2) {
+        List list1 = head1;
+        List list2 = head2;
 
-		if (head1 == null || head2 == null) {
+        while (list1 != null) {
 
-			return null;
-		}
+            list1 = list1.next;
 
-		int len1 = 0;
+            len1++;
+        }
+        while (list2 != null) {
 
-		int len2 = 0;
+            list2 = list2.next;
 
-		List list1 = head1;
-		List list2 = head2;
+            len2++;
+        }
 
-		while (list1 != null) {
+        list1 = head1;
+        list2 = head2;
 
-			list1 = list1.next;
+        int diff = Math.abs(len1 - len2);
 
-			len1++;
-		}
-		while (list2 != null) {
+        int count = 0;
 
-			list2 = list2.next;
+        if (len1 > len2) {
 
-			len2++;
-		}
+            while (count < diff) {
 
-		list1 = head1;
-		list2 = head2;
+                list1 = list1.next;
+                count++;
+            }
+        } else if (len1 < len2) {
 
-		int diff = Math.abs(len1 - len2);
+            while (count < diff) {
 
-		int count = 0;
+                list2 = list2.next;
 
-		if (len1 > len2) {
+                count++;
+            }
+        }
 
-			while (count < diff) {
+        while (list1 != null || list2 != null) {
 
-				list1 = list1.next;
-				count++;
-			}
-		} else if (len1 < len2) {
+            if (list1 == list2) {
 
-			while (count < diff) {
+                return list1;
+            }
 
-				list2 = list2.next;
-
-				count++;
-			}
-		}
-
-		while (list1 != null || list2 != null) {
-
-			if (list1 == list2) {
-
-				return list1;
-			}
-
-			list1 = list1.next;
-			list2 = list2.next;
-		}
-		return null;
-	}
+            list1 = list1.next;
+            list2 = list2.next;
+        }
+        return null;
+    }
 }
