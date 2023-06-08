@@ -1,69 +1,68 @@
 package practice;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * 
- * @author Prachi
- * 
  * @param <K>
- * @param <V>
- * 
- *            Using a composite approach is better than using the inheritance.
+ * @param <V> Using a composite approach is better than using the inheritance.
  *            (HeadFirst Design Pattern)
- * 
+ *            <p>
  *            This was asked in HP - ArcSight on-site.
+ * @author Prachi
+ *
+ * Implement Object cache with Least Recently Used(LRU) eviction policy.
  */
-public class LRUCacheImpl<K, V> implements LRUCache<K, V> {
+public class LRUCacheImpl<K, V> {
 
-	// SoftReference is used for a memory friendly cache.
-	// the value will be removed under memory shortage situations and
-	// the keys of the values will be removed from the cache map.
-	private final Map<K, V> cache;
+    private final Map<K, V> cache;
 
-	public LRUCacheImpl(final int cacheSize) {
+    private final LinkedList<K> accessOrderForEviction;
 
-		// 'true' uses the access order instead of the insertion order.
-		this.cache = new LinkeHashMapForCache<K, V>(cacheSize);
-	}
+    private final int capacity;
 
-	@Override
-	public void put(K key, V value) {
-		cache.put(key, value);
-	}
+    public LRUCacheImpl(final int capacity) {
+        this.capacity = capacity;
+        cache = new HashMap<>();
+        accessOrderForEviction = new LinkedList<>();
+    }
 
-	@Override
-	public V get(K key) {
-		return cache.get(key);
-	}
+    public static void main(String[] args) {
+        LRUCacheImpl cache = new LRUCacheImpl(3);
+        cache.put(1, "One");
+        cache.put(2, "Two");
+        cache.put(3, "Three");
+        cache.put(4, "Four");
+        cache.get(3);
+        cache.get(2);
+        cache.put(1, "One");
+        cache.get(3);
+        cache.get(1);
+        cache.printCacheContent();
+    }
 
-	@Override
-	public V atomicGetAndSet(K key, V value) {
-		V result = get(key);
-		put(key, value);
-		return result;
-	}
-}
+    public void put(K key, V value) {
+        if (accessOrderForEviction.size() >= capacity) {
+            K removedKey = accessOrderForEviction.removeLast();
+            cache.remove(removedKey);
+        }
+        accessOrderForEviction.addFirst(key);
+        cache.put(key, value);
+    }
 
-class LinkeHashMapForCache<K, V> extends LinkedHashMap<K, V> {
+    public V get(K key) {
+        V value = cache.get(key);
+        if (null != value) {
+            accessOrderForEviction.remove(key);
+            accessOrderForEviction.addFirst(key);
+        }
+        return value;
+    }
 
-	private static final long serialVersionUID = 1L;
-
-	private int cacheSize;
-
-	public LinkeHashMapForCache(int cacheSize) {
-
-		// Set the access-order to true so that the map can provide
-		// ordering mode by least recently used access order instead of by
-		// insertion order.
-		super(cacheSize, 0.75f, true);
-	}
-
-	@Override
-	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-		// When to remove the eldest entry i.e Least Recently Used (i.e
-		// LRU) entry
-		return size() > cacheSize; // Size exceeded the max allowed.
-	}
+    public void printCacheContent() {
+        for (Map.Entry<K, V> entry : cache.entrySet()) {
+            System.out.println("Key=" + entry.getKey() + " and Value=" + entry.getValue());
+        }
+    }
 }
