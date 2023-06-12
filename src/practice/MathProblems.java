@@ -502,7 +502,7 @@ public class MathProblems {
 	}
 
 	public int getMajority(int arr[]) {
-		if (arr == null)
+		if (arr == null || arr.length == 0)
 			return -1;
 		int element = findMajorityElement(arr);
 		int length = arr.length;
