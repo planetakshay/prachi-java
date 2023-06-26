@@ -261,6 +261,18 @@ public class SinglyLinkedListOps {
 		System.out.println("Swap Kth Node: ");
         head = opsObj.swapKthNode(head, 3);
         opsObj.print(head);
+
+        head = opsObj.addNodeBack(head, 8);
+        head = opsObj.addNodeBack(head, 32);
+        head = opsObj.addNodeBack(head, 256);
+        head = opsObj.addNodeBack(head, 2048);
+
+        // Remove duplicate nodes.
+        System.out.println("List with duplicates");
+        opsObj.print(head);
+        removeDuplicates(head);
+        System.out.println("List with unique elements");
+        opsObj.print(head);
     }
 
     /**
@@ -552,5 +564,22 @@ public class SinglyLinkedListOps {
             list2 = list2.next;
         }
         return null;
+    }
+
+    public static void removeDuplicates(List head) {
+        if (head != null && head.next != null) {
+            List current = head;
+            while(current != null) {
+                List runner = current;
+                while(runner.next != null) {
+                    if(runner.next.data == current.data) {
+                        runner.next = runner.next.next;
+                    } else {
+                        runner = runner.next;
+                    }
+                }
+                current = current.next;
+            }
+        }
     }
 }
