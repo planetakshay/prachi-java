@@ -3,15 +3,11 @@ package practice;
 import java.util.Stack;
 
 class List {
-
     int data;
     List next;
-
     public List(int data) {
-
         this.data = data;
     }
-
 
     @Override
     public int hashCode() {
@@ -21,10 +17,8 @@ class List {
         result = prime * result + ((next == null) ? 0 : next.hashCode());
         return result;
     }
-
     @Override
     public boolean equals(Object obj) {
-
         if (this == obj)
             return true;
         if (obj == null)
@@ -41,89 +35,54 @@ class List {
             return false;
         return true;
     }
-
 }
 
 public class SinglyLinkedListOps {
-
     public List addNodeBack(List head, int data) {
-
         List node = new List(data);
-
         if (head == null) {
-
             head = node;
-
             return head;
         }
-
         List curr = head;
-
         while (curr.next != null) {
-
             curr = curr.next;
         }
-
         curr.next = node;
-
         return head;
     }
-
     public List removeNode(List head, int data) {
-
         if (head == null) {
-
             return null;
         }
-
         List curr = head;
-
         List prev = null;
-
         while (curr != null) {
-
             if (curr.data == data) {
-
                 curr = curr.next;
-
                 if (prev == null) {
-
                     prev = curr;
-
                 } else {
-
                     prev.next = curr;
                 }
-
             } else {
-
                 prev = curr;
-
                 curr = curr.next;
             }
-
         }
-
         return head;
     }
 
     public List reverse(List head) {
-
         List prev = null;
         List curr = head;
         List next = null;
-
         while (curr != null) {
-
             next = curr.next;
-
             curr.next = prev;
-
             prev = curr;
-
             curr = next;
         }
-
         return prev;
     }
 
@@ -138,9 +97,7 @@ public class SinglyLinkedListOps {
 
     public List reverseByGivenSize(List head, int limit) {
         if (head == null || head.next == null) return head;
-
         int length = lengthOfLinkedList(head);
-
         List dummyHead = new List(0);
         dummyHead.next = head;
 
@@ -168,13 +125,11 @@ public class SinglyLinkedListOps {
         if (head == null || head.next == null || limit == 1) {
             return head;
         }
-
         List prev = null;
         List curr = head;
         List next = null;
 
         int count = 0;
-
         while (curr != null && count < limit) {
             next = curr.next;
             curr.next = prev;
@@ -186,54 +141,32 @@ public class SinglyLinkedListOps {
         if (next != null) {
             head.next = reverseByGivenSize(next, limit);
         }
-
         return prev;
     }
-
     public void print(List head) {
-
         List node = head;
-
         while (node != null) {
-
             System.out.print(node.data);
-
             if (node.next != null) {
-
                 System.out.print("-->");
             }
-
             node = node.next;
         }
         System.out.println("\n");
     }
-
     public static void main(String args[]) {
-
         List head = null;
-
         SinglyLinkedListOps opsObj = new SinglyLinkedListOps();
-
         head = opsObj.addNodeBack(head, 2);
-
         head = opsObj.addNodeBack(head, 4);
-
         head = opsObj.addNodeBack(head, 8);
-
         head = opsObj.addNodeBack(head, 16);
-
         head = opsObj.addNodeBack(head, 32);
-
         head = opsObj.addNodeBack(head, 64);
-
         head = opsObj.addNodeBack(head, 128);
-
         head = opsObj.addNodeBack(head, 256);
-
         head = opsObj.addNodeBack(head, 512);
-
         head = opsObj.addNodeBack(head, 1024);
-
         head = opsObj.addNodeBack(head, 2048);
 
         System.out.println("Original LinkedList: ");
@@ -266,13 +199,27 @@ public class SinglyLinkedListOps {
         head = opsObj.addNodeBack(head, 32);
         head = opsObj.addNodeBack(head, 256);
         head = opsObj.addNodeBack(head, 2048);
-
         // Remove duplicate nodes.
         System.out.println("List with duplicates");
         opsObj.print(head);
         removeDuplicates(head);
         System.out.println("List with unique elements");
         opsObj.print(head);
+
+        System.out.println("Remove given node. The node is not the head or the tail of the linked list");
+
+    }
+
+    /**
+     * The method below cannot delete if the node (to be deleted)
+     * in the argument is the last node of the linked list.
+     * @param node
+     */
+    public static void removeMiddleNode(List node) {
+        if(node != null && node.next != null) {
+            node.data = node.next.data;
+            node.next = node.next.next;
+        }
     }
 
     /**
@@ -284,61 +231,37 @@ public class SinglyLinkedListOps {
      * @return
      */
     boolean hasLoop(List first) {
-
         if (first == null) // list does not exist..so no loop either.
             return false;
-
-        List slow, fast; // create two references.
-
-        slow = fast = first; // make both refer to the start of the list.
-
+        List slow = first, fast = first; // create two references.
         while (true) {
-
             slow = slow.next; // 1 hop.
-
             if (fast.next != null)
                 fast = fast.next.next; // 2 hops.
             else
                 return false; // next node null => no loop.
-
             if (slow == null || fast == null) // if either hits null..no loop.
                 return false;
-
             if (slow == fast) // if the two ever meet...we must have a loop.
                 return true;
         }
     }
 
     public List nThFromLast(List head, int n) {
-
         if (head != null) {
-
             List temp = head;
             List node = head;
-
-            for (int index = 0; index < n - 1; index++) {
-
+            for (int index = 0; index < n; index++) {
                 if (temp == null) {
-
                     return null;
                 }
                 temp = temp.next;
-
             }
-
-            if (temp == null) {
-
-                return null;
-            }
-
-            while (temp.next != null) {
-
+            while (temp != null) {
                 node = node.next;
                 temp = temp.next;
             }
-
             return node;
-
         }
         return null;
     }
