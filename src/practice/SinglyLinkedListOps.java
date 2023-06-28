@@ -526,7 +526,7 @@ public class SinglyLinkedListOps {
         }
         List odd = head;
         List even = head.next;
-        List evenHead = even;
+        List firstEven = even;
 
         while(even != null && even.next != null) {
             odd.next = even.next;
@@ -534,7 +534,7 @@ public class SinglyLinkedListOps {
             even.next = odd.next;
             even = even.next;
         }
-        odd.next = evenHead;
-        return head;
+        odd.next = firstEven;
+        return odd;
     }
 }
