@@ -206,8 +206,22 @@ public class SinglyLinkedListOps {
         System.out.println("List with unique elements");
         opsObj.print(head);
 
-        System.out.println("Remove given node. The node is not the head or the tail of the linked list");
+        // Rearrange odd and even nodes.
+        List oddEven = new List(1);
+        oddEven = opsObj.addNodeBack(oddEven, 3);
+        oddEven = opsObj.addNodeBack(oddEven, 5);
+        oddEven = opsObj.addNodeBack(oddEven, 7);
+        oddEven = opsObj.addNodeBack(oddEven, 2);
+        oddEven = opsObj.addNodeBack(oddEven, 4);
+        oddEven = opsObj.addNodeBack(oddEven, 6);
+        oddEven = opsObj.addNodeBack(oddEven, 8);
 
+        opsObj.print(oddEven);
+        System.out.println("Rearraged as odd and even: ");
+        oddEvenSorting(oddEven);
+        opsObj.print(oddEven);
+
+        System.out.println("Remove given node. The node is not the head or the tail of the linked list");
     }
 
     /**
@@ -504,5 +518,23 @@ public class SinglyLinkedListOps {
                 current = current.next;
             }
         }
+    }
+
+    public static List oddEvenSorting(List head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        List odd = head;
+        List even = head.next;
+        List evenHead = even;
+
+        while(even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
     }
 }
