@@ -1,14 +1,14 @@
-package algo;
+package algo.service;
 
 import com.sun.jdi.InvocationException;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
-public class ServiceEndpoint1 implements ServiceEndpoint<String> {
-
+public class ServiceEndpoint2 implements ServiceEndpoint<String> {
     public static final int MAX_CONCURRENT_INVOCATION = 10;
     // Using counting semaphore to ensure maxConcurrentInvocation is
-    //honored for this endpoint.
+    // honored for this endpoint.
     static Semaphore semaphore = new Semaphore(MAX_CONCURRENT_INVOCATION);
 
     @Override
@@ -19,7 +19,7 @@ public class ServiceEndpoint1 implements ServiceEndpoint<String> {
     @Override
     public Set<String> getSupportedParameters() {
         Set<String> supportedParams = new HashSet<>();
-        supportedParams.add("param1");
+        supportedParams.add("param2");
         return supportedParams;
     }
 
@@ -27,9 +27,9 @@ public class ServiceEndpoint1 implements ServiceEndpoint<String> {
     public List<String> invoke(Map<String, Object> parameters) throws InvocationException {
         try {
             semaphore.acquire();
-            System.out.println("Available permits: " + semaphore.availablePermits());
+            System.out.println("Available permists: " + semaphore.availablePermits());
             List<String> result = new LinkedList<>();
-            result.add("called from se1");
+            result.add("called from se2");
             return result;
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

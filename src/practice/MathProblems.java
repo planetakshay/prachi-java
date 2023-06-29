@@ -22,7 +22,9 @@ public class MathProblems {
 		problems.swapTwoIntegers(5, 9);
 
 		System.out.println("Reverse Number: " + problems.reverseInt(1234567));
-
+		System.out.println("Reverse Number: " + problems.reverseInt(-8910));
+		System.out.println("Reverse Number: " + problems.reverseInt(Integer.MAX_VALUE));
+		System.out.println("Reverse Number: " + problems.reverseInt(Integer.MIN_VALUE));
 		System.out.println("Column Number: "
 				+ problems.getNumberForExcelColumn("AB"));
 
@@ -178,19 +180,29 @@ public class MathProblems {
 	}
 
 	public int reverseInt(int number) {
-
-		int digit = 0, reverse = 0;
-
+		boolean isNegative = false;
+		if(number < 0) {
+			isNegative = true;
+			number *= -1;
+		}
+		int digit = 0;
+		long reverse = 0;
 		while (number > 0) {
-
 			digit = number % 10;
-
 			reverse = reverse * 10 + digit;
-
 			number = number / 10;
 		}
-
-		return reverse;
+		if(isNegative) {
+			reverse *= -1;
+		}
+		if(reverse > Integer.MAX_VALUE) {
+			System.out.println("Integer overflow: " + reverse);
+			reverse = 0;
+		} else if(reverse < Integer.MIN_VALUE) {
+			System.out.println("Integer underflow: " + reverse);
+			reverse = 0;
+		}
+		return (int) reverse;
 	}
 
 	/**
@@ -624,23 +636,16 @@ public class MathProblems {
 	}
 
 	public int findPairWithMaxDifference(int[] array) {
-
 		if (array == null || array.length < 2) {
-
 			return 0;
 		}
-
 		int max = Integer.MIN_VALUE;
-
 		int min = Integer.MAX_VALUE;
 
 		for (int i : array) {
-
 			if (i < min) {
-
 				min = i;
 			} else if (i > max) {
-
 				max = i;
 			}
 		}

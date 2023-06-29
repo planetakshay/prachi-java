@@ -15,19 +15,14 @@ import java.util.Map;
  * Implement Object cache with Least Recently Used(LRU) eviction policy.
  */
 public class LRUCacheImpl<K, V> {
-
     private final Map<K, V> cache;
-
     private final LinkedList<K> accessOrderForEviction;
-
     private final int capacity;
-
     public LRUCacheImpl(final int capacity) {
         this.capacity = capacity;
         cache = new HashMap<>();
         accessOrderForEviction = new LinkedList<>();
     }
-
     public static void main(String[] args) {
         LRUCacheImpl cache = new LRUCacheImpl(3);
         cache.put(1, "One");

@@ -1,4 +1,4 @@
-package algo;
+package algo.service;
 
 import com.sun.jdi.InvocationException;
 

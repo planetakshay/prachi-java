@@ -85,35 +85,65 @@ public class BinarySearchTree {
 
 
 	public TreeStructure insert(TreeStructure node, int value) {
-
 		if (node == null) {
-
 			node = new TreeStructure();
-
 			node.data = value;
-
 		} else {
-
 			if (node.data > value) {
-
 				node.left = insert(node.left, value);
-
 			} else if (node.data <= value) {
-
 				node.right = insert(node.right, value);
 			}
 		}
-
 		return node;
 	}
 
-	// Without recursion
+	public TreeStructure deleteNode(TreeStructure root, int value) {
+		if(root == null) {
+			return root;
+		}
+		if(root.data > value) {
+			return deleteNode(root.left,value);
+		} else if(root.data < value) {
+			return deleteNode(root.right,value);
+		}
+		if(root.left == null) {
+			return root.right;
+		} else if(root.right == null) {
+			return root.left;
+		} else {
+			TreeStructure succParent = root;
+			// Find successor
+			TreeStructure succ = root.right;
+			while (succ.left != null) {
+				succParent = succ;
+				succ = succ.left;
+			}
+			// Delete successor.  Since successor
+			// is always left child of its parent
+			// we can safely make successor's right
+			// right child as left of its parent.
+			// If there is no succ, then assign
+			// succ.right to succParent.right
+			if (succParent != root) {
+				succParent.left = succ.right;
+			} else {
+				succParent.right = succ.right;
+			}
+			// Copy Successor Data to root
+			root.data = succ.data;
+			// Delete Successor and return root
+			return root;
+		}
+	}
 
 	/**
 	 *
 	 * BFS is a way of traversing a Binary Search Tree.
 	 * HP on-site. This is also called Breadth first search (BFS) algorithm
-	 * // Use Queue data structure for BFS
+	 *
+	 * Use Queue data structure for iterative solution(non-recursive) for BFS
+	 * The tree is printed layer by layer.
 	 *
 	 * @param root
 	 */

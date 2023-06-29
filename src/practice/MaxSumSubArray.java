@@ -2,7 +2,9 @@ package practice;
 
 /**
  * Visit - http://rerun.me/blog/2012/08/30/maximum-continuous-subarray-problem-
- * kandanes-algorithm/ for more details
+ * Kadane's-algorithm/ for more details
+ *
+ *
  * 
  * @author Prachi
  * 
