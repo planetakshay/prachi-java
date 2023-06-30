@@ -43,7 +43,7 @@ public class Ballot {
 
     public List<String> getResults(List<Ballot> ballots) {
         // value of pref1 = 3, pref2= 2 and pref1= 1;
-        Map<String, Integer> candidateVotes = new TreeMap<>();
+        Map<String, Integer> candidateVotes = new HashMap<>();
         for (Ballot ballot : ballots) {
             populateMap(ballot.pref1, 3, candidateVotes);
             populateMap(ballot.pref2, 2, candidateVotes);
