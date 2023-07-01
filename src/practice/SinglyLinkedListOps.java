@@ -5,6 +5,7 @@ import java.util.Stack;
 class List {
     int data;
     List next;
+
     public List(int data) {
         this.data = data;
     }
@@ -17,6 +18,7 @@ class List {
         result = prime * result + ((next == null) ? 0 : next.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -29,15 +31,172 @@ class List {
         if (data != other.data)
             return false;
         if (next == null) {
-            if (other.next != null)
-                return false;
-        } else if (!next.equals(other.next))
-            return false;
-        return true;
+            return other.next == null;
+        } else return next.equals(other.next);
     }
 }
 
 public class SinglyLinkedListOps {
+    public static void main(String[] args) {
+        List head = null;
+        SinglyLinkedListOps opsObj = new SinglyLinkedListOps();
+        head = opsObj.addNodeBack(head, 2);
+        head = opsObj.addNodeBack(head, 4);
+        head = opsObj.addNodeBack(head, 8);
+        head = opsObj.addNodeBack(head, 16);
+        head = opsObj.addNodeBack(head, 32);
+        head = opsObj.addNodeBack(head, 64);
+        head = opsObj.addNodeBack(head, 128);
+        head = opsObj.addNodeBack(head, 256);
+        head = opsObj.addNodeBack(head, 512);
+        head = opsObj.addNodeBack(head, 1024);
+        head = opsObj.addNodeBack(head, 2048);
+
+        System.out.println("Original LinkedList: ");
+        opsObj.print(head);
+
+        System.out.println("Remove Node: ");
+        head = opsObj.removeNode(head, 16);
+        opsObj.print(head);
+
+        System.out.println("Does Linked List has loop? " + (opsObj.hasLoop(head) ? "Yes" : "No"));
+
+        List nThNode = opsObj.nThFromLast(head, 2);
+        System.out.println("Nth Node from end is: " + nThNode.data);
+
+        List nThNodeFromBeginning = opsObj.nThFromBeginning(head, 6);
+        System.out.println("Nth Node from the beginning is: "
+                + nThNodeFromBeginning.data);
+        // head = opsObj.reverse(head);
+        opsObj.print(head);
+
+        System.out.println("Reverse in the groups of k nodes: ");
+        head = opsObj.reverseByGivenSize(head, 4);
+        opsObj.print(head);
+
+        System.out.println("Swap Kth Node: ");
+        head = opsObj.swapKthNode(head, 3);
+        opsObj.print(head);
+
+        head = opsObj.addNodeBack(head, 8);
+        head = opsObj.addNodeBack(head, 32);
+        head = opsObj.addNodeBack(head, 256);
+        head = opsObj.addNodeBack(head, 2048);
+        // Remove duplicate nodes.
+        System.out.println("List with duplicates");
+        opsObj.print(head);
+        removeDuplicates(head);
+        System.out.println("List with unique elements");
+        opsObj.print(head);
+
+        // Rearrange odd and even nodes.
+        List oddEven = new List(1);
+        oddEven = opsObj.addNodeBack(oddEven, 3);
+        oddEven = opsObj.addNodeBack(oddEven, 5);
+        oddEven = opsObj.addNodeBack(oddEven, 7);
+        oddEven = opsObj.addNodeBack(oddEven, 2);
+        oddEven = opsObj.addNodeBack(oddEven, 4);
+        oddEven = opsObj.addNodeBack(oddEven, 6);
+        oddEven = opsObj.addNodeBack(oddEven, 8);
+
+        opsObj.print(oddEven);
+        System.out.println("Rearraged as odd and even: ");
+        oddEvenSorting(oddEven);
+        opsObj.print(oddEven);
+
+        // Delete middle node of the list
+        System.out.println("Delete middle node of the list. ");
+        List deleteMiddleNode = new List(1);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 3);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 4);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 7);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 1);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 2);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 6);
+        /* deleteMiddleNode = deleteMiddleNode(deleteMiddleNode);
+        opsObj.print(deleteMiddleNode); */
+
+        System.out.println("Delete middle node of the list with only two nodes. ");
+        deleteMiddleNode = new List(2);
+        deleteMiddleNode = opsObj.addNodeBack(deleteMiddleNode, 1);
+        deleteMiddleNode = deleteMiddleNode(deleteMiddleNode);
+        opsObj.print(deleteMiddleNode);
+
+        System.out.println("Remove given node. The node is not the head or the tail of the linked list");
+    }
+
+    /**
+     * The method below cannot delete if the node (to be deleted)
+     * in the argument is the last node of the linked list.
+     *
+     * @param node
+     */
+    public static void removeMiddleNode(List node) {
+        if (node != null && node.next != null) {
+            node.data = node.next.data;
+            node.next = node.next.next;
+        }
+    }
+
+    public static void removeDuplicates(List head) {
+        if (head != null && head.next != null) {
+            List current = head;
+            while (current != null) {
+                List runner = current;
+                while (runner.next != null) {
+                    if (runner.next.data == current.data) {
+                        runner.next = runner.next.next;
+                    } else {
+                        runner = runner.next;
+                    }
+                }
+                current = current.next;
+            }
+        }
+    }
+
+    public static List oddEvenSorting(List head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        List odd = head;
+        List even = head.next;
+        List firstEven = even;
+
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = firstEven;
+        return odd;
+    }
+
+    public static List deleteMiddleNode(List head) {
+        List curr = head;
+        List fast = head;
+
+        if(head == null || head.next != null) {
+            return null;
+        }
+        while (fast != null && fast.next != null) {
+            curr = curr.next;
+            fast = fast.next.next;
+        }
+        // At this point current is at the middle of the list
+        if(curr != null) {
+            if(curr.next == null) {
+                curr = null;
+                head.next = curr;
+            } else {
+                curr.data = curr.next.data;
+                curr.next = curr.next.next;
+            }
+        }
+        return head;
+    }
+
     public List addNodeBack(List head, int data) {
         List node = new List(data);
         if (head == null) {
@@ -51,6 +210,7 @@ public class SinglyLinkedListOps {
         curr.next = node;
         return head;
     }
+
     public List removeNode(List head, int data) {
         if (head == null) {
             return null;
@@ -143,6 +303,7 @@ public class SinglyLinkedListOps {
         }
         return prev;
     }
+
     public void print(List head) {
         List node = head;
         while (node != null) {
@@ -153,87 +314,6 @@ public class SinglyLinkedListOps {
             node = node.next;
         }
         System.out.println("\n");
-    }
-    public static void main(String args[]) {
-        List head = null;
-        SinglyLinkedListOps opsObj = new SinglyLinkedListOps();
-        head = opsObj.addNodeBack(head, 2);
-        head = opsObj.addNodeBack(head, 4);
-        head = opsObj.addNodeBack(head, 8);
-        head = opsObj.addNodeBack(head, 16);
-        head = opsObj.addNodeBack(head, 32);
-        head = opsObj.addNodeBack(head, 64);
-        head = opsObj.addNodeBack(head, 128);
-        head = opsObj.addNodeBack(head, 256);
-        head = opsObj.addNodeBack(head, 512);
-        head = opsObj.addNodeBack(head, 1024);
-        head = opsObj.addNodeBack(head, 2048);
-
-        System.out.println("Original LinkedList: ");
-        opsObj.print(head);
-
-		System.out.println("Remove Node: ");
-        head = opsObj.removeNode(head, 16);
-        opsObj.print(head);
-
-        System.out.println("Does Linked List has loop? " + (opsObj.hasLoop(head) ? "Yes" : "No"));
-
-        List nThNode = opsObj.nThFromLast(head, 2);
-        System.out.println("Nth Node from end is: " + nThNode.data);
-
-        List nThNodeFromBeginning = opsObj.nThFromBeginning(head, 6);
-        System.out.println("Nth Node from the beginning is: "
-                + nThNodeFromBeginning.data);
-        // head = opsObj.reverse(head);
-        opsObj.print(head);
-
-        System.out.println("Reverse in the groups of k nodes: ");
-        head = opsObj.reverseByGivenSize(head, 4);
-        opsObj.print(head);
-
-		System.out.println("Swap Kth Node: ");
-        head = opsObj.swapKthNode(head, 3);
-        opsObj.print(head);
-
-        head = opsObj.addNodeBack(head, 8);
-        head = opsObj.addNodeBack(head, 32);
-        head = opsObj.addNodeBack(head, 256);
-        head = opsObj.addNodeBack(head, 2048);
-        // Remove duplicate nodes.
-        System.out.println("List with duplicates");
-        opsObj.print(head);
-        removeDuplicates(head);
-        System.out.println("List with unique elements");
-        opsObj.print(head);
-
-        // Rearrange odd and even nodes.
-        List oddEven = new List(1);
-        oddEven = opsObj.addNodeBack(oddEven, 3);
-        oddEven = opsObj.addNodeBack(oddEven, 5);
-        oddEven = opsObj.addNodeBack(oddEven, 7);
-        oddEven = opsObj.addNodeBack(oddEven, 2);
-        oddEven = opsObj.addNodeBack(oddEven, 4);
-        oddEven = opsObj.addNodeBack(oddEven, 6);
-        oddEven = opsObj.addNodeBack(oddEven, 8);
-
-        opsObj.print(oddEven);
-        System.out.println("Rearraged as odd and even: ");
-        oddEvenSorting(oddEven);
-        opsObj.print(oddEven);
-
-        System.out.println("Remove given node. The node is not the head or the tail of the linked list");
-    }
-
-    /**
-     * The method below cannot delete if the node (to be deleted)
-     * in the argument is the last node of the linked list.
-     * @param node
-     */
-    public static void removeMiddleNode(List node) {
-        if(node != null && node.next != null) {
-            node.data = node.next.data;
-            node.next = node.next.next;
-        }
     }
 
     /**
@@ -425,12 +505,7 @@ public class SinglyLinkedListOps {
             head2 = head2.next;
         }
 
-        if (head1 == head2) {
-
-            return true;
-        }
-
-        return false;
+        return head1 == head2;
     }
 
     /**
@@ -501,40 +576,5 @@ public class SinglyLinkedListOps {
             list2 = list2.next;
         }
         return null;
-    }
-
-    public static void removeDuplicates(List head) {
-        if (head != null && head.next != null) {
-            List current = head;
-            while(current != null) {
-                List runner = current;
-                while(runner.next != null) {
-                    if(runner.next.data == current.data) {
-                        runner.next = runner.next.next;
-                    } else {
-                        runner = runner.next;
-                    }
-                }
-                current = current.next;
-            }
-        }
-    }
-
-    public static List oddEvenSorting(List head) {
-        if(head == null || head.next == null) {
-            return head;
-        }
-        List odd = head;
-        List even = head.next;
-        List firstEven = even;
-
-        while(even != null && even.next != null) {
-            odd.next = even.next;
-            odd = odd.next;
-            even.next = odd.next;
-            even = even.next;
-        }
-        odd.next = firstEven;
-        return odd;
     }
 }
