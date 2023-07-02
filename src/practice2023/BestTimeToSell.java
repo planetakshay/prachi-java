@@ -17,7 +17,7 @@ public class BestTimeToSell {
             } else {
                 lowInd = highInd;
             }
-            highInd += 1;
+            highInd++;
         }
         return maxProfit;
     }
