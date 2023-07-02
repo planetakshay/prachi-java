@@ -22,7 +22,7 @@ public class WorstTimeToBuy {
             }
             highInd++;
         }
-        System.out.println("Worst day to sell: " + lowInd);
+        System.out.println("Worst day to buy: " + lowInd);
         return maxLoss;
     }
 }
