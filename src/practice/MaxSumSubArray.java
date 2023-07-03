@@ -19,16 +19,14 @@ public class MaxSumSubArray {
 	}
 
 	public static void findMaxSubArray(int[] inputArray) {
-
 		int maxStartIndex = 0;
 		int maxEndIndex = 0;
-		int maxSum = Integer.MIN_VALUE; // In an array of
-										// +ve and -ve integers maximum sum
-										// could be anything so choose a
-										// smallest number possible to begin
-										// with. Hence
-										// Integer.MIN_VALUE.
 
+		// In an array of +ve and -ve integers maximum sum
+		// could be anything so choose a smallest number possible to begin
+		// with. Hence Integer.MIN_VALUE.
+
+		int maxSum = Integer.MIN_VALUE;
 		int cumulativeSum = 0;
 		int maxStartIndexUntilNow = 0;
 
@@ -47,7 +45,6 @@ public class MaxSumSubArray {
 				cumulativeSum = 0;
 			}
 		}
-
 		System.out.println("Max sum         : " + maxSum);
 		System.out.println("Max start index : " + maxStartIndex);
 		System.out.println("Max end index   : " + maxEndIndex);
