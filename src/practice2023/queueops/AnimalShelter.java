@@ -8,6 +8,10 @@ import java.util.LinkedList;
 public class AnimalShelter {
     LinkedList<Dog> dogs = new LinkedList<>();
     LinkedList<Cat> cats = new LinkedList<>();
+    // The below field is used for keep order of arrival of the animal
+    // into the shelter as based on that, it will be determined which
+    // animal is the oldest. This is also used to determine which animal
+    // to give away when there is a conflict.
     private int order;
 
     public static void main(String[] args) {
@@ -43,6 +47,14 @@ public class AnimalShelter {
     public void enqueue(Animal animal) {
         animal.setOrder(order++);
         if (animal instanceof Dog) {
+            /**
+             * Alternatively use addLast method to ensure
+             *              the element is getting added at the end of the list
+             *              since we are using it as a Queue. Which is a FIFO data structure
+             *              and dequeue operation always remove the top element.
+             *              to maintain FIFO the newly inserted elements should always go
+             *              at the end of the existing list/queue.
+             */
             dogs.add((Dog) animal);
         } else if (animal instanceof Cat) {
             cats.add((Cat) animal);
