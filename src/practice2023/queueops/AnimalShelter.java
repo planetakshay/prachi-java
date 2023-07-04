@@ -9,35 +9,6 @@ public class AnimalShelter {
     LinkedList<Dog> dogs = new LinkedList<>();
     LinkedList<Cat> cats = new LinkedList<>();
     private int order;
-    public void enqueue(Animal animal) {
-        animal.setOrder(order++);
-        if (animal instanceof Dog) {
-            dogs.addLast((Dog) animal);
-        } else if (animal instanceof Cat) {
-            cats.addLast((Cat) animal);
-        }
-    }
-    public Animal dequeueAny() {
-        if (dogs.size() == 0) {
-            return dequeueCat();
-        } else if (cats.size() == 0) {
-            return dequeueDog();
-        } else {
-            Dog dog = dogs.peek();
-            Cat cat = cats.peek();
-            if (dog.isOlderThan(cat)) {
-                return dequeueDog();
-            } else {
-                return dequeueCat();
-            }
-        }
-    }
-    public Cat dequeueCat() {
-        return cats.poll();
-    }
-    public Dog dequeueDog() {
-        return dogs.poll();
-    }
 
     public static void main(String[] args) {
         AnimalShelter shelter = new AnimalShelter();
@@ -68,5 +39,37 @@ public class AnimalShelter {
         String animalName = shelter.dequeueAny() == null ? "None" : shelter.dequeueAny().getName();
         System.out.println("Last adopted animal: " + shelter.dequeueAny() == null ? "None" : animalName);
     }
-}
 
+    public void enqueue(Animal animal) {
+        animal.setOrder(order++);
+        if (animal instanceof Dog) {
+            dogs.add((Dog) animal);
+        } else if (animal instanceof Cat) {
+            cats.add((Cat) animal);
+        }
+    }
+
+    public Animal dequeueAny() {
+        if (dogs.size() == 0) {
+            return dequeueCat();
+        } else if (cats.size() == 0) {
+            return dequeueDog();
+        } else {
+            Dog dog = dogs.peek();
+            Cat cat = cats.peek();
+            if (dog.isOlderThan(cat)) {
+                return dequeueDog();
+            } else {
+                return dequeueCat();
+            }
+        }
+    }
+
+    public Cat dequeueCat() {
+        return cats.poll();
+    }
+
+    public Dog dequeueDog() {
+        return dogs.poll();
+    }
+}
