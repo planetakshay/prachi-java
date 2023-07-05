@@ -26,14 +26,13 @@ public class BinarySearchTree {
         node = bst.insert(node, 6);
 
         bst.printTreeLayers(node);
-        // bst.inOrderTraversal(node);
         System.out.println("\nDepth: " + bst.maxDepth(node));
         System.out.println("Lowest Common Ancestor: " + bst.findLowestCommonAncestor(node, 40, 15).data);
         System.out.println(bst.treeDiameter(node));
         System.out.println(bst.size(node));
 
-        nonRecursiveInOrderTraversal(node);
-
+        // bst.inOrderTraversal(node);
+        bst.nonRecursiveInOrderTraversal(node);
         TreeStructure binaryTree = null;
         binaryTree = bst.insert(binaryTree, 10);
         binaryTree = bst.insert(binaryTree, 9);
@@ -57,7 +56,7 @@ public class BinarySearchTree {
 
         System.out.println("Updated height after removing subtree of 30: " + bst.removeSubtree(30, binaryTree));
 
-        int[] array = new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        int[] array = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
         bst.printTreeLayers(bst.minimalTree(array));
 
         System.out.println("\n\nPrint tree by levels... ");
@@ -88,8 +87,13 @@ public class BinarySearchTree {
             level.forEach(vertex -> {
                 System.out.print(vertex.data + "\t");
             });
-            System.out.println("");
+            System.out.println();
         });
+
+        System.out.println("In order successor of the node...");
+        binaryTree = bst.initTree(bst);
+        TreeStructure curr = binaryTree.left.right.right;
+        System.out.println("Inorder Successor of " + curr.data + " : " + bst.inOrderSuccessor(curr).data);
     }
 
     public static void nonRecursiveInOrderTraversal(TreeStructure root) {
@@ -111,6 +115,18 @@ public class BinarySearchTree {
                 curr = curr.right;
             }
         }
+    }
+
+    public TreeStructure initTree(BinarySearchTree bst) {
+        TreeStructure binaryTree = null;
+        binaryTree = insert(binaryTree, 20);
+        binaryTree = insert(binaryTree, 8);
+        binaryTree = insert(binaryTree, 22);
+        binaryTree = insert(binaryTree, 4);
+        binaryTree = insert(binaryTree, 12);
+        binaryTree = insert(binaryTree, 10);
+        binaryTree = insert(binaryTree, 14);
+        return binaryTree;
     }
 
     public void inOrderTraversal(TreeStructure root) {
@@ -148,8 +164,10 @@ public class BinarySearchTree {
         } else {
             if (node.data > value) {
                 node.left = insert(node.left, value);
+                node.left.parent = node;
             } else if (node.data <= value) {
                 node.right = insert(node.right, value);
+                node.right.parent = node;
             }
         }
         return node;
@@ -229,6 +247,7 @@ public class BinarySearchTree {
             }
         }
     }
+
     public int maxDepth(TreeStructure node) {
         if (node == null) {
             return 0;
@@ -243,13 +262,48 @@ public class BinarySearchTree {
         return 1 + Math.min(minDepth(node.left), minDepth(node.right));
     }
 
+    // The runtime of this implementation is O(NlogN) which is not very efficient.
     boolean isBalanced(TreeStructure node) {
         return maxDepth(node) - minDepth(node) <= 1;
     }
 
+    /*
+     Runtime of following isBalanced is O(N) and O(H) size.
+     Where H is the height of the tree and N is no of vertices.
+     Return value of Integer.MIN_VALUE indicates error condition.
+     either left subtree is imbalanced or right subtree is imbalanced
+     or the tree is imbalanced.
+    */
+
+    public boolean isBalancedEfficient(TreeStructure root) {
+        return checkHeight(root) != Integer.MIN_VALUE;
+    }
+
+    public int checkHeight(TreeStructure node) {
+        if (node == null) {
+            return -1;
+        }
+        int leftHeight = checkHeight(node.left);
+        if (leftHeight == Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        int rightHeight = checkHeight(node.right);
+        if (rightHeight == Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        int diff = Math.abs(rightHeight - leftHeight);
+        if (diff > 1) {
+            // This means the tree is not balanced and hence return error code
+            // which in our example is the least value a Java 32-bit integer can hold.
+            return Integer.MIN_VALUE;
+        } else {
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
+
     public int height(TreeStructure root) {
         if (root == null) {
-            return 0;
+            return -1;
         }
         int height = Math.max(height(root.left), height(root.right)) + 1;
         return height;
@@ -257,14 +311,14 @@ public class BinarySearchTree {
 
     public int heightLeft(TreeStructure node) {
         if (node == null) {
-            return 0;
+            return -1;
         }
         return 1 + heightLeft(node.left);
     }
 
     public int heightRight(TreeStructure node) {
         if (node == null) {
-            return 0;
+            return -1;
         }
         return 1 + heightRight(node.right);
     }
@@ -372,10 +426,9 @@ public class BinarySearchTree {
     }
 
     /**
-     *
      * @param array
      * @param start start index in the subarray
-     * @param end end index in the subarray
+     * @param end   end index in the subarray
      * @return
      */
     public TreeStructure createMinimalBST(int[] array, int start, int end) {
@@ -390,11 +443,11 @@ public class BinarySearchTree {
     }
 
     public void createLevelLinkedList(TreeStructure node, List<List<TreeStructure>> lists, int level) {
-        if(node == null) {
+        if (node == null) {
             return;
         }
         List<TreeStructure> list = null;
-        if(lists.size() == level) {
+        if (lists.size() == level) {
             list = new LinkedList<>();
             lists.add(list);
         } else {
@@ -404,10 +457,38 @@ public class BinarySearchTree {
         createLevelLinkedList(node.left, lists, level + 1);
         createLevelLinkedList(node.right, lists, level + 1);
     }
+
     public List<List<TreeStructure>> createLevelLinkedList(TreeStructure root) {
         List<List<TreeStructure>> lists = new LinkedList<>();
         createLevelLinkedList(root, lists, 0);
         return lists;
+    }
+
+    public TreeStructure leftMostchild(TreeStructure node) {
+        if (node == null) {
+            return null;
+        }
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    public TreeStructure inOrderSuccessor(TreeStructure node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.right != null) {
+            return leftMostchild(node);
+        } else {
+            TreeStructure curr = node;
+            TreeStructure parent = node.parent;
+            while (parent != null && parent.left != curr) {
+                curr = parent;
+                parent = parent.parent;
+            }
+            return parent;
+        }
     }
 }
 
@@ -415,6 +496,7 @@ class TreeStructure {
     int data;
     TreeStructure left;
     TreeStructure right;
+    TreeStructure parent;
 
     TreeStructure() {
     }
