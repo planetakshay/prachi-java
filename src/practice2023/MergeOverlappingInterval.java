@@ -56,6 +56,12 @@ public class MergeOverlappingInterval {
         return mergedList.toArray(new int[mergedList.size()][]);
     }
 
+    /**
+     * Roblox phone screen
+     * Interviewer: Devakinandan Panda
+     * @param intervals
+     * @return
+     */
     public static int computeWatchTime(int[][] intervals) {
         if (intervals == null || intervals.length == 0) {
             return 0;
