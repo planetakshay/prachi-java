@@ -14,7 +14,7 @@ public class IntervalIsCovered {
         intervals = new LinkedList<>(Arrays.asList("(1,4)", "(6,7)", "(2,5)"));
         System.out.println("Is covered for range 2: " + isCovered(intervals, "(5,6)"));
 
-        intervals = new LinkedList<>(Arrays.asList("(1,4)"));
+        intervals = new LinkedList<>(List.of("(1,4)"));
         System.out.println("Is covered for range 3: " + isCovered(intervals, "(1,4)"));
     }
 
@@ -26,20 +26,20 @@ public class IntervalIsCovered {
         int[] target = getRange(targetInterval);
         int[] current = getRange(intervals.get(0));
 
-        if(withinRange(current, target)) {
+        if (withinRange(current, target)) {
             return true;
         }
         boolean isCovered = false;
-        for (int i = 1;i< intervals.size() ;i++) {
+        for (int i = 1; i < intervals.size(); i++) {
             int[] next = getRange(intervals.get(i));
             int currBegin = current[0];
             int currEnd = current[1];
             int nextBegin = next[0];
             int nextEnd = next[1];
 
-            if(currBegin == nextBegin && currEnd == nextEnd) { // repeating intervals.
+            if (currBegin == nextBegin && currEnd == nextEnd) { // repeating intervals.
                 continue;
-            } else if(currEnd >= nextBegin) { // overlapping intervals. Merge them
+            } else if (currEnd >= nextBegin) { // overlapping intervals. Merge them
                 current[1] = Math.max(currEnd, nextEnd);
             } else { // scattered intervals.
                 current = next;
@@ -87,10 +87,10 @@ public class IntervalIsCovered {
     }*/
 
     public static int[] getRange(String interval) {
-        int[] range = new int[2];
         if (interval == null || interval.isEmpty()) {
-            return range;
+            return null;
         }
+        int[] range = new int[2];
 
         String withoutParen = interval.substring(1, interval.length() - 1);
         String[] lowHigh = withoutParen.split(",");
