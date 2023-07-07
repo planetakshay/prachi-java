@@ -14,13 +14,13 @@ public class DocComment {
         System.out.println("\nInput: \n" + "(0, 3): A\n" + "(2, 4): B\n" + "(5, 6): C");
         List<Interval> intervals = Arrays.asList(new Interval("(0, 3): A"), new Interval("(2, 4): B"), new Interval("(5, 6): C"));
         List<Interval> output = mergeIntervalsWithLabels(intervals);
-        System.out.println("\nOutput: ");
+        System.out.println("Output: ");
         output.stream().forEach(interval -> System.out.println(interval));
 
-        System.out.println("\n\nInput: \n(0, 3): A\n" + "(0, 3): B\n" + "(2, 4): C\n" + "(5, 6): D");
-        intervals = Arrays.asList(new Interval("(0, 3): A"), new Interval("(0, 3): B"), new Interval("(2, 4): C"), new Interval("(5, 6): D"));
+        System.out.println("\n\nInput: \n(0, 3): A\n" + "(0, 3): B\n" + "(2, 4): C\n" + "(5, 6): D\n" + "(6, 8): E\n");
+        intervals = Arrays.asList(new Interval("(0, 3): A"), new Interval("(0, 3): B"), new Interval("(2, 4): C"), new Interval("(5, 6): D"), new Interval("(6, 8): E"));
         output = mergeIntervalsWithLabels(intervals);
-        System.out.println("\nOutput: ");
+        System.out.println("Output: ");
         output.stream().forEach(interval -> System.out.println(interval));
     }
 
