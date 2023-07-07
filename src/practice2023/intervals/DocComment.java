@@ -28,6 +28,11 @@ public class DocComment {
         if (intervals == null || intervals.isEmpty()) {
             return null;
         }
+        // MOST IMPORTANT STEP TO SOLVE THIS PROBLEM
+        // Sort the intervals by their start time.
+        // And initialize current outside the for loop first.
+        Collections.sort(intervals, (interval1, interval2) -> Integer.compare(interval1.getStart(), interval2.getStart()));
+
         int size = intervals.size();
         Interval curr = intervals.get(0);
         List<Interval> splitIntervals = new LinkedList<>();
@@ -66,8 +71,8 @@ public class DocComment {
 }
 
 class Interval {
-    int start;
-    int end;
+    Integer start;
+    Integer end;
     List<String> label;
     public Interval(int start, int end, List<String> labels) {
         this.start = start;
