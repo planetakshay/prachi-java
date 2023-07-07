@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.intervals;
 
 import java.util.*;
 
@@ -90,11 +90,10 @@ public class IntervalIsCovered {
         if (interval == null || interval.isEmpty()) {
             return null;
         }
-        int[] range = new int[2];
 
         String withoutParen = interval.substring(1, interval.length() - 1);
         String[] lowHigh = withoutParen.split(",");
-        range = new int[2];
+        int[] range = new int[2];
 
         try {
             range[0] = Integer.parseInt(lowHigh[0].trim());

@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.intervals;
 
 import java.util.Arrays;
 import java.util.LinkedList;
