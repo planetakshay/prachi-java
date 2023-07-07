@@ -70,6 +70,12 @@ public class MathProblems {
         int[] maxDifference = new int[]{1, 2, 3, 4, 5, 7, 8, 15, 18, 3, -20, -30};
 
         System.out.println("Minimum difference: " + problems.findPairWithMaxDifference(maxDifference));
+
+        int[] duplicate = new int[]{1,3,4,2,2};
+        System.out.println("Minimum difference: " + problems.findDuplicate(duplicate));
+
+        duplicate = new int[]{6,7,1,2,3,4,5,5};
+        System.out.println("Minimum difference: " + problems.findDuplicate(duplicate));
     }
 
     // Usage: int[] denoms = new int[] { 1, 2, 5, 10, 20, 50, 100, 200 };
@@ -597,5 +603,21 @@ public class MathProblems {
             }
         }
         return max - min;
+    }
+
+    public int findDuplicate(int[] array) {
+        int index = 0;
+        int index2 = 0;
+        do {
+            index = array[index];
+            index2 = array[array[index2]];
+        } while (index != index2);
+
+        index2 = 0;
+        while (index != index2) {
+            index = array[index];
+            index2 = array[index2];
+        }
+        return index;
     }
 }

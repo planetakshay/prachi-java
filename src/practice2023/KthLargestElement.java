@@ -1,5 +1,6 @@
 package practice2023;
 
+import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -24,6 +25,11 @@ public class KthLargestElement {
         // The following code will discard the larger elements than
         // Kth largest and at the end of the program the top most
         // element in the queue will be kth largest.
+        // Since the following queue keeps the top K largest elements,
+        // Use the constructor with only capacity.
+        // If using it to keep last k smallest elements,
+        // use following constructor with sort order instead
+        // kthLargestQueue = new PriorityQueue(k + 1, Collections.reverseOrder());
         Queue<Integer> kthLargestQueue = new PriorityQueue(k + 1);
         for (int i = 0; i < nums.length; i++) {
             kthLargestQueue.add(nums[i]);
