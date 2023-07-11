@@ -17,34 +17,25 @@ package practice;
 public class ConnectedNodes {
 
 	public static void main(String args[]) {
-
 		byte[][] connection = new byte[][] { { 0, 1, 1, 0, 0, 0 },
 				{ 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 1, 1 },
 				{ 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 0, 1 },
 				{ 0, 0, 0, 0, 0, 0 } };
-
 		ConnectedNodes nodes = new ConnectedNodes();
-
 		System.out.println("Nodes are connected: "
 				+ nodes.isConnected(connection, 1, 5));
 	}
 
 	public boolean isConnected(byte[][] array, int source, int target) {
-
 		if (array[source][target] == 1) {
-
 			return true;
 		} else {
-
 			for (int i = 0; i < array.length; i++) {
-
 				if (array[source][i] == 1) {
-
 					return isConnected(array, i, target);
 				}
 			}
 		}
-
 		return false;
 	}
 }

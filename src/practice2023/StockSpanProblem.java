@@ -7,9 +7,14 @@ public class StockSpanProblem {
     public static void main(String[] args) {
         int[] prices = new int[]{90, 40, 20, 30, 80, 60, 100};
         System.out.println("Stock Span: " + Arrays.toString(getStockSpan(prices)));
+
         prices = new int[] {100, 80, 60, 70, 60, 75, 85};
         System.out.println("Stock Span: " + Arrays.toString(getStockSpan(prices)));
-        prices = new int[] {100,60,70,65,80,85};
+
+        prices = new int[]{100, 60, 70, 65, 80, 85};
+        System.out.println("Stock Span: " + Arrays.toString(getStockSpan(prices)));
+
+        prices = new int[]{50, 52, 58, 54, 57, 51, 55, 60, 62, 65, 68, 72, 62, 61, 59, 63, 72};
         System.out.println("Stock Span: " + Arrays.toString(getStockSpan(prices)));
     }
 

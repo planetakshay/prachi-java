@@ -31,32 +31,30 @@ public class DocComment {
         // MOST IMPORTANT STEP TO SOLVE THIS PROBLEM
         // Sort the intervals by their start time.
         // And initialize current outside the for loop first.
+        // This operation will be order of nlog(n) time complexity.
         Collections.sort(intervals, (interval1, interval2) -> Integer.compare(interval1.getStart(), interval2.getStart()));
 
         int size = intervals.size();
         Interval curr = intervals.get(0);
         List<Interval> splitIntervals = new LinkedList<>();
         for (int i = 1; i < size; i++) {
-
             Interval next = intervals.get(i);
 
-            if (curr.equals(next)) {
+            if (curr.equals(next)) { // handle duplicates.
                 continue;
             } else if (curr.getStart() == next.getStart() && curr.getEnd() == next.getEnd() && !curr.getLabel().equals(next.getLabel())) {
-                // merge only label.
+                // Same interval but different labels. i.e. merge only label.
                 List<String> labelsSoFar = new LinkedList<>(curr.getLabel());
                 labelsSoFar.addAll(next.getLabel());
                 curr.setLabel(labelsSoFar);
-
             } else if (curr.getEnd() > next.getStart()) {
                 //merge intervals and labels.
-                List<String> mergedLabels = new LinkedList<>();
-                mergedLabels.addAll(curr.getLabel());
-                mergedLabels.addAll(next.getLabel());
-
                 Interval split = new Interval(curr.getStart(), next.getStart(), curr.getLabel());
                 splitIntervals.add(split);
 
+                List<String> mergedLabels = new LinkedList<>();
+                mergedLabels.addAll(curr.getLabel());
+                mergedLabels.addAll(next.getLabel());
                 split = new Interval(next.getStart(), curr.getEnd(), mergedLabels);
                 splitIntervals.add(split);
 
