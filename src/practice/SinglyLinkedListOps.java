@@ -190,6 +190,27 @@ public class SinglyLinkedListOps {
         String loop = collisionNode == null ? "None" : String.valueOf(collisionNode.data);
         System.out.println("Cycle starts at: " + loop);
 
+        // Delete nth from the end of the linked list.
+        linkedList = null;
+        linkedList = opsObj.addNodeBack(linkedList, 10);
+        linkedList = opsObj.addNodeBack(linkedList, 4);
+        linkedList = opsObj.addNodeBack(linkedList, 8);
+        linkedList = opsObj.addNodeBack(linkedList, 16);
+        linkedList = opsObj.addNodeBack(linkedList, 20);
+        linkedList = opsObj.addNodeBack(linkedList, 2);
+        linkedList = opsObj.addNodeBack(linkedList, 3);
+        linkedList = opsObj.addNodeBack(linkedList, 7);
+        linkedList = opsObj.addNodeBack(linkedList, 11);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.addNodeBack(linkedList, 1);
+        System.out.println("Original List: ");
+        opsObj.print(linkedList);
+        int n = 4;
+        linkedList = opsObj.nThFromLastDelete(linkedList, n);
+        System.out.println("After deleting " + n + "th node from end of the list\n");
+        opsObj.print(linkedList);
+
+
         System.out.println("Remove given node. The node is not the head or the tail of the linked list");
     }
 
@@ -468,6 +489,30 @@ public class SinglyLinkedListOps {
                 temp = temp.next;
             }
             return node;
+        }
+        return null;
+    }
+
+    public List nThFromLastDelete(List head, int n) {
+        if (head != null) {
+            List temp = head;
+            List node = head;
+            for (int index = 0; index < n; index++) {
+                if (temp == null) {
+                    return null;
+                }
+                temp = temp.next;
+            }
+            while (temp != null) {
+                node = node.next;
+                temp = temp.next;
+            }
+            if(node != null) {
+                List next = node.next;
+                node.data = next.data;
+                node.next = next.next;
+            }
+            return head;
         }
         return null;
     }

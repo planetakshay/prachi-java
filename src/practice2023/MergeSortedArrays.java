@@ -36,7 +36,7 @@ public class MergeSortedArrays {
 
     // Simple merge sort.
     public static int[] mergeArrays(int[] arr1, int[] arr2) {
-        if (arr1 == null || arr2.length == 0) {
+        if (arr1 == null || arr1.length == 0) {
             return arr2;
         } else if (arr2 == null || arr2.length == 0) {
             return arr1;
@@ -62,6 +62,15 @@ public class MergeSortedArrays {
         return mergedArray;
     }
 
+    /**
+     *
+     * @param nums1 First sorted array with enough empty cells to put
+     *              elements of second array while maintaining
+     *              the sort order of the fist array
+     * @param m  last populated index of first array.
+     * @param nums2  second sorted array.
+     * @param n last index of the second array.
+     */
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1, j = n - 1, index = nums1.length - 1;
 
@@ -78,6 +87,16 @@ public class MergeSortedArrays {
                 }
             }
             index--;
+        }
+        // Compute median.
+
+        int len = nums1.length;
+        int half = len / 2;
+
+        if(len % 2 == 0) {
+            System.out.println("Median of merged arrays: " + ((float) (nums1[half - 1] + nums1[half])) / 2);
+        } else {
+            System.out.println("Median of merged arrays: " + nums1[half]);
         }
     }
 }
