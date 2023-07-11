@@ -13,9 +13,10 @@ public class StockPriceInterval {
         int[] prices = new int[]{50, 52, 58, 54, 57, 51, 55, 60, 62, 65, 68, 72, 62, 61, 59, 63, 72};
         System.out.println("Max Interval: " + (inefficient(prices)));
         System.out.println("Max Interval using while: " + (inefficientWhile(prices)));
+        System.out.println("O(N) time complexity: " + findLongest(prices));
         prices = new int[]{10, 1, 5};
         System.out.println("Max Interval using while: " + (inefficientWhile(prices)));
-
+        System.out.println("O(N) time complexity: " + findLongest(prices));
     }
     // O(n2) complexity.
     public static int inefficient(int[] array) {
@@ -60,5 +61,22 @@ public class StockPriceInterval {
             }
         }
         return maxDistance;
+    }
+
+    public static int findLongest(int[] prices) {
+
+        int start = 0, end = start + 1;
+        int currInterval = 0, maxInterval = 0;
+
+        for(int i = 1; i < prices.length;i++) {
+            if(prices[start] > prices[end]) {
+                currInterval++;
+            } else {
+                start = end;
+            }
+            maxInterval = Math.max(maxInterval, currInterval);
+            end++;
+        }
+        return maxInterval;
     }
 }

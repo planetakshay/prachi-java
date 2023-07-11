@@ -210,6 +210,23 @@ public class SinglyLinkedListOps {
         System.out.println("After deleting " + n + "th node from end of the list\n");
         opsObj.print(linkedList);
 
+        // Swap adjacent nodes in a LinkedList
+        linkedList = null;
+        linkedList = opsObj.addNodeBack(linkedList, 10);
+        linkedList = opsObj.addNodeBack(linkedList, 4);
+        linkedList = opsObj.addNodeBack(linkedList, 8);
+        linkedList = opsObj.addNodeBack(linkedList, 16);
+        linkedList = opsObj.addNodeBack(linkedList, 20);
+        linkedList = opsObj.addNodeBack(linkedList, 2);
+        linkedList = opsObj.addNodeBack(linkedList, 3);
+        linkedList = opsObj.addNodeBack(linkedList, 7);
+        linkedList = opsObj.addNodeBack(linkedList, 11);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.addNodeBack(linkedList, 1);
+
+        // opsObj.print(linkedList);
+        linkedList = opsObj.swapAdjacent(linkedList);
+        // opsObj.print(linkedList);
 
         System.out.println("Remove given node. The node is not the head or the tail of the linked list");
     }
@@ -495,8 +512,12 @@ public class SinglyLinkedListOps {
 
     public List nThFromLastDelete(List head, int n) {
         if (head != null) {
+            if(head.next == null) {
+                return null;
+            }
             List temp = head;
             List node = head;
+            List prev = null;
             for (int index = 0; index < n; index++) {
                 if (temp == null) {
                     return null;
@@ -504,10 +525,13 @@ public class SinglyLinkedListOps {
                 temp = temp.next;
             }
             while (temp != null) {
+                prev = node;
                 node = node.next;
                 temp = temp.next;
             }
-            if(node != null) {
+            if(node != null && node.next == null) {
+                prev.next = null;
+            } else {
                 List next = node.next;
                 node.data = next.data;
                 node.next = next.next;
@@ -528,6 +552,29 @@ public class SinglyLinkedListOps {
             count++;
         }
         return pointer;
+    }
+
+    public List swapAdjacent(List head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        System.out.println("Before swapping...");
+        print(head);
+        List dummy = new List(0);
+        dummy.next = head;
+        List curr = dummy;
+
+        while(curr.next != null && curr.next.next != null) {
+            List first = curr.next;
+            List second = curr.next.next;
+            first.next = second.next;
+            curr.next = second;
+            curr.next.next = first;
+            curr = curr.next.next;
+        }
+        System.out.println("After swapping...");
+        print(dummy.next);
+        return dummy.next;
     }
 
     /**
