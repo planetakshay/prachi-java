@@ -569,20 +569,16 @@ public class MathProblems {
     public void fizzBuzz() {
 
         for (int i = 1; i <= 100; i++) {
-
             // Setting the variables as follows makes the code more readable.
             boolean fizzBuzz = (i % 3 == 0 && i % 5 == 0);
             boolean fizz = i % 3 == 0;
             boolean buzz = i % 5 == 0;
 
             if (fizzBuzz) {
-
                 System.out.println("FizzBuzz");
             } else if (fizz) {
-
                 System.out.println("Fizz");
             } else if (buzz) {
-
                 System.out.println("Buzz");
             }
         }
