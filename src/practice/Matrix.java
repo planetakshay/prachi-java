@@ -1,7 +1,7 @@
 package practice;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
 /**
  * This example prints diagonals of a matrix. The example uses 3x3 matrix. This
@@ -36,16 +36,20 @@ public class Matrix {
 		reset = matrix.resetValues(reset);
 		System.out.println("Now printing Reset Values");
 		matrix.printMatrix(reset);
+
+		int[][] a = new int[][] {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+		List<Integer> spiralOrder = matrix.printSpiralOrderLeetCode(a);
+		System.out.println(Arrays.toString(spiralOrder.toArray()));
 	}
 
 	/**
-	 * 
+	 *
 	 * @param matrix
 	 * @return
-	 * 
+	 *
 	 *         Yahoo on-site. For any cell with value 0 reset the corresponding
 	 *         row and column values to zero.
-	 * 
+	 *
 	 *         If you set matrix's corresponding row and column value to zero as
 	 *         you spot it the entire matrix will turn into zeros. Instead, save
 	 *         row and column values in a set and later loop through the row and
@@ -85,6 +89,7 @@ public class Matrix {
 			}
 		}
 	}
+
 	public void printSecondDiagonal(int array[][]) {
 		if (array != null) {
 			int n = array.length - 1;
@@ -93,6 +98,7 @@ public class Matrix {
 			}
 		}
 	}
+
 	// If rows and columns are sorted.
 	public boolean findElement(int[][] matrix, int ele, int m, int n) {
 		int row = 0;
@@ -124,7 +130,7 @@ public class Matrix {
 	/**
 	 * Print an nxn matrix spirally. This algorith is often asked in PayPal,
 	 * eBay, Amazon.
-	 * 
+	 *
 	 * @param a
 	 */
 	public void printSpiralOrder(int a[][]) {
@@ -145,6 +151,35 @@ public class Matrix {
 			colStart++;
 			colEnd--;
 		}
+	}
+
+	public List<Integer> printSpiralOrderLeetCode(int matrix[][]) {
+		int m = matrix.length, n = matrix[0].length;
+		int rowStart = 0, rowEnd = m - 1, colStart = 0, colEnd = n - 1;
+		List<Integer> spiral = new LinkedList<>();
+		while (rowStart <= rowEnd && colStart <= colEnd) {
+			for (int i = colStart; i <= colEnd; i++) {
+				spiral.add(matrix[rowStart][i]);
+			}
+			rowStart++;
+			for (int i = rowStart; i <= rowEnd; i++) {
+				spiral.add(matrix[i][colEnd]);
+			}
+			colEnd--;
+			if(rowStart <= rowEnd) {
+				for (int i = colEnd; i >= colStart; i--) {
+					spiral.add(matrix[rowEnd][i]);
+				}
+				rowEnd--;
+			}
+			if(colStart <= colEnd) {
+				for (int i = rowEnd; i >= rowStart; i--) {
+					spiral.add(matrix[i][colStart]);
+				}
+				colStart++;
+			}
+		}
+		return spiral;
 	}
 
 	public void printMatrix(int[][] array) {
