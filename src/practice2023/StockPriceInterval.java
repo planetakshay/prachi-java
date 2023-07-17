@@ -12,10 +12,11 @@ public class StockPriceInterval {
     public static void main(String[] args) {
         int[] prices = new int[]{50, 52, 58, 54, 57, 51, 55, 60, 62, 65, 68, 72, 62, 61, 59, 63, 72};
         System.out.println("Max Interval: " + (inefficient(prices)));
-        System.out.println("Max Interval using while: " + (inefficientWhile(prices)));
+        /* System.out.println("Max Interval using while: " + (inefficientWhile(prices))); */
         System.out.println("O(N) time complexity: " + findLongest(prices));
         prices = new int[]{10, 1, 5};
-        System.out.println("Max Interval using while: " + (inefficientWhile(prices)));
+        System.out.println("Max Interval: " + (inefficient(prices)));
+        /*System.out.println("Max Interval using while: " + (inefficientWhile(prices)));*/
         System.out.println("O(N) time complexity: " + findLongest(prices));
     }
     // O(n2) complexity.
@@ -36,7 +37,8 @@ public class StockPriceInterval {
                 maxDistance = distance;
             }
         }
-        System.out.println("Low = " + low + " High = " + high);
+        System.out.println("\nDistance = " + distance + "\nmaxDistance = " + maxDistance + "\nLow = " + low + ", High = " + high);
+        System.out.println("-------------------------------------------------");
         return maxDistance;
     }
     public static int inefficientWhile(int[] array) {
@@ -56,27 +58,33 @@ public class StockPriceInterval {
             j = i + 1;
             i++;
             if (maxDistance < distance) {
-                System.out.println("\nDistance = " + distance + "\nmaxDistance = " + maxDistance + "\nLow = " + low + " High = " + high);
                 maxDistance = distance;
+                System.out.println("\nDistance = " + distance + "\nmaxDistance = " + maxDistance + "\nLow = " + low + " High = " + high);
             }
         }
+        System.out.println("-------------------------------------------------");
         return maxDistance;
     }
 
+    /**
+     * WIP: Not returning expected results.
+     * @param prices
+     * @return
+     */
     public static int findLongest(int[] prices) {
-
         int start = 0, end = start + 1;
         int currInterval = 0, maxInterval = 0;
 
         for(int i = 1; i < prices.length;i++) {
             if(prices[start] > prices[end]) {
-                currInterval++;
+                currInterval = end - start;
             } else {
                 start = end;
             }
-            maxInterval = Math.max(maxInterval, currInterval);
             end++;
         }
+        maxInterval = Math.max(maxInterval, currInterval);
+        System.out.println("-------------------------------------------------");
         return maxInterval;
     }
 }

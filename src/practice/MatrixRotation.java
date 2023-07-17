@@ -1,31 +1,21 @@
 package practice;
 
 public class MatrixRotation {
-
 	public static void main(String args[]) {
-
 		int matrix[][] = new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-
 		print(matrix);
-
 		int[][] rotated = rotate(matrix);
-
 		System.out.println("--------------------------------------");
-
 		print(rotated);
 	}
 
 	public static void print(int[][] matrix) {
-
 		for (int i = 0; i < matrix.length; i++) {
-
 			for (int j = 0; j < matrix.length; j++) {
-
 				System.out.print(matrix[i][j] + "\t");
 			}
 			System.out.println();
 		}
-
 	}
 
 	public static int[][] rotate(int[][] matrix) {
@@ -36,7 +26,6 @@ public class MatrixRotation {
 		int temp = 0;
 
 		for (int i = 0; i < row / 2; i++) {
-
 			for (int j = 0; j < (column + 1) / 2; j++) {
 				System.out.println("--------------------------------------");
 				temp = matrix[i][j];
@@ -52,10 +41,8 @@ public class MatrixRotation {
 				matrix[j][length - i] = temp;
 				print(matrix);
 				System.out.println("--------------------------------------");
-				
 			}
 		}
-
 		return matrix;
 	}
 }

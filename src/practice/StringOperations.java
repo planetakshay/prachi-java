@@ -1,12 +1,6 @@
 package practice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 import java.util.List;
 
 public class StringOperations {
@@ -22,7 +16,7 @@ public class StringOperations {
 
         StringOperations stringOps = new StringOperations();
 
-        System.out.println(stringOps.countOccurenceRecursion("prachiakshay", 'a'));
+        /* System.out.println(stringOps.countOccurenceRecursion("prachiakshay", 'a'));
 
         System.out.println(stringOps.countOccurrenceNoRecursion("prachiakshay", 'a'));
 
@@ -69,15 +63,20 @@ public class StringOperations {
         System.out.println("Longest substring with unique characters: " + stringOps.longestSubOfUniqueCharacters("a123a45a6"));
 
         System.out.println(stringOps.replaceUsWithThem("It usually rains when the bus comes to us"));
-        System.out.println(stringOps.isBalancedParanthesis("((((())))"));
+        System.out.println(stringOps.isBalancedParantheses("((((())))"));
 
-        System.out.println(stringOps.isBalancedParanthesis("({[]})(([]))((({{{{}}}})))"));
+        System.out.println(stringOps.isBalancedParantheses("({[]})(([]))((({{{{}}}})))"));
 
-        System.out.println(stringOps.isBalancedParanthesis("a(b(c{d[e(f(g)h)i]j}k)l)m"));
+        System.out.println(stringOps.isBalancedParantheses("a(b(c{d[e(f(g)h)i]j}k)l)m"));
 
-        System.out.println(stringOps.isBalancedParanthesis("(())aa(({[aa(a(yyy)b)bb)])}bb{}[]"));
+        System.out.println(stringOps.isBalancedParantheses("(())aa(({[aa(a(yyy)b)bb)])}bb{}[]"));
 
-        System.out.println(stringOps.isBalancedParanthesis("]"));
+        System.out.println(stringOps.isBalancedParantheses("]")); */
+        String paran = "()())()";
+        // paran = ")(())((((()(";
+        // paran = ")(())((((()()))()()(()))";
+        stringOps.removeInvalidParentheses(paran, new HashSet<>(), minRemovals(paran));
+        //removeInvalidParanthesisBFS(paran);
     }
 
     // case insensitive comparison.
@@ -424,7 +423,7 @@ public class StringOperations {
         return abc;
     }
 
-    public boolean isBalancedParanthesis(String paranthesis) {
+    public static boolean isBalancedParantheses(String paranthesis) {
 
         Stack<Character> stack = new Stack<Character>();
 
@@ -471,4 +470,141 @@ public class StringOperations {
         }
         return stack.isEmpty();
     }
+
+    public static void removeInvalidParentheses(String input, HashSet<String> output, int minRemovalAllowed) {
+        if (minRemovalAllowed == 0) {
+            int minNow = minRemovals(input);
+            if (minNow == 0) {
+                if (!output.contains(input)) {
+                    System.out.println(input);
+                    output.add(input);
+                }
+            }
+            return;
+        }
+        for (int i = 0; i < input.length(); i++) {
+            String left = input.substring(0, i);
+            String right = input.substring(i + 1);
+            removeInvalidParentheses(left + right, output, minRemovalAllowed - 1);
+        }
+    }
+
+    public static int minRemovals(String paranthesis) {
+        Stack<Character> stack = new Stack<Character>();
+        char[] paranArray = paranthesis.toCharArray();
+        for (int i = 0; i < paranArray.length; i++) {
+            char in = paranArray[i];
+            switch (in) {
+                case l_paren:
+                    stack.push(in);
+                    break;
+                case l_brace:
+                    stack.push(in);
+                    break;
+                case l_bracket:
+                    stack.push(in);
+                    break;
+                case r_paren:
+                    if (stack.size() == 0 || stack.peek() == r_paren) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_paren) {
+                        stack.pop();
+                    }
+                    break;
+                case r_brace:
+                    if (stack.size() == 0 || stack.peek() == r_brace) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_brace) {
+                        stack.pop();
+                    }
+                    break;
+                case r_bracket:
+                    if (stack.size() == 0 || stack.peek() == r_bracket) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_bracket) {
+                        stack.pop();
+                    }
+                    break;
+                default:
+            }
+        }
+        return stack.size();
+    }
+
+    public static int minRemovalsNoSwitch(String paranthesis) {
+        Stack<Character> stack = new Stack<Character>();
+        char[] paranArray = paranthesis.toCharArray();
+        for (int i = 0; i < paranArray.length; i++) {
+            char in = paranArray[i];
+            if (in == l_paren) {
+                stack.push(in);
+            } else if (in == r_paren) {
+                if (stack.size() == 0) {
+                    stack.push(in);
+                } else if (stack.peek() == r_paren) {
+                    stack.push(in);
+                } else if (stack.peek() == l_paren) {
+                    stack.pop();
+                }
+            }
+        }
+        return stack.size();
+    }
+
+    public static List<String> removeInvalidParanthesisBFS(String input) {
+        if(input.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        Set<String> balancedParanString = new HashSet<>();
+        Queue<String> subStrings = new LinkedList<>();
+        String removedParan = "";
+        boolean level = false;
+
+        subStrings.add(input);
+        balancedParanString.add(input);
+
+        while (!subStrings.isEmpty()) {
+            String curr = subStrings.peek();
+            subStrings.remove();
+
+            if (isBalancedParan(curr)) {
+                System.out.println(curr);
+                level = true;
+            }
+            if (level) {
+                continue;
+            }
+            for (int i = 0; i < curr.length(); i++) {
+                if (curr.charAt(i) == '(' || curr.charAt(i) == ')') {
+                    removedParan = curr.substring(0, i) + curr.substring(i + 1);
+                    if (!balancedParanString.contains(removedParan)) {
+                        subStrings.add(removedParan);
+                        balancedParanString.add(removedParan);
+                    }
+                }
+            }
+        }
+
+        return balancedParanString.stream().toList();
+    }
+
+    static boolean isBalancedParan(String input) {
+        int balancedCount = 0;
+
+        for(int i = 0;i<input.length();i++) {
+            if(input.charAt(i) == '(') {
+                balancedCount++;
+            }
+            else if(input.charAt(i) == ')') {
+                balancedCount--;
+            }
+            if(balancedCount < 0) {
+                return false;
+            }
+        }
+
+        return balancedCount == 0;
+    }
+
 }

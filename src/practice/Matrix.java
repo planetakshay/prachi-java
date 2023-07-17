@@ -128,7 +128,7 @@ public class Matrix {
 	}
 
 	/**
-	 * Print an nxn matrix spirally. This algorith is often asked in PayPal,
+	 * Print an nxn matrix spirally. This algorithm is often asked in PayPal,
 	 * eBay, Amazon.
 	 *
 	 * @param a

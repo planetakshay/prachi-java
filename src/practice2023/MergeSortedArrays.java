@@ -32,10 +32,19 @@ public class MergeSortedArrays {
         nums2 = new int[]{1};
         merge(nums1, 1, nums2, nums2.length);
         Arrays.stream(nums1).forEach(ele -> System.out.print("\t" + ele));
+
+        System.out.println("\nCracking Coding Interview Test case: ");
+        nums1 = new int[]{1, 2, 4, 9, 10, 0, 0, 0, 0};
+        nums2 = new int[]{2, 5, 6, 8};
+        mergeCrackingCodingInterview(nums1,nums2, 5, nums2.length);
+        Arrays.stream(nums1).forEach(ele -> System.out.print("\t" + ele));
     }
 
     // Simple merge sort.
     public static int[] mergeArrays(int[] arr1, int[] arr2) {
+        if(arr1 == null && arr2 == null) {
+            return null;
+        }
         if (arr1 == null || arr1.length == 0) {
             return arr2;
         } else if (arr2 == null || arr2.length == 0) {
@@ -97,6 +106,24 @@ public class MergeSortedArrays {
             System.out.println("Median of merged arrays: " + ((float) (nums1[half - 1] + nums1[half])) / 2);
         } else {
             System.out.println("Median of merged arrays: " + nums1[half]);
+        }
+    }
+
+    public static void mergeCrackingCodingInterview(int[] a, int[] b, int lastA, int lastB) {
+        int indexA = lastA - 1;
+        int indexB = lastB - 1;
+
+        int mergedIndex = lastB + lastA - 1;
+
+        while(indexB >= 0) {
+            if(indexA >= 0 && a[indexA] > b[indexB]) {
+                a[mergedIndex] = a[indexA];
+                indexA--;
+            } else {
+                a[mergedIndex] = b[indexB];
+                indexB--;
+            }
+            mergedIndex--;
         }
     }
 }
