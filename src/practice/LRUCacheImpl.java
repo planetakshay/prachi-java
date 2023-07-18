@@ -38,7 +38,7 @@ public class LRUCacheImpl<K, V> {
     }
 
     public void put(K key, V value) {
-        if (accessOrderForEviction.size() >= capacity) {
+        if (!cache.containsKey(key) && cache.size() >= capacity) {
             K removedKey = accessOrderForEviction.removeLast();
             cache.remove(removedKey);
         }
@@ -49,7 +49,9 @@ public class LRUCacheImpl<K, V> {
     public V get(K key) {
         V value = cache.get(key);
         if (null != value) {
-            accessOrderForEviction.remove(key);
+            if(accessOrderForEviction.contains(key)) {
+                accessOrderForEviction.remove((Integer)key);
+            }
             accessOrderForEviction.addFirst(key);
         }
         return value;
