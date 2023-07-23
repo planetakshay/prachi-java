@@ -24,6 +24,7 @@ public class Matrix {
 				{ 90, 200, 210, 300 } };
 		System.out.println("\nElement 230 is found: "
 				+ matrix.findElement(array1, 210, 4, 4));
+
 		int array2[][] = new int[][] { { 210, 150, 480, 10000 },
 				{ 960, 730, 10, 130 }, { 850, 100, 120, 140 },
 				{ 900, 200, 210, 3000 } };
@@ -40,6 +41,10 @@ public class Matrix {
 		int[][] a = new int[][] {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
 		List<Integer> spiralOrder = matrix.printSpiralOrderLeetCode(a);
 		System.out.println(Arrays.toString(spiralOrder.toArray()));
+
+		array1 = new int[][]{{1, 3}};
+		System.out.println("\nElement 3 is found: "
+				+ matrix.findElement(array1, 3, 1, 2));
 	}
 
 	/**

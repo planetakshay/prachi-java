@@ -44,9 +44,27 @@ public class IntervalIsCovered {
             } else { // scattered intervals.
                 current = next;
             }
-            isCovered = current[0] <= target[0] && target[1] <= current[1];
+            isCovered = withinRange(current, target);
         }
         return isCovered;
+    }
+
+    public static int[] getRange(String interval) {
+        if (interval == null || interval.isEmpty()) {
+            return null;
+        }
+
+        String withoutParen = interval.substring(1, interval.length() - 1);
+        String[] lowHigh = withoutParen.split(",");
+        int[] range = new int[2];
+
+        try {
+            range[0] = Integer.parseInt(lowHigh[0].trim());
+            range[1] = Integer.parseInt(lowHigh[1].trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Exception during parsing range. " + e.getMessage());
+        }
+        return range;
     }
 
     public static boolean withinRange(int[] current, int[] target) {
@@ -85,22 +103,4 @@ public class IntervalIsCovered {
         }
         return false;
     }*/
-
-    public static int[] getRange(String interval) {
-        if (interval == null || interval.isEmpty()) {
-            return null;
-        }
-
-        String withoutParen = interval.substring(1, interval.length() - 1);
-        String[] lowHigh = withoutParen.split(",");
-        int[] range = new int[2];
-
-        try {
-            range[0] = Integer.parseInt(lowHigh[0].trim());
-            range[1] = Integer.parseInt(lowHigh[1].trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Exception during parsing range. " + e.getMessage());
-        }
-        return range;
-    }
 }

@@ -1,5 +1,9 @@
 package practice2023;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * https://www.hackerearth.com/practice/basic-programming/bit-manipulation/basics-of-bit-manipulation/tutorial/
  * <p>
@@ -22,6 +26,8 @@ public class AllPossibleSubsets {
         System.out.println("Subsets of number array\n");
         nums = new int[] {1,2};
         allSubsets(nums);
+
+        System.out.println("All: " + Arrays.toString(getSubsets(nums).toArray()));
     }
 
     public static void allSubsets(char[] chars) {
@@ -60,5 +66,22 @@ public class AllPossibleSubsets {
                 System.out.println("}");
             }
         }
+    }
+
+    public static List<List<Integer>> getSubsets(int[] nums) {
+        List<List<Integer>> subsets = new LinkedList<>();
+        if (nums != null) {
+            int len = nums.length;
+            for (int i = 0; i < Math.pow(2, len); i++) {
+                List<Integer> set = new LinkedList<>();
+                for (int j = 0; j < len; j++) {
+                    if ((i & (1 << j)) > 0) {
+                        set.add(nums[j]);
+                    }
+                }
+                subsets.add(set);
+            }
+        }
+        return subsets;
     }
 }

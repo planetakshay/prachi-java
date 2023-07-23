@@ -14,6 +14,17 @@ public class BinarySearch {
         Arrays.sort(array, 0, array.length - 1);
         int index = binarySearch(array, 0, array.length - 1, 89);
         System.out.println("index = " + index);
+
+        /* array = new int[] {5,7,7,8,8,10};
+        Arrays.sort(array, 0, array.length - 1);
+        int[] range = binarySearchRange(array, 0, array.length - 1, 8);
+        System.out.println("range = " + Arrays.toString(range)); */
+
+        array = new int[] {2,2};
+        Arrays.sort(array, 0, array.length - 1);
+        int[] range = searchRange(array, 2);
+        System.out.println("range = " + Arrays.toString(range));
+
         int[] rotatedArray = {3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2};
         System.out.println("Element in rotated Array found at index: "
                 + pivotedBinarySearch(rotatedArray, rotatedArray.length, 5));
@@ -31,12 +42,59 @@ public class BinarySearch {
         int pivot = (start + end) / 2;
         if (array[pivot] == item) {
             return pivot;
-
         } else if (array[pivot] > item) {
             return binarySearch(array, start, pivot - 1, item);
         } else {
             return binarySearch(array, pivot + 1, end, item);
         }
+    }
+
+    public static int[] searchRange(int[] nums, int target) {
+        if(nums == null || nums.length == 0) {
+            return new int[]{-1, -1};
+        }
+        int[] range = new int[2];
+        range[0] = findFirstIndex(nums, target);
+        range[1] = findLastIndex(nums, target);
+        return range;
+    }
+
+    public static int findFirstIndex(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        int index = -1;
+
+        while(start <= end) {
+            int mid = start + (end - start) / 2;
+            if(nums[mid] >= target) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+            if(nums[mid] == target){
+                index = mid;
+            }
+        }
+        return index;
+    }
+
+    public static int findLastIndex(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        int index = -1;
+
+        while(start <= end) {
+            int mid = start + (end - start) / 2;
+            if(nums[mid] <= target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+            if(nums[mid] == target){
+                index = mid;
+            }
+        }
+        return index;
     }
 
     /*

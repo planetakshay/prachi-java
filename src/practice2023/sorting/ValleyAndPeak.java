@@ -2,7 +2,10 @@ package practice2023.sorting;
 
 import java.util.Arrays;
 
-
+/**
+ * Valley and Peak algorithm from Cracking coding interview
+ * 6th edition book in searching and sorting.
+ */
 public class ValleyAndPeak {
     public static void main(String[] args) {
         int[] array = new int[] {5, 8, 6, 2, 3, 4, 6};

@@ -490,6 +490,22 @@ public class BinarySearchTree {
             return parent;
         }
     }
+
+    public Node transformToDoublyLinkedList(TreeStructure tree, Node head) {
+        if(tree == null) {
+            return null;
+        }
+
+        transformToDoublyLinkedList(tree.left, head);
+        tree.left = null;
+        System.out.print(tree.data + "\t");
+        Node node = new Node();
+        node.val = String.valueOf(tree.data);
+        inOrderTraversal(tree.right);
+
+        return node;
+    }
+
 }
 
 class TreeStructure {
@@ -504,4 +520,9 @@ class TreeStructure {
     TreeStructure(int data) {
         this.data = data;
     }
+}
+
+class Node {
+    String val;
+    Node left, right;
 }
