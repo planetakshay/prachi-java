@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *         killing kth person standing in a circle distribute a piece of cake to
  *         every kth person standing in a circle of n people. and the cake
  *         should be distributed in such a way the last person should not
- *         receive the cake and we need to return who didn't receive the cake.
+ *         receive the cake, and we need to return who didn't receive the cake.
  * 
  *         The following problem is solved for last one person or last m person
  *         who don't receive cake.

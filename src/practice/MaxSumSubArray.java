@@ -4,49 +4,59 @@ package practice;
  * Visit - http://rerun.me/blog/2012/08/30/maximum-continuous-subarray-problem-
  * Kadane's-algorithm/ for more details
  *
+ * Best explanation is given on wikipedia page - https://en.wikipedia.org/wiki/Maximum_subarray_problem
  *
- * 
  * @author Prachi
- * 
  */
 public class MaxSumSubArray {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		int[] intArr = { -3, -1, -1, -1, -1, -1, -2, -5, -3, -2 };
+        int[] intArr = {-3, -1, -1, -1, -1, -1, -2, -5, -3, -2};
+        maxSubArray(intArr);
 
-		findMaxSubArray(intArr);
-	}
+        intArr = new int[]{-2, 1};
+        maxSubArray(intArr);
 
-	public static void findMaxSubArray(int[] inputArray) {
-		int maxStartIndex = 0;
-		int maxEndIndex = 0;
+        intArr = new int[]{-2, -1};
+        maxSubArray(intArr);
 
-		// In an array of +ve and -ve integers maximum sum
-		// could be anything so choose a smallest number possible to begin
-		// with. Hence Integer.MIN_VALUE.
+        intArr = new int[]{-1, 0, -2};
+        maxSubArray(intArr);
 
-		int maxSum = Integer.MIN_VALUE;
-		int cumulativeSum = 0;
-		int maxStartIndexUntilNow = 0;
+        intArr = new int[]{-3, -2, -2, -3};
+        maxSubArray(intArr);
 
-		for (int currentIndex = 0; currentIndex < inputArray.length; currentIndex++) {
+		intArr = new int[]{-2,1,-3,4,-1,2,1,-5,4};
+		maxSubArray(intArr);
+    }
 
-			int eachArrayItem = inputArray[currentIndex];
+    public static int maxSubArray(int[] nums) {
 
-			cumulativeSum += eachArrayItem;
+        int start = 0;
+        int end = 0;
+        int maxSum = Integer.MIN_VALUE;
+        int currSum = 0;
+        int maxStartIndex = 0;
 
-			if (cumulativeSum > maxSum) {
-				maxSum = cumulativeSum;
-				maxStartIndex = maxStartIndexUntilNow;
-				maxEndIndex = currentIndex;
-			} else if (cumulativeSum < 0) {
-				maxStartIndexUntilNow = currentIndex + 1;
-				cumulativeSum = 0;
-			}
-		}
-		System.out.println("Max sum         : " + maxSum);
-		System.out.println("Max start index : " + maxStartIndex);
-		System.out.println("Max end index   : " + maxEndIndex);
-	}
+        // In an array of +ve and -ve integers maximum sum
+        // could be anything so choose a smallest number possible to begin
+        // with. Hence Integer.MIN_VALUE.
+
+        for (int i = 0; i < nums.length; i++) {
+            currSum = Math.max(nums[i], currSum + nums[i]);
+            if (currSum > maxSum) {
+                maxSum = Math.max(maxSum, currSum);
+                start = maxStartIndex;
+                end = i;
+            } else if (currSum < 0) {
+                maxStartIndex = i + 1;
+                currSum = 0;
+            }
+        }
+        System.out.println("Max sum         : " + maxSum);
+        System.out.println("Max start index : " + start);
+        System.out.println("Max end index   : " + end);
+        return maxSum;
+    }
 }
