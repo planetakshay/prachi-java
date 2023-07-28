@@ -13,7 +13,10 @@ public class LeastPopularPerson {
         for (Message message : messages) {
             messagesReceived.put(message.getTo(), (messagesReceived.getOrDefault(message.getTo(),0)) + 1);
         }
-        return messagesReceived.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.naturalOrder())).findFirst().get().getKey();
+
+        return messagesReceived.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.naturalOrder()))
+                .findFirst().get().getKey();
     }
 
     public static void main(String[] args) {

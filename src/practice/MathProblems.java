@@ -556,9 +556,9 @@ public class MathProblems {
      */
     public int remaining(int n, int k) {
         int r = 0;
-        for (int i = 2; i <= n; i++)
+        for (int i = 2; i <= n; i++) {
             r = (r + k) % i;
-
+        }
         return r;
     }
 

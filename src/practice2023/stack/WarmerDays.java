@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.stack;
 
 import java.util.Arrays;
 import java.util.Stack;

@@ -295,24 +295,17 @@ public class StringOperations {
      * @return
      */
     public Integer compute(List<String> str) {
-
         Stack<Integer> stack = new Stack<Integer>();
-
         if (str == null || str.isEmpty()) {
-
             return null;
         }
-
         for (String temp : str) {
-
             try {
                 Integer number = Integer.parseInt(temp);
-
                 if (number != null) {
                     stack.push(number);
                 }
             } catch (NumberFormatException e) {
-
                 if (stack.size() >= 2) {
                     int second = stack.pop();
                     int first = stack.pop();
@@ -321,21 +314,15 @@ public class StringOperations {
                 }
             }
         }
-
         if (stack.size() == 1) {
-
             return stack.pop();
         }
-
         return null;
     }
 
     public Integer calculate(int first, int second, char ch) {
-
         Integer result = Integer.MIN_VALUE;
-
         switch (ch) {
-
             case '+':
                 result = first + second;
                 break;
@@ -351,7 +338,6 @@ public class StringOperations {
             default:
                 result = null;
         }
-
         return result;
     }
 
@@ -363,48 +349,28 @@ public class StringOperations {
      * @return
      */
     public String longestSubOfUniqueCharacters(String str) {
-
         if (str == null || str.isEmpty()) {
-
             return str;
         }
-
         Set<Character> characters = new HashSet<Character>();
-
         StringBuilder builder = new StringBuilder();
-
         String longestSoFar = "", potentialLongest = "";
-
         for (char c : str.toCharArray()) {
-
             if (!characters.contains(c)) {
-
                 builder.append(c);
-
                 characters.add(c);
-
                 if (builder.toString().length() > longestSoFar.length()) {
-
                     longestSoFar = builder.toString();
                 }
-
             } else {
-
                 potentialLongest = builder.toString();
-
                 if (potentialLongest.length() > longestSoFar.length()) {
-
                     longestSoFar = potentialLongest;
                 }
-
                 builder = new StringBuilder(potentialLongest.substring(potentialLongest.indexOf(c) + 1));
-
                 builder.append(c);
-
             }
-
         }
-
         return longestSoFar;
     }
 
