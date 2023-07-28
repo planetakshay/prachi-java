@@ -3,6 +3,10 @@ package practice2023.stack;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * Apple phone screen for Payment team.
+ * Interviewer: Tanya Al-Rehani
+ */
 public class WarmerDays {
 
     public static void main(String[] args) {
