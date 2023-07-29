@@ -2,11 +2,21 @@ package practice2023;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.RandomAccessFile;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Instacart
+ * Instacart phone screen
+ *
+ * The followup question was instead of reading file line by line what can be
+ * done to improve performance.
+ *
+ * The answer likes in how much one understands RDBMS indexes.
+ * Creating indexes around frequently accessed data from the file
+ * will help in looking up specific row and column of the file
+ *
+ * the problem below is a simulation of DB table query.
  */
 public class ReadCharFromFile {
 
