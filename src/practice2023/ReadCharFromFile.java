@@ -21,6 +21,7 @@ import java.util.List;
 public class ReadCharFromFile {
 
     public static void main(String[] args) {
+
         System.out.println("character at: " + getChar("src/input.txt"));
     }
 
