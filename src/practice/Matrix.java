@@ -38,6 +38,12 @@ public class Matrix {
 		System.out.println("Now printing Reset Values");
 		matrix.printMatrix(reset);
 
+		int[][] resetMatrix = new int[][] {{0,1,2,0},{3,4,5,2},{1,3,1,5}};
+		matrix.printMatrix(resetMatrix);
+		resetMatrix = matrix.resetValuesInPlace(resetMatrix);
+		System.out.println("Now printing Reset Values with InPlace...........");
+		matrix.printMatrix(resetMatrix);
+
 		int[][] a = new int[][] {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
 		List<Integer> spiralOrder = matrix.printSpiralOrderLeetCode(a);
 		System.out.println(Arrays.toString(spiralOrder.toArray()));
@@ -67,23 +73,76 @@ public class Matrix {
 		Set<Integer> rows = new HashSet<Integer>();
 		Set<Integer> cols = new HashSet<Integer>();
 		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
+			for (int j = 0; j < matrix[i].length; j++) {
 				if (matrix[i][j] == 0) {
 					rows.add(i);
 					cols.add(j);
 				}
 			}
-			for (int row : rows) {
-				for (int j = 0; j < matrix[0].length; j++) {
-					matrix[row][j] = 0;
-				}
+		}
+		for (int row : rows) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				matrix[row][j] = 0;
 			}
-			for (int col : cols) {
-				for (int j = 0; j < matrix.length; j++) {
-					matrix[j][col] = 0;
+		}
+		for (int col : cols) {
+			for (int j = 0; j < matrix.length; j++) {
+				matrix[j][col] = 0;
+			}
+		}
+		return matrix;
+	}
+
+	/**
+	 * https://leetcode.com/problems/set-matrix-zeroes/description/?envType=study-plan-v2&envId=top-interview-150
+	 *
+	 * @param matrix
+	 * @return
+	 */
+	public int[][] resetValuesInPlace(int[][] matrix) {
+		if (matrix == null) {
+			return matrix;
+		}
+
+		boolean isCol = false;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+
+		// Handle first cell only. And determine if first column or row needs to be
+		// set to zero
+		for(int i=0; i < rows; i++) {
+			if(matrix[i][0] == 0) {
+				isCol = true;
+			}
+			// Handler remaining of the metric.
+			for(int j=1;j<cols;j++) {
+				if(matrix[i][j] == 0) {
+					matrix[0][j] = 0;
+					matrix[i][0] = 0;
 				}
 			}
 		}
+
+		for(int i=1;i<rows;i++) {
+			for(int j=1;j<cols;j++) {
+				if(matrix[i][0] == 0 || matrix[0][j] == 0) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+
+		if(matrix[0][0] == 0) {
+			for(int i=0;i<rows;i++) {
+				matrix[0][i] = 0;
+			}
+		}
+
+		if(isCol) {
+			for(int i=0;i<rows;i++) {
+				matrix[i][0] = 0;
+			}
+		}
+
 		return matrix;
 	}
 
