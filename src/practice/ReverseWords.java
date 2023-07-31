@@ -28,32 +28,20 @@ public class ReverseWords {
 	 * @param inputString
 	 */
 	public static void getWordsInReverseOrder(char[] inputString) {
-
 		if (inputString != null) {
-
 			int wStartIndex = 0, wEndIndex = 0;
-
 			// Reverse the string just by exchanging the character position.
-
 			reverseString(inputString, wStartIndex, inputString.length - 1);
-
 			// Reverse each word in the reversed string.
-
 			while (wEndIndex < inputString.length) {
-
 				while (wEndIndex < inputString.length
 						&& inputString[wEndIndex] != 32) {
-
 					wEndIndex++;
 				}
 				wEndIndex--;
-
 				reverseString(inputString, wStartIndex, wEndIndex);
-
 				wEndIndex += 2;
-
 				wStartIndex = wEndIndex;
-
 			}
 		}
 	}
