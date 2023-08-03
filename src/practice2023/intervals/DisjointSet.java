@@ -10,7 +10,6 @@ import java.util.*;
  * https://walkccc.me/LeetCode/problems/2092/
  */
 public class DisjointSet {
-
     public static final Integer TOTAL_NODES = 50;
 
     private int[] parent;
@@ -33,12 +32,12 @@ public class DisjointSet {
             n = TOTAL_NODES;
         }
         parent = new int[n];
-        rank = new int[n];
+        rank = new int[n]; // All ranks will have initial value 0
 
         int parentLen = parent.length;
         for (int i = 1; i < parentLen; i++) {
             parent[i] = i;
-            rank[i] = 0;
+            // rank[i] = 0; this is taken care of at line 35.
         }
     }
 

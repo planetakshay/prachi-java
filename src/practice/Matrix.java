@@ -114,7 +114,7 @@ public class Matrix {
 			if(matrix[i][0] == 0) {
 				isCol = true;
 			}
-			// Handler remaining of the metric.
+			// Handle remaining of the metric.
 			for(int j=1;j<cols;j++) {
 				if(matrix[i][j] == 0) {
 					matrix[0][j] = 0;

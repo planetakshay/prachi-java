@@ -7,11 +7,11 @@ public class StringCompression {
 
     public static void main(String[] args) {
         char[] chars = new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'};
-        System.out.println("New length: " + compressExtraSpace(chars));
-        System.out.println("New length: " + compressNoExtraSpace(chars));
+        System.out.println("New length: " + compressAdditionalSpace(chars));
+        System.out.println("New length: " + compressInplace(chars));
     }
 
-    public static int compressNoExtraSpace(char[] chars) {
+    public static int compressInplace(char[] chars) {
         if (chars == null || chars.length == 0) {
             return 0;
         }
@@ -25,6 +25,9 @@ public class StringCompression {
             chars[index++] = chars[i];
             if (j - i > 1) {
                 String count = String.valueOf(j - i);
+                // Since this is an array each digit in count will take up
+                // one cell in the array.
+
                 for (char c : count.toCharArray()) {
                     chars[index++] = c;
                 }
@@ -34,7 +37,7 @@ public class StringCompression {
         return index;
     }
 
-    public static int compressExtraSpace(char[] chars) {
+    public static int compressAdditionalSpace(char[] chars) {
         if (chars == null || chars.length == 0) {
             return 0;
         }
