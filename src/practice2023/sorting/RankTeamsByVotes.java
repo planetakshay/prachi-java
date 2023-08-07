@@ -35,7 +35,6 @@ public class RankTeamsByVotes {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             builder.append(candidates[i].getName());
-
         }
         return builder.toString();
     }

@@ -23,15 +23,16 @@ public class WordPattern {
 
         Map<Character, String> patternMap = new HashMap<>();
         for(int i=0;i<pattern.length();i++) {
-            if(!patternMap.containsValue(words[i])) {
+            Character curr = pattern.charAt(i);
+            if(patternMap.containsKey(curr)) {
+                if (!words[i].equalsIgnoreCase(patternMap.get(pattern.charAt(i)))) {
+                    return false;
+                }
+            } else {
+                if(patternMap.containsValue(words[i])) {
+                    return false;
+                }
                 patternMap.put(pattern.charAt(i), words[i]);
-            }
-        }
-        // compare the order.
-
-        for(int i=0;i<pattern.length();i++) {
-            if(!words[i].equalsIgnoreCase(patternMap.get(pattern.charAt(i)))) {
-                return false;
             }
         }
         return true;

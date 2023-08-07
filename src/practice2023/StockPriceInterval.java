@@ -70,21 +70,30 @@ public class StockPriceInterval {
      * WIP: Not returning expected results.
      * @param prices
      * @return
+     *
+     * 50, 52, 58, 54, 57, 51, 55, 60, 62, 65, 68, 72, 62, 61, 59, 63, 72
+     *
      */
     public static int findLongest(int[] prices) {
-        int start = 0, end = start + 1;
-        int currInterval = 0, maxInterval = 0;
-
-        for(int i = 1; i < prices.length;i++) {
-            if(prices[start] > prices[end]) {
-                currInterval = end - start;
-            } else {
-                start = end;
-            }
-            end++;
+        if(prices == null || prices.length == 0) {
+            return 0;
         }
-        maxInterval = Math.max(maxInterval, currInterval);
-        System.out.println("-------------------------------------------------");
+        Stack<Integer> stack = new Stack<>();
+        int interval = 0;
+        int maxInterval = 0;
+        int curMax = prices[0];
+        for(int i = 0; i < prices.length;i++) {
+            while (!stack.empty() && prices[stack.peek()] > prices[i]) {
+                interval = i - stack.peek();
+                maxInterval = Math.max(interval, maxInterval);
+                stack.pop();
+            }
+            if(curMax <= prices[i]) {
+                stack.push(i);
+                curMax = prices[i];
+            }
+        }
+
         return maxInterval;
     }
 }

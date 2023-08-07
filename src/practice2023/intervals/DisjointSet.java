@@ -73,12 +73,12 @@ public class DisjointSet {
     }
 
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
-        TreeMap<Integer, List<StorySharing>> learntStory = new TreeMap<>();
-
         // Initialize parent and rank and find parent and rank for the first person.
         init(n);
         union(0, firstPerson);
 
+        // Timestamp as a key and meeting between two people is a value.
+        TreeMap<Integer, List<StorySharing>> learntStory = new TreeMap<>();
         for (int[] meeting : meetings) {
             learntStory.putIfAbsent(meeting[2], new ArrayList<>());
             learntStory.get(meeting[2]).add(new StorySharing(meeting[0], meeting[1]));

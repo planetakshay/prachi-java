@@ -1,9 +1,9 @@
-package practice2023;
+package practice2023.strings;
 
 /**
  * https://leetcode.com/problems/string-compression/
  */
-public class StringCompression {
+public class StringCompressionInPlace {
 
     public static void main(String[] args) {
         char[] chars = new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'};
