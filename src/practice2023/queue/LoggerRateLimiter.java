@@ -9,6 +9,7 @@ import java.util.LinkedList;
 public class LoggerRateLimiter {
     private final LinkedList<Pair<String, Integer>> msgQueue;
     private final HashSet<String> msgSet;
+
     /**
      * Initialize your data structure here.
      */
@@ -19,14 +20,19 @@ public class LoggerRateLimiter {
 
     public static void main(String[] args) {
         LoggerRateLimiter logger = new LoggerRateLimiter();
-        // [[],[1,"foo"],[2,"bar"],[3,"foo"],[8,"bar"],[10,"foo"],[11,"foo"]]
-        boolean shouldPrintMsg = logger.shouldPrintMessage(1,"foo");
-        shouldPrintMsg = logger.shouldPrintMessage(2,"bar");
-        shouldPrintMsg = logger.shouldPrintMessage(3,"foo");
-        shouldPrintMsg = logger.shouldPrintMessage(8,"bar");
-        shouldPrintMsg = logger.shouldPrintMessage(10,"foo");
-        shouldPrintMsg = logger.shouldPrintMessage(11,"foo");
+        boolean shouldPrintMsg = logger.shouldPrintMessage(1, "foo");
+        shouldPrintMsg = logger.shouldPrintMessage(2, "bar");
+        System.out.println("shouldPrintMsg: " + shouldPrintMsg);
+        shouldPrintMsg = logger.shouldPrintMessage(3, "foo");
+        System.out.println("shouldPrintMsg: " + shouldPrintMsg);
+        shouldPrintMsg = logger.shouldPrintMessage(8, "bar");
+        System.out.println("shouldPrintMsg: " + shouldPrintMsg);
+        shouldPrintMsg = logger.shouldPrintMessage(10, "foo");
+        System.out.println("shouldPrintMsg: " + shouldPrintMsg);
+        shouldPrintMsg = logger.shouldPrintMessage(11, "foo");
+        System.out.println("shouldPrintMsg: " + shouldPrintMsg);
     }
+
     /**
      * Returns true if the message should be printed in the given timestamp, otherwise returns false.
      */
@@ -37,7 +43,9 @@ public class LoggerRateLimiter {
             if (timestamp - head.second >= 10) {
                 msgQueue.removeFirst();
                 msgSet.remove(head.first);
-            } else break;
+            } else {
+                break;
+            }
         }
 
         if (!msgSet.contains(message)) {
@@ -45,9 +53,10 @@ public class LoggerRateLimiter {
             msgQueue.addLast(newEntry);
             msgSet.add(message);
             return true;
-        } else return false;
-
+        }
+        return false;
     }
+
     class Pair<U, V> {
         public U first;
         public V second;

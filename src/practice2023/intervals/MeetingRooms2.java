@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/**
+ * https://leetcode.com/problems/meeting-rooms-ii/
+ *
+ * Find out minimum no of meeting rooms required for the given intervals.
+ *
+ */
 public class MeetingRooms2 {
 
     public int minMeetingRooms(int[][] intervals) {

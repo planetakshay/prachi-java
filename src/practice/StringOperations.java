@@ -75,7 +75,11 @@ public class StringOperations {
         String paran = "()())()";
         // paran = ")(())((((()(";
         // paran = ")(())((((()()))()()(()))";
+        paran = "((()((s((((()";
+        long start = System.currentTimeMillis();
         stringOps.removeInvalidParentheses(paran, new HashSet<>(), minRemovals(paran));
+        long end = System.currentTimeMillis();
+        System.out.println("Time taken: " + (end - start));
         //removeInvalidParanthesisBFS(paran);
     }
 
