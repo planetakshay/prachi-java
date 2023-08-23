@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class BinarySearchTree {
+    private int gstSum = 0;
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
         TreeStructure node = null;
@@ -94,6 +95,48 @@ public class BinarySearchTree {
         binaryTree = bst.initTree(bst);
         TreeStructure curr = binaryTree.left.right.right;
         System.out.println("Inorder Successor of " + curr.data + " : " + bst.inOrderSuccessor(curr).data);
+        // Find closes value in the binary search tree.
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 4);
+        binaryTree = bst.insert(binaryTree, 2);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 3);
+
+        double target = 3.7;
+        System.out.println("closest to " + target + " in bst: " + bst.closestValue(binaryTree, target));
+
+        // bst to GST.
+        // https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/description/
+
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 4);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 6);
+        binaryTree = bst.insert(binaryTree, 0);
+        binaryTree = bst.insert(binaryTree, 2);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 7);
+        binaryTree = bst.insert(binaryTree, 3);
+        binaryTree = bst.insert(binaryTree, 8);
+        binaryTree = bst.bstToGst(binaryTree);
+        System.out.println("bstToGst with helper. ");
+        bst.printTreeLayers(binaryTree);
+
+        binaryTree = null;
+        bst.gstSum = 0;
+        binaryTree = bst.insert(binaryTree, 4);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 6);
+        binaryTree = bst.insert(binaryTree, 0);
+        binaryTree = bst.insert(binaryTree, 2);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 7);
+        binaryTree = bst.insert(binaryTree, 3);
+        binaryTree = bst.insert(binaryTree, 8);
+        binaryTree = bst.bstToGstNoHelper(binaryTree);
+        System.out.println("\nbstToGst without helper. ");
+        bst.printTreeLayers(binaryTree);
     }
 
     public static void nonRecursiveInOrderTraversal(TreeStructure root) {
@@ -506,6 +549,56 @@ public class BinarySearchTree {
         return node;
     }
 
+    public int closestValue(TreeStructure root, double target) {
+        LinkedList<TreeStructure> stack = new LinkedList<>();
+        long pred = Integer.MIN_VALUE;
+        while(!stack.isEmpty() || root != null) {
+            while(root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+            root = stack.removeLast();
+            if(pred <= target && target < root.data) {
+                return Math.abs(pred - target) <= Math.abs(root.data - target) ? (int) pred : root.data;
+            }
+            pred = root.data;
+            root = root.right;
+        }
+        return (int) pred;
+    }
+
+    public TreeStructure bstToGst(TreeStructure root) {
+        if(root == null) {
+            return root;
+        }
+        gstHelper(root);
+        return root;
+    }
+
+    public void gstHelper(TreeStructure node) {
+        if(node == null) {
+            return;
+        }
+        bstToGst(node.right);
+        gstSum += node.data;
+        node.data = gstSum;
+        bstToGst(node.left);
+    }
+
+    public TreeStructure bstToGstNoHelper(TreeStructure root) {
+        if(root == null) {
+            return null;
+        }
+        if(root.right != null) {
+            bstToGstNoHelper(root.right);
+        }
+        root.data += gstSum;
+        gstSum = root.data; // preserve last sum for next recursive call.
+        if(root.left != null) {
+            bstToGstNoHelper(root.left);
+        }
+        return root;
+    }
 }
 
 class TreeStructure {
