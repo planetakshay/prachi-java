@@ -28,11 +28,3 @@ public class MeetingRoom {
         return true;
     }
 }
-
-class Meeting {
-    int start;
-    int end;
-    int max;
-    Meeting prev;
-    Meeting next;
-}
