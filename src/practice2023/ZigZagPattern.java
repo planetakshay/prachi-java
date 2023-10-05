@@ -8,6 +8,9 @@ public class ZigZagPattern {
 
     public static void main(String[] args) {
         System.out.println("String in ZigZag pattern: " + printZigZag("PAYPALISHIRING", 3));
+
+        int equ = 5 - 7 * 3 % 5/2 * 14 + 9 % 4;
+        System.out.println("equ: " + equ);
     }
 
     public static String printZigZag(String input, int numOfRows) {

@@ -27,7 +27,7 @@ public class MatrixRotation {
 
 		for (int i = 0; i < row / 2; i++) {
 			for (int j = 0; j < (column + 1) / 2; j++) {
-				System.out.println("--------------------------------------");
+				/* System.out.println("--------------------------------------");
 				temp = matrix[i][j];
 				matrix[i][j] = matrix[length - j][i];
 				print(matrix);
@@ -40,9 +40,38 @@ public class MatrixRotation {
 				System.out.println("--------------------------------------");
 				matrix[j][length - i] = temp;
 				print(matrix);
-				System.out.println("--------------------------------------");
+				System.out.println("--------------------------------------"); */
+
+				temp = matrix[i][j];
+				matrix[i][j] = matrix[length - j][i];
+				matrix[length - j][i] = matrix[length - i][length - j];
+				matrix[length - i][length - j] = matrix[j][length - i];
+				matrix[j][length - i] = temp;
 			}
 		}
 		return matrix;
+	}
+
+	// Instead call transpose and reflect methods for simpler solution.
+	public void transpose(int[][] matrix) {
+		int n = matrix.length;
+		for (int i = 0; i < n; i++) {
+			for (int j = i + 1; j < n; j++) {
+				int tmp = matrix[j][i];
+				matrix[j][i] = matrix[i][j];
+				matrix[i][j] = tmp;
+			}
+		}
+	}
+
+	public void reflect(int[][] matrix) {
+		int n = matrix.length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n / 2; j++) {
+				int tmp = matrix[i][j];
+				matrix[i][j] = matrix[i][n - j - 1];
+				matrix[i][n - j - 1] = tmp;
+			}
+		}
 	}
 }

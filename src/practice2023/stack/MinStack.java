@@ -23,7 +23,7 @@ public class MinStack {
 		stack.push(value);
 	}
 
-	public Integer pop() {
+	/* public Integer pop() {
 		Integer value = null;
 		if (stack.size() > 0) {
 			value = stack.pop();
@@ -34,8 +34,20 @@ public class MinStack {
 				minStack.pop();
 			}
 		}
-		// System.out.println("In pop() method: Current Min: " + minStack.peek());
 		return value;
+	} */
+
+	public void pop() {
+		Integer value = null;
+		if (stack.size() > 0) {
+			value = stack.pop();
+		}
+		if (minStack.size() > 0) {
+			Integer currentMin = minStack.peek();
+			if (currentMin == value) {
+				minStack.pop();
+			}
+		}
 	}
 
 	public Integer getMin() {
@@ -89,11 +101,11 @@ public class MinStack {
 		minStack.push(-1024);
 		minStack.push(512);
 
-		System.out.print(minStack.pop());
+		minStack.pop();
 		System.out.print("\t" + minStack.getMin());
-		System.out.print("\t" + minStack.pop());
+		minStack.pop();
 		System.out.print("\t" + minStack.getMin());
-		System.out.print("\t" + minStack.pop());
-		System.out.print("\t" + minStack.getMin());
+		minStack.pop();
+		System.out.print("\t" + minStack.getMin() + "\n");
 	}
 }

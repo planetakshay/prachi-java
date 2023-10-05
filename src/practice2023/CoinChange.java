@@ -11,6 +11,11 @@ public class CoinChange {
 
         System.out.println("No of ways for 50: " + makeChangeDP(50));
         System.out.println("No of ways for 50: " + makeChangeRecursive(50));
+
+        System.out.println("No of ways for 5: " + change(new int[]{1, 2, 5}, 5));
+        System.out.println("No of ways for 5: " + change(new int[]{2}, 3));
+        System.out.println("No of ways for 5: " + change(new int[]{10}, 10));
+        // System.out.println("No of ways for 5: " + change(new int[]{1, 2, 5}, 5));
     }
 
     public static int makeChangeDP(int amount) {
@@ -53,5 +58,9 @@ public class CoinChange {
             ways += makeChangeRecursive(remaining, denom, index + 1);
         }
         return ways;
+    }
+
+    public static int change(int[] coins, int amount) {
+        return makeChangeRecursive(amount, coins, 0);
     }
 }

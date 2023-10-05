@@ -1,17 +1,13 @@
 package practice2023.tree;
 
-import com.sun.source.tree.Tree;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class BinarySearchTree {
     private int gstSum = 0;
+
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
-        TreeStructure node = null;
+        TreeNode node = null;
         node = bst.insert(node, 10);
         node = bst.insert(node, 9);
         node = bst.insert(node, 7);
@@ -28,13 +24,13 @@ public class BinarySearchTree {
 
         bst.printTreeLayers(node);
         System.out.println("\nDepth: " + bst.maxDepth(node));
-        System.out.println("Lowest Common Ancestor: " + bst.findLowestCommonAncestor(node, 40, 15).data);
+        System.out.println("Lowest Common Ancestor: " + bst.findLowestCommonAncestor(node, 40, 15).val);
         System.out.println(bst.treeDiameter(node));
         System.out.println(bst.size(node));
 
         // bst.inOrderTraversal(node);
-        bst.nonRecursiveInOrderTraversal(node);
-        TreeStructure binaryTree = null;
+        nonRecursiveInOrderTraversal(node);
+        TreeNode binaryTree = null;
         binaryTree = bst.insert(binaryTree, 10);
         binaryTree = bst.insert(binaryTree, 9);
         binaryTree = bst.insert(binaryTree, 7);
@@ -83,18 +79,18 @@ public class BinarySearchTree {
         binaryTree = bst.insert(binaryTree, 12);
         binaryTree = bst.insert(binaryTree, 50);
 
-        List<List<TreeStructure>> levels = bst.createLevelLinkedList(binaryTree);
+        List<List<TreeNode>> levels = bst.createLevelLinkedList(binaryTree);
         levels.forEach(level -> {
             level.forEach(vertex -> {
-                System.out.print(vertex.data + "\t");
+                System.out.print(vertex.val + "\t");
             });
             System.out.println();
         });
 
         System.out.println("In order successor of the node...");
         binaryTree = bst.initTree(bst);
-        TreeStructure curr = binaryTree.left.right.right;
-        System.out.println("Inorder Successor of " + curr.data + " : " + bst.inOrderSuccessor(curr).data);
+        TreeNode curr = binaryTree.left.right.right;
+        System.out.println("Inorder Successor of " + curr.val + " : " + bst.inOrderSuccessor(curr).val);
         // Find closes value in the binary search tree.
         binaryTree = null;
         binaryTree = bst.insert(binaryTree, 4);
@@ -137,13 +133,76 @@ public class BinarySearchTree {
         binaryTree = bst.bstToGstNoHelper(binaryTree);
         System.out.println("\nbstToGst without helper. ");
         bst.printTreeLayers(binaryTree);
+
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 3);
+        binaryTree = bst.insert(binaryTree, 4);
+
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 2);
+
+        TreeNode subTree = new TreeNode();
+        subTree = bst.insert(subTree, 4);
+        subTree = bst.insert(subTree, 1);
+        subTree = bst.insert(subTree, 2);
+
+        System.out.println("\nisSubTree. " + bst.isSubtree(binaryTree, subTree));
+
+        System.out.println("Set Next....");
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 10);
+        binaryTree = bst.insert(binaryTree, 9);
+        binaryTree = bst.insert(binaryTree, 7);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 30);
+        binaryTree = bst.insert(binaryTree, 25);
+        binaryTree = bst.insert(binaryTree, 20);
+        binaryTree = bst.insert(binaryTree, 15);
+        binaryTree = bst.insert(binaryTree, 4);
+        binaryTree = bst.insert(binaryTree, 8);
+        binaryTree = bst.insert(binaryTree, 40);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 6);
+        binaryTree = bst.insert(binaryTree, 14);
+        binaryTree = bst.insert(binaryTree, 18);
+        binaryTree = bst.insert(binaryTree, 28);
+        binaryTree = bst.insert(binaryTree, 22);
+        binaryTree = bst.insert(binaryTree, 12);
+        binaryTree = bst.insert(binaryTree, 50);
+        bst.printLayersWithNext(bst.setNext(binaryTree));
     }
 
-    public static void nonRecursiveInOrderTraversal(TreeStructure root) {
+    public static void morrisInorderTraversal(TreeNode root) {
         if (root != null) {
-            System.out.println("In order traversal iterative solution.");
-            Stack<TreeStructure> stack = new Stack<>();
-            TreeStructure curr = root;
+            TreeNode curr = root;
+            TreeNode prev;
+            while (curr != null) {
+                if (curr.left == null) {
+                    System.out.print(curr.val + "\t");
+                } else {
+                    prev = curr.left;
+                    while (prev.right != null && prev.right != curr) {
+                        prev = prev.right;
+                    }
+                    if (prev.right == null) {
+                        prev.right = curr;
+                        curr = curr.left;
+                    } else {
+                        prev.right = null;
+                        System.out.print(curr.val + "\t");
+                        curr = curr.right;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void nonRecursiveInOrderTraversal(TreeNode root) {
+        if (root != null) {
+            System.out.println("In order traversal using stack solution.");
+            Stack<TreeNode> stack = new Stack<>();
+            TreeNode curr = root;
             while (curr != null || !stack.isEmpty()) {
                 while (curr != null) {
                     stack.push(curr);
@@ -154,14 +213,14 @@ public class BinarySearchTree {
                 // So preserve reference of the last node pushed
                 // to stack before printing the value of the popped node.
                 curr = stack.pop();
-                System.out.print(curr.data + "\t");
+                System.out.print(curr.val + "\t");
                 curr = curr.right;
             }
         }
     }
 
-    public TreeStructure initTree(BinarySearchTree bst) {
-        TreeStructure binaryTree = null;
+    public TreeNode initTree(BinarySearchTree bst) {
+        TreeNode binaryTree = null;
         binaryTree = insert(binaryTree, 20);
         binaryTree = insert(binaryTree, 8);
         binaryTree = insert(binaryTree, 22);
@@ -172,43 +231,43 @@ public class BinarySearchTree {
         return binaryTree;
     }
 
-    public void inOrderTraversal(TreeStructure root) {
+    public void inOrderTraversal(TreeNode root) {
         if (root == null) {
             return;
         }
         inOrderTraversal(root.left);
-        System.out.print(root.data + "\t");
+        System.out.print(root.val + "\t");
         inOrderTraversal(root.right);
     }
 
-    public void preOrderTraversal(TreeStructure root) {
+    public void preOrderTraversal(TreeNode root) {
         if (root == null) {
             return;
         }
-        System.out.print(root.data + "\t");
+        System.out.print(root.val + "\t");
         inOrderTraversal(root.left);
         inOrderTraversal(root.right);
     }
 
-    public void postOrderTraversal(TreeStructure root) {
+    public void postOrderTraversal(TreeNode root) {
         if (root == null) {
             return;
         }
         inOrderTraversal(root.left);
         inOrderTraversal(root.right);
-        System.out.print(root.data + "\t");
+        System.out.print(root.val + "\t");
     }
 
 
-    public TreeStructure insert(TreeStructure node, int value) {
+    public TreeNode insert(TreeNode node, int value) {
         if (node == null) {
-            node = new TreeStructure();
-            node.data = value;
+            node = new TreeNode();
+            node.val = value;
         } else {
-            if (node.data > value) {
+            if (node.val > value) {
                 node.left = insert(node.left, value);
                 node.left.parent = node;
-            } else if (node.data <= value) {
+            } else if (node.val <= value) {
                 node.right = insert(node.right, value);
                 node.right.parent = node;
             }
@@ -216,13 +275,13 @@ public class BinarySearchTree {
         return node;
     }
 
-    public TreeStructure deleteNode(TreeStructure root, int value) {
+    public TreeNode deleteNode(TreeNode root, int value) {
         if (root == null) {
             return root;
         }
-        if (root.data > value) {
+        if (root.val > value) {
             return deleteNode(root.left, value);
-        } else if (root.data < value) {
+        } else if (root.val < value) {
             return deleteNode(root.right, value);
         }
         if (root.left == null) {
@@ -230,9 +289,9 @@ public class BinarySearchTree {
         } else if (root.right == null) {
             return root.left;
         } else {
-            TreeStructure succParent = root;
+            TreeNode succParent = root;
             // Find successor
-            TreeStructure succ = root.right;
+            TreeNode succ = root.right;
             while (succ.left != null) {
                 succParent = succ;
                 succ = succ.left;
@@ -249,7 +308,7 @@ public class BinarySearchTree {
                 succParent.right = succ.right;
             }
             // Copy Successor Data to root
-            root.data = succ.data;
+            root.val = succ.val;
             // Delete Successor and return root
             return root;
         }
@@ -264,12 +323,12 @@ public class BinarySearchTree {
      *
      * @param root
      */
-    public void printTreeLayers(TreeStructure root) {
-        Queue<TreeStructure> queue = new LinkedList<TreeStructure>();
+    public void printTreeLayers(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(root);
         // used as a line break while printing.
         queue.add(null);
-        TreeStructure node;
+        TreeNode node;
         while (!queue.isEmpty()) {
             node = queue.poll();
             // Following condition takes care of the line break at each level
@@ -280,7 +339,7 @@ public class BinarySearchTree {
                     System.out.println();
                 }
             } else {
-                System.out.print(node.data + "\t");
+                System.out.print(node.val + "\t");
                 if (node.left != null) {
                     queue.add(node.left);
                 }
@@ -291,14 +350,43 @@ public class BinarySearchTree {
         }
     }
 
-    public int maxDepth(TreeStructure node) {
+    public void printLayersWithNext(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        // used as a line break while printing.
+        queue.add(null);
+        TreeNode node;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            // Following condition takes care of the line break at each level
+            // By adding line break into the queue.
+            if (node == null) {
+                if (!queue.isEmpty()) {
+                    queue.add(null);
+                    System.out.println();
+                }
+            } else {
+                System.out.print(node.val);
+                String next = node.next != null ? String.valueOf(node.next.val) : "null";
+                System.out.print("\t node.next: " + next + "\t");
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+        }
+    }
+
+    public int maxDepth(TreeNode node) {
         if (node == null) {
             return 0;
         }
         return 1 + Math.max(maxDepth(node.left), maxDepth(node.right));
     }
 
-    public int minDepth(TreeStructure node) {
+    public int minDepth(TreeNode node) {
         if (node == null) {
             return 0;
         }
@@ -306,7 +394,7 @@ public class BinarySearchTree {
     }
 
     // The runtime of this implementation is O(NlogN) which is not very efficient.
-    boolean isBalanced(TreeStructure node) {
+    boolean isBalanced(TreeNode node) {
         return maxDepth(node) - minDepth(node) <= 1;
     }
 
@@ -318,11 +406,11 @@ public class BinarySearchTree {
      or the tree is imbalanced.
     */
 
-    public boolean isBalancedEfficient(TreeStructure root) {
+    public boolean isBalancedEfficient(TreeNode root) {
         return checkHeight(root) != Integer.MIN_VALUE;
     }
 
-    public int checkHeight(TreeStructure node) {
+    public int checkHeight(TreeNode node) {
         if (node == null) {
             return -1;
         }
@@ -344,7 +432,7 @@ public class BinarySearchTree {
         }
     }
 
-    public int height(TreeStructure root) {
+    public int height(TreeNode root) {
         if (root == null) {
             return -1;
         }
@@ -352,21 +440,21 @@ public class BinarySearchTree {
         return height;
     }
 
-    public int heightLeft(TreeStructure node) {
+    public int heightLeft(TreeNode node) {
         if (node == null) {
             return -1;
         }
         return 1 + heightLeft(node.left);
     }
 
-    public int heightRight(TreeStructure node) {
+    public int heightRight(TreeNode node) {
         if (node == null) {
             return -1;
         }
         return 1 + heightRight(node.right);
     }
 
-    public int treeDiameter(TreeStructure node) {
+    public int treeDiameter(TreeNode node) {
         if (node == null) {
             return 0;
         }
@@ -377,11 +465,11 @@ public class BinarySearchTree {
         return Math.max(lHeight + rHeight + 1, Math.max(ldiameter, rdiameter));
     }
 
-    public TreeStructure findLowestCommonAncestor(TreeStructure root, int value1, int value2) {
+    public TreeNode findLowestCommonAncestor(TreeNode root, int value1, int value2) {
         while (root != null) {
-            if (root.data > value1 && root.data > value2) {
+            if (root.val > value1 && root.val > value2) {
                 root = root.left;
-            } else if (root.data < value1 && root.data < value2) {
+            } else if (root.val < value1 && root.val < value2) {
                 root = root.right;
             } else {
                 return root;
@@ -390,7 +478,7 @@ public class BinarySearchTree {
         return null;
     }
 
-    public int size(TreeStructure root) {
+    public int size(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -405,26 +493,26 @@ public class BinarySearchTree {
      * @param b
      * @return
      */
-    boolean areMirrorTrees(TreeStructure a, TreeStructure b) {
+    boolean areMirrorTrees(TreeNode a, TreeNode b) {
         if (a == null && b == null) {
             return true;
         }
         if (a == null || b == null) {
             return false;
         }
-        return a.data == b.data && areMirrorTrees(a.left, b.right) && areMirrorTrees(a.right, b.left);
+        return a.val == b.val && areMirrorTrees(a.left, b.right) && areMirrorTrees(a.right, b.left);
     }
 
-    public boolean isValid(TreeStructure root) {
+    public boolean isValid(TreeNode root) {
         return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    private boolean isValidBST(TreeStructure node, int min, int max) {
+    private boolean isValidBST(TreeNode node, int min, int max) {
         if (node == null) return true;
-        return node.data > min && node.data < max && isValidBST(node.left, min, node.data) && isValidBST(node.right, node.data, max);
+        return node.val > min && node.val < max && isValidBST(node.left, min, node.val) && isValidBST(node.right, node.val, max);
     }
 
-    private int removeSubtree(int val, TreeStructure root) {
+    private int removeSubtree(int val, TreeNode root) {
         System.out.println("\n\n");
         printTreeLayers(root);
         int height = height(root);
@@ -432,12 +520,12 @@ public class BinarySearchTree {
         if (root == null) {
             return 0;
         }
-        TreeStructure current = root;
-        TreeStructure parent = root;
+        TreeNode current = root;
+        TreeNode parent = root;
         boolean leftChild = false;
-        while (current.data != val) {
+        while (current.val != val) {
             parent = current;
-            if (val < current.data) {
+            if (val < current.val) {
                 current = current.left;
                 leftChild = true;
             } else {
@@ -460,7 +548,7 @@ public class BinarySearchTree {
         return height;
     }
 
-    public TreeStructure minimalTree(int[] array) {
+    public TreeNode minimalTree(int[] array) {
         System.out.println("Convert array into minimal tree...");
         if (array == null || array.length == 0) {
             return null;
@@ -474,22 +562,22 @@ public class BinarySearchTree {
      * @param end   end index in the subarray
      * @return
      */
-    public TreeStructure createMinimalBST(int[] array, int start, int end) {
+    public TreeNode createMinimalBST(int[] array, int start, int end) {
         if (end < start) {
             return null;
         }
         int mid = (start + end) / 2;
-        TreeStructure node = new TreeStructure(array[mid]);
+        TreeNode node = new TreeNode(array[mid]);
         node.left = createMinimalBST(array, start, mid - 1);
         node.right = createMinimalBST(array, mid + 1, end);
         return node;
     }
 
-    public void createLevelLinkedList(TreeStructure node, List<List<TreeStructure>> lists, int level) {
+    public void createLevelLinkedList(TreeNode node, List<List<TreeNode>> lists, int level) {
         if (node == null) {
             return;
         }
-        List<TreeStructure> list = null;
+        List<TreeNode> list = null;
         if (lists.size() == level) {
             list = new LinkedList<>();
             lists.add(list);
@@ -501,13 +589,13 @@ public class BinarySearchTree {
         createLevelLinkedList(node.right, lists, level + 1);
     }
 
-    public List<List<TreeStructure>> createLevelLinkedList(TreeStructure root) {
-        List<List<TreeStructure>> lists = new LinkedList<>();
+    public List<List<TreeNode>> createLevelLinkedList(TreeNode root) {
+        List<List<TreeNode>> lists = new LinkedList<>();
         createLevelLinkedList(root, lists, 0);
         return lists;
     }
 
-    public TreeStructure leftMostchild(TreeStructure node) {
+    public TreeNode leftMostchild(TreeNode node) {
         if (node == null) {
             return null;
         }
@@ -517,15 +605,15 @@ public class BinarySearchTree {
         return node;
     }
 
-    public TreeStructure inOrderSuccessor(TreeStructure node) {
+    public TreeNode inOrderSuccessor(TreeNode node) {
         if (node == null) {
             return null;
         }
         if (node.right != null) {
             return leftMostchild(node);
         } else {
-            TreeStructure curr = node;
-            TreeStructure parent = node.parent;
+            TreeNode curr = node;
+            TreeNode parent = node.parent;
             while (parent != null && parent.left != curr) {
                 curr = parent;
                 parent = parent.parent;
@@ -534,84 +622,213 @@ public class BinarySearchTree {
         }
     }
 
-    public Node transformToDoublyLinkedList(TreeStructure tree, Node head) {
-        if(tree == null) {
+    public Node transformToDoublyLinkedList(TreeNode tree, Node head) {
+        if (tree == null) {
             return null;
         }
 
         transformToDoublyLinkedList(tree.left, head);
         tree.left = null;
-        System.out.print(tree.data + "\t");
+        System.out.print(tree.val + "\t");
         Node node = new Node();
-        node.val = String.valueOf(tree.data);
+        node.val = String.valueOf(tree.val);
         inOrderTraversal(tree.right);
 
         return node;
     }
 
-    public int closestValue(TreeStructure root, double target) {
-        LinkedList<TreeStructure> stack = new LinkedList<>();
+    public int closestValue(TreeNode root, double target) {
+        LinkedList<TreeNode> stack = new LinkedList<>();
         long pred = Integer.MIN_VALUE;
-        while(!stack.isEmpty() || root != null) {
-            while(root != null) {
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
                 stack.add(root);
                 root = root.left;
             }
             root = stack.removeLast();
-            if(pred <= target && target < root.data) {
-                return Math.abs(pred - target) <= Math.abs(root.data - target) ? (int) pred : root.data;
+            if (pred <= target && target < root.val) {
+                return Math.abs(pred - target) <= Math.abs(root.val - target) ? (int) pred : root.val;
             }
-            pred = root.data;
+            pred = root.val;
             root = root.right;
         }
         return (int) pred;
     }
 
-    public TreeStructure bstToGst(TreeStructure root) {
-        if(root == null) {
+    public TreeNode bstToGst(TreeNode root) {
+        if (root == null) {
             return root;
         }
         gstHelper(root);
         return root;
     }
 
-    public void gstHelper(TreeStructure node) {
-        if(node == null) {
+    public void gstHelper(TreeNode node) {
+        if (node == null) {
             return;
         }
         bstToGst(node.right);
-        gstSum += node.data;
-        node.data = gstSum;
+        gstSum += node.val;
+        node.val = gstSum;
         bstToGst(node.left);
     }
 
-    public TreeStructure bstToGstNoHelper(TreeStructure root) {
-        if(root == null) {
+    public TreeNode bstToGstNoHelper(TreeNode root) {
+        if (root == null) {
             return null;
         }
-        if(root.right != null) {
+        if (root.right != null) {
             bstToGstNoHelper(root.right);
         }
-        root.data += gstSum;
-        gstSum = root.data; // preserve last sum for next recursive call.
-        if(root.left != null) {
+        root.val += gstSum;
+        gstSum = root.val; // preserve last sum for next recursive call.
+        if (root.left != null) {
             bstToGstNoHelper(root.left);
         }
         return root;
     }
-}
 
-class TreeStructure {
-    int data;
-    TreeStructure left;
-    TreeStructure right;
-    TreeStructure parent;
-
-    TreeStructure() {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null) {
+            return false;
+        }
+        if (isIdentical(root, subRoot)) {
+            return true;
+        }
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
 
-    TreeStructure(int data) {
-        this.data = data;
+    private boolean isIdentical(TreeNode node1, TreeNode node2) {
+        if (node1 == null || node2 == null) {
+            return node1 == null && node2 == null;
+        }
+        return node1.val == node2.val && isIdentical(node1.left, node2.left) && isIdentical(node1.right, node2.right);
+    }
+
+    /**
+     * @param root
+     * @return Snowflake phone screen.
+     */
+    private TreeNode setNext(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (i < size - 1) {
+                    current.next = queue.peek();
+                }
+                if (current.left != null) {
+                    queue.add(current.left);
+                }
+                if (current.right != null) {
+                    queue.add(current.right);
+                }
+            }
+        }
+        return root;
+    }
+
+    public TreeNode searchBST(TreeNode root, int data) {
+        return search(root, data);
+    }
+
+    public TreeNode search(TreeNode node, int val) {
+        if (node == null || node.val == val) {
+            return node;
+        }
+        return node.val <= val ? search(node.right, val) : search(node.left, val);
+    }
+
+    public TreeNode searchBSTIterative(TreeNode node, int val) {
+        while (node != null && node.val != val) {
+            if (node.val <= val) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
+        return node;
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        root.left = right;
+        root.right = left;
+        return root;
+    }
+
+    /**
+     * Use BFS and swap the nodes in the queue.
+     * And add the left and/or right subtrees back to the queue.
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTreeIterative(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            TreeNode curr = queue.poll();
+            TreeNode temp = curr.left;
+            curr.left = curr.right;
+            curr.right = temp;
+            if (curr.left != null) {
+                queue.add(curr.left);
+            }
+            if (curr.right != null) {
+                queue.add(curr.right);
+            }
+        }
+        return root;
+    }
+
+    /**
+     * This is a recursive DFS solution.
+     * @param root
+     * @return
+     */
+    public TreeNode reverseOddLevelTree(TreeNode root) {
+        dfs(root.left, root.right, true);
+        return root;
+    }
+    public void dfs(TreeNode left, TreeNode right, boolean isOdd) {
+        if(left == null) {
+            return;
+        }
+        if(isOdd) {
+            final int data = left.val;
+            left.val = right.val;
+            right.val = data;
+        }
+        dfs(left.left, right.right, !isOdd);
+        dfs(left.right, right.left, !isOdd);
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode parent;
+    TreeNode next;
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
     }
 }
 

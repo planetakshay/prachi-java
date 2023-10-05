@@ -1,6 +1,8 @@
 package practice;
 
+import java.util.ArrayList;
 import java.util.Stack;
+import java.util.List;
 
 public class MathProblems {
 
@@ -555,11 +557,24 @@ public class MathProblems {
      * solved as follows.
      */
     public int remaining(int n, int k) {
-        int r = 0;
-        for (int i = 2; i <= n; i++) {
-            r = (r + k) % i;
+        if (n == 1)
+            return 1;
+        else
+            return (remaining(n - 1, k) + k - 1) % n + 1;
+    }
+
+    public int josephus(int n, int k) {
+        List<Integer> items = new ArrayList<>();
+        return findRemaining(items, 0, k);
+    }
+
+    public int findRemaining(List<Integer> items, int start, int k) {
+        if (items.size() == 1) {
+            return items.get(0);
         }
-        return r;
+        int begin = (start + k) % items.size();
+        items.remove(begin);
+        return findRemaining(items, start, k);
     }
 
     /**

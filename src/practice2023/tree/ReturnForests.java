@@ -11,27 +11,27 @@ import java.util.Set;
  */
 public class ReturnForests {
     Set<Integer> toBeDeletedNodes = new HashSet<>();
-    List<TreeStructure> remainingNodes = new LinkedList<>();
+    List<TreeNode> remainingNodes = new LinkedList<>();
 
-    public List<TreeStructure> delNodes(TreeStructure root, int[] toDelete) {
+    public List<TreeNode> delNodes(TreeNode root, int[] toDelete) {
         for(int i : toDelete) {
             toBeDeletedNodes.add(i);
         }
         helper(root);
         // Add root at the last if it is not part of the deleted list.
-        if(!toBeDeletedNodes.contains(root.data)) {
+        if(!toBeDeletedNodes.contains(root.val)) {
             remainingNodes.add(root);
         }
         return remainingNodes;
     }
 
-    public TreeStructure helper(TreeStructure node) {
+    public TreeNode helper(TreeNode node) {
         if(node == null) {
             return null;
         }
         node.left = helper(node.left);
         node.right = helper(node.right);
-        if(toBeDeletedNodes.contains(node.data)) {
+        if(toBeDeletedNodes.contains(node.val)) {
             if(node.left != null) {
                 remainingNodes.add(node.left);
             }

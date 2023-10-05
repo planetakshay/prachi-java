@@ -1,5 +1,8 @@
 package practice2023;
 
+/**
+ * https://leetcode.com/problems/valid-number/description/
+ */
 public class ValidNumber {
 
     public static void main(String[] args) {
@@ -11,6 +14,8 @@ public class ValidNumber {
         System.out.println("28.prachi isValidNumber: " + isValidNumber("28.prachi"));
         System.out.println("prachi.deodhar isValidNumber: " + isValidNumber("prachi.deodhar"));
         System.out.println("something: " + isValidNumber("something"));
+
+        System.out.println("something: " + isValid("0"));
     }
 
     public static boolean isValidNumber(String input) {
@@ -19,7 +24,9 @@ public class ValidNumber {
         }
         int periodCount = 0;
         for (char curr : input.toCharArray()) {
-            if (periodCount > 1) return false;
+            if (periodCount > 1) {
+                return false;
+            }
             if (curr == '.') {
                 periodCount++;
             } else if (curr != '-' && !Character.isDigit(curr)) {
@@ -27,5 +34,38 @@ public class ValidNumber {
             }
         }
         return true;
+    }
+
+    public static boolean isValid(String s) {
+        if (s == null || s.isBlank()) {
+            return false;
+        }
+        boolean seenDigit = false;
+        boolean seenDot = false;
+        boolean seenExponent = false;
+        for (char curr : s.toCharArray()) {
+            if (Character.isDigit(curr)) {
+                seenDigit = true;
+            } else if (curr == '-' || curr == '+') {
+                int index = s.indexOf(curr);
+                if (index > 0 && (s.charAt(index - 1) != 'e' || s.charAt(index - 1) != 'E')) {
+                    return false;
+                }
+            } else if (curr == 'e' || curr == 'E') {
+                if (seenExponent || !seenDigit) {
+                    return false;
+                }
+                seenExponent = true;
+                seenDigit = false;
+            } else if (curr == '.') {
+                if (seenDot || seenExponent) {
+                    return false;
+                }
+                seenDot = true;
+            } else {
+                return false;
+            }
+        }
+        return seenDigit;
     }
 }
