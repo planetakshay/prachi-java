@@ -4,7 +4,6 @@ import java.util.*;
 
 public class BinarySearchTree {
     private int gstSum = 0;
-
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
         TreeNode node = null;
@@ -171,6 +170,30 @@ public class BinarySearchTree {
         binaryTree = bst.insert(binaryTree, 12);
         binaryTree = bst.insert(binaryTree, 50);
         bst.printLayersWithNext(bst.setNext(binaryTree));
+
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 10);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 7);
+        binaryTree = bst.insert(binaryTree, 15);
+        binaryTree = bst.insert(binaryTree, 12);
+        binaryTree = bst.insert(binaryTree, 18);
+
+        binaryTree = bst.closestValue(binaryTree, binaryTree, Integer.MAX_VALUE, 13);
+        System.out.println("\nclosest node to binaryTree: " + binaryTree.val);
+
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 10);
+        binaryTree = bst.insert(binaryTree, 5);
+        binaryTree = bst.insert(binaryTree, 1);
+        binaryTree = bst.insert(binaryTree, 7);
+        binaryTree = bst.insert(binaryTree, 15);
+        binaryTree = bst.insert(binaryTree, 12);
+        binaryTree = bst.insert(binaryTree, 18);
+
+        binaryTree = bst.closestValue(binaryTree, binaryTree, Integer.MAX_VALUE, 4);
+        System.out.println("\nclosest node to binaryTree: " + binaryTree.val);
     }
 
     public static void morrisInorderTraversal(TreeNode root) {
@@ -653,6 +676,37 @@ public class BinarySearchTree {
             root = root.right;
         }
         return (int) pred;
+    }
+
+    /**
+     * Coupang phone screen
+     *
+     * @param root
+     * @param closest
+     * @param diff
+     * @param target
+     * @return
+     */
+    public TreeNode closestValue(TreeNode root, TreeNode closest, int diff, int target) {
+        if(root == null) {
+            return closest;
+        }
+
+        if(root.val == target) {
+            return root;
+        }
+
+        int currDiff = Math.abs(root.val - target);
+        if(currDiff < diff) {
+            diff = currDiff;
+            closest = root;
+        }
+
+        if(root.val < target) {
+            return closestValue(root.right, closest, diff, target);
+        } else {
+            return closestValue(root.left, closest, diff, target);
+        }
     }
 
     public TreeNode bstToGst(TreeNode root) {

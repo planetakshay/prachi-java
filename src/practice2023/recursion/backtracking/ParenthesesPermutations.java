@@ -1,8 +1,8 @@
-package practice2023.backtracking;
+package practice2023.recursion.backtracking;
 
 import java.util.*;
 
-public class ParenthesisPermutations {
+public class ParenthesesPermutations {
 
     public static void main(String[] args) {
         Set<String> permutations = validParenPermutations(1);

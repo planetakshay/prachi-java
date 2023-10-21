@@ -81,6 +81,8 @@ public class StringOperations {
         long end = System.currentTimeMillis();
         System.out.println("Time taken: " + (end - start));
         //removeInvalidParanthesisBFS(paran);
+        String[] words = new String[] {"abba","baba","bbaa","cd","cd"};
+        stringOps.removeAllAnagrams(words);
     }
 
     // case insensitive comparison.
@@ -148,22 +150,93 @@ public class StringOperations {
         return given.matches(pattern);
     }
 
+    /**
+     * O(NlogN) time complexity
+     * O(1) space complexity.
+     *
+     * @param str1
+     * @param str2
+     * @return
+     */
     public boolean isAnagram(String str1, String str2) {
-
         char[] charSequenceStr1 = str1.toCharArray();
-
         char[] charSequenceStr2 = str2.toCharArray();
-
         if (charSequenceStr1.length != charSequenceStr2.length) {
-
             return false;
         }
-
         Arrays.sort(charSequenceStr1);
-
         Arrays.sort(charSequenceStr2);
-
         return Arrays.equals(charSequenceStr1, charSequenceStr2);
+    }
+    /**
+     * O(N) time complexity
+     * O(N) space complexity.
+     *
+     * When your input has unicode characters instead of ASCII
+     * use HashMap for storing frequencies of characters.
+     * Using a huge continuous array will be extremely terrible
+     * as it could lead to almost million characters.
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isAnagramEfficient(String s, String t) {
+        if(s.length() != t.length()) {
+            return false;
+        }
+        // only lowercase english alphabets.
+        int[] frequency = new int[26];
+        int len = s.length();
+
+        for(int i=0;i<len;i++) {
+            frequency[s.charAt(i) - 'a']++;
+            frequency[t.charAt(i) - 'a']--;
+        }
+
+        for(int freq : frequency) {
+            if(freq != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public List<String> removeAllAnagrams(String[] words) {
+        Map<String, List<String>> allAnagrams = new HashMap<>();
+        for(int i=0;i<words.length;i++) {
+            String word = words[i];
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String key = String.valueOf(chars);
+            List<String> temp = allAnagrams.getOrDefault(key, new ArrayList<>());
+            temp.add(word);
+            allAnagrams.put(key, temp);
+        }
+        List<String> noAnagrams = new ArrayList<>();
+        for(String key : allAnagrams.keySet()) {
+            noAnagrams.add(allAnagrams.get(key).get(0));
+        }
+        return noAnagrams;
+    }
+
+    /**
+     * https://leetcode.com/problems/find-resultant-array-after-removing-anagrams/description/
+     * @param words
+     * @return
+     */
+    public List<String> removeAdjacentAnagrams(String[] words) {
+        List<String> result = new ArrayList<>();
+        if (words.length == 0) {
+            return result;
+        }
+        result.add(words[0]);
+        for (int i = 1; i < words.length; i++) {
+            if (!isAnagram(words[i], words[i - 1])) {
+                result.add(words[i]);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -173,27 +246,18 @@ public class StringOperations {
      * @return
      */
     public char firstNonRepeatedCharacter(String str) {
-
         Map<Character, Integer> charFrequency = new HashMap<Character, Integer>();
-
-
         for (int i = 0; i < str.length(); i++) {
             int frequency = 0;
             char c = str.charAt(i);
-
             if (charFrequency.containsKey(c)) {
-
                 frequency = charFrequency.get(c);
             }
             charFrequency.put(c, ++frequency);
-
         }
         for (int i = 0; i < str.length(); i++) {
-
             char c = str.charAt(i);
-
             if (charFrequency.get(c) == 1) {
-
                 return c;
             }
         }
