@@ -477,6 +477,8 @@ public class BinarySearchTree {
         return 1 + heightRight(node.right);
     }
 
+    //Longest path between any two nodes of the tree.
+    // The path may not pass through the tree node.
     public int treeDiameter(TreeNode node) {
         if (node == null) {
             return 0;
@@ -511,6 +513,8 @@ public class BinarySearchTree {
     /**
      * Amazon on-site. Given two binary trees, determine if they are mirror of
      * each other.
+     *
+     * https://leetcode.com/problems/symmetric-tree/
      *
      * @param a
      * @param b

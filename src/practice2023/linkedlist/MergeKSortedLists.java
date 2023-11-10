@@ -29,7 +29,7 @@ public class MergeKSortedLists {
         // Initially point will have value 0. Then pop first list
         // from the queue and set point's next to this recently popped
         // list. Now move point to first element of the first list.
-        // and add all the rest of the nodes back to the queue.
+        // and add all the AtlassianRest of the nodes back to the queue.
         // This way all the first elements of the lists will come together
         // then second, third .... nth.
 

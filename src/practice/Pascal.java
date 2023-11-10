@@ -31,7 +31,7 @@ public class Pascal {
 		// First and last numbers in row are always 1
 		row[0] = 1;
 		row[row.length - 1] = 1;
-		// The rest of the row can be
+		// The AtlassianRest of the row can be
 		// calculated based on previous row
 		for (int i = 1; i < row.length - 1; i++) {
 			row[i] = previous[i - 1] + previous[i];

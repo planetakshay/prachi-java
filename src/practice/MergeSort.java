@@ -49,7 +49,7 @@ public class MergeSort {
 			}
 			k++;
 		}
-		// Copy the rest of the left side of the array into the target array
+		// Copy the AtlassianRest of the left side of the array into the target array
 		while (i <= middle) {
 			numbers[k] = helper[i];
 			k++;
