@@ -6,6 +6,12 @@ import java.util.*;
  * https://leetcode.com/problems/alien-dictionary/
  */
 public class AlienDictionary {
+    Map<Character, List<Character>> adjMap;
+    Map<Character, Integer> arrival;
+    Map<Character, Integer> departure;
+    int timestamp;
+
+    StringBuilder alienAlphabets = new StringBuilder();
     public static void main(String[] args) {
         String[] alienWords = new String[]{"wrt", "wrf", "er", "ett", "rftt"};
         System.out.println("Alien Dictionary Alphabets: " + alienOrder(alienWords));
@@ -15,8 +21,27 @@ public class AlienDictionary {
 
         alienWords = new String[]{"z", "x", "z"};
         System.out.println("Alien Dictionary Alphabets: " + alienOrder(alienWords));
+
+        AlienDictionary dictionary = new AlienDictionary();
+        alienWords = new String[]{"wrt", "wrf", "er", "ett", "rftt"};
+        System.out.println("Alien Dictionary Alphabets: " + dictionary.alienOrderDFS(Arrays.asList(alienWords)));
+
+        dictionary = new AlienDictionary();
+        alienWords = new String[]{"z", "x"};
+        System.out.println("Alien Dictionary Alphabets: " + dictionary.alienOrderDFS(Arrays.asList(alienWords)));
+
+        dictionary = new AlienDictionary();
+        alienWords = new String[]{"z", "x", "z"};
+        System.out.println("Alien Dictionary Alphabets: " + dictionary.alienOrderDFS(Arrays.asList(alienWords)));
     }
 
+    /**
+     * Following solution uses BFS traversal and performs
+     * Topological Sorting and arranges characters in alien
+     * language in topological order (in this case lexicographically sorted order).
+     * @param words
+     * @return
+     */
     public static String alienOrder(String[] words) {
         Map<Character, List<Character>> adjList = new HashMap<>();
         Map<Character, Integer> inDegree = new HashMap<>();
@@ -83,5 +108,66 @@ public class AlienDictionary {
             return "";
         }
         return builder.toString();
+    }
+
+    /**
+     * Method signature and implementation is from IK timed test.
+     * Uses DFS traversal.
+     *
+     * Interview Kickstart.
+     * @param words
+     * @return
+     */
+    public String alienOrderDFS(List<String> words) {
+        adjMap = new HashMap<>();
+        arrival = new HashMap<>();
+        departure = new HashMap<>();
+        timestamp = 0;
+
+        for(String word : words) {
+            for(int i=0; i < word.length(); i++) {
+                char curr = word.charAt(i);
+                adjMap.put(curr, new ArrayList<>());
+                arrival.put(curr, -1);
+                departure.put(curr, -1);
+            }
+        }
+
+        for(int i=0; i < words.size() - 1; i++) {
+            String curr = words.get(i);
+            String next = words.get(i + 1);
+            int currLen = curr.length();
+            int nextLen = next.length();
+            if (currLen > nextLen && curr.startsWith(next)) {
+                return "";
+            }
+            int smallest = Math.min(currLen, nextLen);
+            for (int j = 0; j < smallest; j++) {
+                char currCh = curr.charAt(j);
+                char nextCh = next.charAt(j);
+                if (currCh != nextCh) {
+                    adjMap.get(currCh).add(nextCh);
+                    break;
+                }
+            }
+        }
+
+        for(char ch : adjMap.keySet()) {
+            if(arrival.get(ch) == -1) {
+                dfs(ch);
+            }
+        }
+        return alienAlphabets.reverse().toString();
+    }
+
+    private void dfs(char src) {
+        arrival.put(src, timestamp++);
+        for(char nei : adjMap.get(src)) {
+            if(arrival.get(nei) == -1) {
+                dfs(nei);
+            }
+        }
+        departure.put(src, timestamp++);
+        alienAlphabets.append(src);
     }
 }

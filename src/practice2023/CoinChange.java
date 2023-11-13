@@ -24,7 +24,7 @@ public class CoinChange {
         return makeChangeDP(amount, denom, 0, map);
     }
 
-    public static int makeChangeDP(int amount, int[] denom, int index, int[][]map) {
+    public static int makeChangeDP(int amount, int[] denom, int index, int[][] map) {
 
         if(map[amount][index] > 0) {
             return map[amount][index];

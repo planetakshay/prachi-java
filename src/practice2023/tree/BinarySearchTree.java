@@ -194,6 +194,19 @@ public class BinarySearchTree {
 
         binaryTree = bst.closestValue(binaryTree, binaryTree, Integer.MAX_VALUE, 4);
         System.out.println("\nclosest node to binaryTree: " + binaryTree.val);
+
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 92);
+        binaryTree = bst.insert(binaryTree, 88);
+        binaryTree = bst.insert(binaryTree, 51);
+        binaryTree = bst.insert(binaryTree, 55);
+        binaryTree = bst.insert(binaryTree, 36);
+        binaryTree = bst.insert(binaryTree, 69);
+        binaryTree = bst.insert(binaryTree, 37);
+        binaryTree = bst.insert(binaryTree, 97);
+        binaryTree = bst.insert(binaryTree, 56);
+        binaryTree = bst.insert(binaryTree, 49);
+        bst.preOrderTraversal(binaryTree);
     }
 
     public static void morrisInorderTraversal(TreeNode root) {
