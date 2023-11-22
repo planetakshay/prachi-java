@@ -16,7 +16,6 @@ public class MaxSumBstInBt {
         if (root == null) {
             return new BstProperties(0, true, Integer.MAX_VALUE, Integer.MIN_VALUE);
         }
-
         BstProperties leftBst = getSum(root.left);
         BstProperties rightBst = getSum(root.right);
         int min = Math.min(root.val, Math.min(leftBst.min, rightBst.min));

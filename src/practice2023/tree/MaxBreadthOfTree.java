@@ -46,7 +46,6 @@ public class MaxBreadthOfTree {
 class Pair {
     TreeNode node;
     int index;
-
     public Pair(TreeNode node, int index) {
         this.index = index;
         this.node = node;

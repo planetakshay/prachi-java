@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.dynamicprogramming;
 
 /**
  * Find all possible unique paths from (0,0) to (m-1, n-1)
@@ -10,7 +10,7 @@ package practice2023;
  *
  * Inteview Kickstart
  */
-public class Dynamicprogramming {
+public class FindUniquePaths {
     public static void main(String args) {
 
     }

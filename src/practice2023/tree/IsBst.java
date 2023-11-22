@@ -3,12 +3,35 @@ package practice2023.tree;
 import java.util.Stack;
 
 /**
- *
  * https://leetcode.com/problems/validate-binary-search-tree/
- *
+ * <p>
  * Interview kickstart
  */
 public class IsBst {
+
+    static Integer prev;
+
+    static Boolean is_bst(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return helper(root);
+    }
+
+    static boolean helper(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        if (!helper(root.left)) {
+            return false;
+        }
+        if (prev != null && root.val < prev) {
+            return false;
+        }
+        prev = root.val;
+        return helper(root.right);
+    }
+
     static Boolean isBst(TreeNode root) {
         if (root == null) {
             return true;
