@@ -227,8 +227,22 @@ public class SinglyLinkedListOps {
         // opsObj.print(linkedList);
         linkedList = opsObj.swapAdjacent(linkedList);
         // opsObj.print(linkedList);
-
         System.out.println("Remove given node. The node is not the head or the tail of the linked list");
+
+        System.out.println("Double Linked List: \n");
+        linkedList = null;
+        linkedList = opsObj.addNodeBack(linkedList, 1);
+        linkedList = opsObj.addNodeBack(linkedList, 8);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.doubleIt(linkedList);
+        opsObj.print(linkedList);
+
+        linkedList = null;
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.doubleIt(linkedList);
+        opsObj.print(linkedList);
     }
 
     /**
@@ -386,9 +400,8 @@ public class SinglyLinkedListOps {
     }
 
     public List reverse(List head) {
-        List prev = null;
         List curr = head;
-        List next = null;
+        List next = null, prev = null;
         while (curr != null) {
             next = curr.next;
             curr.next = prev;
@@ -799,5 +812,32 @@ public class SinglyLinkedListOps {
         }
         // Now fast and slow both are at the node from where the cycle starts.
         return fast;
+    }
+
+    /**
+     * https://leetcode.com/problems/double-a-number-represented-as-a-linked-list
+     *
+     * @param head
+     * @return
+     */
+    public List doubleIt(List head) {
+        // Reverse the list.
+        head = reverse(head);
+        List curr = head, prev = null;
+        int carry = 0;
+        while (curr != null) {
+            int multiple = curr.data * 2;
+            int remainder = multiple % 10;
+            curr.data = remainder + carry;
+            carry = multiple / 10;
+            prev = curr;
+            curr = curr.next;
+        }
+        if (carry > 0) {
+            List node = new List(carry);
+            prev.next = node;
+        }
+        head = reverse(head);
+        return head;
     }
 }
