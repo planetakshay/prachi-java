@@ -4,6 +4,11 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * https://leetcode.com/problems/merge-k-sorted-lists/
+ *
+ * Included in Blind 75 questions.
+ */
 public class MergeKSortedLists {
 
     public ListNode mergeKLists(ListNode[] lists) {
@@ -48,6 +53,42 @@ public class MergeKSortedLists {
         // return head.next.
 
         return head.next;
+    }
+
+    public ListNode mergeKListsDivideAndConquer(ListNode[] lists) {
+        if(lists == null || lists.length == 0) {
+            return null;
+        }
+        int len = lists.length - 1;
+        while(len > 0) {
+            int i = 0, j = len;
+            while(i < j) {
+                lists[i] = merge(lists[i], lists[j]);
+                i++;
+                j--;
+                if(i >= j) {
+                    len = j;
+                }
+            }
+        }
+        return lists[0];
+    }
+
+    private ListNode merge(ListNode a, ListNode b) {
+        ListNode result = null;
+        if(a == null) {
+            return b;
+        } else if(b == null) {
+            return a;
+        }
+        if(a.val <= b.val) {
+            result = a;
+            result.next = merge(a.next, b);
+        } else {
+            result = b;
+            result.next = merge(a, b.next);
+        }
+        return result;
     }
 }
 
