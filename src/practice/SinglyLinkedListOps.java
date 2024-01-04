@@ -243,6 +243,17 @@ public class SinglyLinkedListOps {
         linkedList = opsObj.addNodeBack(linkedList, 9);
         linkedList = opsObj.doubleIt(linkedList);
         opsObj.print(linkedList);
+
+        System.out.println("Remove Nth node recursive: \n");
+        linkedList = null;
+        linkedList = opsObj.addNodeBack(linkedList, 1);
+        linkedList = opsObj.addNodeBack(linkedList, 8);
+        linkedList = opsObj.addNodeBack(linkedList, 9);
+        linkedList = opsObj.addNodeBack(linkedList, 10);
+        linkedList = opsObj.addNodeBack(linkedList, 15);
+        linkedList = opsObj.addNodeBack(linkedList, 20);
+        linkedList = opsObj.removeNthNodeRecursive(linkedList, 3);
+        opsObj.print(linkedList);
     }
 
     /**
@@ -361,6 +372,36 @@ public class SinglyLinkedListOps {
             current = current.next;
         }
         return nodes.size() <= 1;
+    }
+
+    public static boolean isPalindromeInplace(List head) {
+        List slow = head;
+        List fast = head;
+        List prev = null;
+
+        while(true) {
+            if(fast == null) {
+                break;
+            }
+            if(fast.next == null) {
+                slow = slow.next;
+                break;
+            }
+            fast = fast.next.next;
+
+            List next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+        while(slow != null) {
+            if(prev.data != slow.data) {
+                return false;
+            }
+            slow = slow.next;
+            prev = prev.next;
+        }
+        return true;
     }
 
     public List addNodeBack(List head, int data) {
@@ -757,6 +798,19 @@ public class SinglyLinkedListOps {
         return l1;
     }
 
+    public List getIntersectionNode(List headA, List headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        List pA = headA;
+        List pB = headB;
+        while (pA != pB) {
+            pA = pA == null ? headB : pA.next;
+            pB = pB == null ? headA : pB.next;
+        }
+        return pA;
+    }
+
     public List partition(List node, int pivot) {
         if (node == null) {
             return null;
@@ -838,6 +892,21 @@ public class SinglyLinkedListOps {
             prev.next = node;
         }
         head = reverse(head);
+        return head;
+    }
+
+    private List removeNthNodeRecursive(List head, int n) {
+        if (n < 1) {
+            return head;
+        }
+        if (head == null) {
+            return null;
+        }
+        // base case
+        if (n == 1) {
+            return head.next;
+        }
+        head.next = removeNthNodeRecursive(head.next, n - 1);
         return head;
     }
 }

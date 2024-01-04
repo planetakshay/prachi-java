@@ -15,7 +15,6 @@ public class UpSideDownTree {
         root.left.right = root;
         root.left = null;
         root.right = null;
-
         return newRoot;
     }
 }

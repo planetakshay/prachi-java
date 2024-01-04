@@ -281,16 +281,16 @@ public class BinarySearchTree {
             return;
         }
         System.out.print(root.val + "\t");
-        inOrderTraversal(root.left);
-        inOrderTraversal(root.right);
+        preOrderTraversal(root.left);
+        preOrderTraversal(root.right);
     }
 
     public void postOrderTraversal(TreeNode root) {
         if (root == null) {
             return;
         }
-        inOrderTraversal(root.left);
-        inOrderTraversal(root.right);
+        postOrderTraversal(root.left);
+        postOrderTraversal(root.right);
         System.out.print(root.val + "\t");
     }
 
@@ -443,18 +443,18 @@ public class BinarySearchTree {
     */
 
     public boolean isBalancedEfficient(TreeNode root) {
-        return checkHeight(root) != Integer.MIN_VALUE;
+        return calculateHeight(root) != Integer.MIN_VALUE;
     }
 
-    public int checkHeight(TreeNode node) {
+    public int calculateHeight(TreeNode node) {
         if (node == null) {
             return -1;
         }
-        int leftHeight = checkHeight(node.left);
+        int leftHeight = calculateHeight(node.left);
         if (leftHeight == Integer.MIN_VALUE) {
             return Integer.MIN_VALUE;
         }
-        int rightHeight = checkHeight(node.right);
+        int rightHeight = calculateHeight(node.right);
         if (rightHeight == Integer.MIN_VALUE) {
             return Integer.MIN_VALUE;
         }
@@ -490,7 +490,7 @@ public class BinarySearchTree {
         return 1 + heightRight(node.right);
     }
 
-    //Longest path between any two nodes of the tree.
+    // Longest path between any two nodes of the tree.
     // The path may not pass through the tree node.
     public int treeDiameter(TreeNode node) {
         if (node == null) {
@@ -503,6 +503,7 @@ public class BinarySearchTree {
         return Math.max(lHeight + rHeight + 1, Math.max(ldiameter, rdiameter));
     }
 
+    // LCA for a Binary Search Tree Node.
     public TreeNode findLowestCommonAncestor(TreeNode root, int value1, int value2) {
         while (root != null) {
             if (root.val > value1 && root.val > value2) {
@@ -540,7 +541,9 @@ public class BinarySearchTree {
         if (a == null || b == null) {
             return false;
         }
-        return a.val == b.val && areMirrorTrees(a.left, b.right) && areMirrorTrees(a.right, b.left);
+        return a.val == b.val
+                && areMirrorTrees(a.left, b.right)
+                && areMirrorTrees(a.right, b.left);
     }
 
     public boolean isValid(TreeNode root) {
@@ -548,8 +551,12 @@ public class BinarySearchTree {
     }
 
     private boolean isValidBST(TreeNode node, int min, int max) {
-        if (node == null) return true;
-        return node.val > min && node.val < max && isValidBST(node.left, min, node.val) && isValidBST(node.right, node.val, max);
+        if (node == null) {
+            return true;
+        }
+        return node.val > min && node.val < max
+                && isValidBST(node.left, min, node.val)
+                && isValidBST(node.right, node.val, max);
     }
 
     private int removeSubtree(int val, TreeNode root) {
@@ -612,7 +619,11 @@ public class BinarySearchTree {
         node.right = createMinimalBST(array, mid + 1, end);
         return node;
     }
-
+    public List<List<TreeNode>> createLevelLinkedList(TreeNode root) {
+        List<List<TreeNode>> lists = new LinkedList<>();
+        createLevelLinkedList(root, lists, 0);
+        return lists;
+    }
     public void createLevelLinkedList(TreeNode node, List<List<TreeNode>> lists, int level) {
         if (node == null) {
             return;
@@ -627,12 +638,6 @@ public class BinarySearchTree {
         list.add(node);
         createLevelLinkedList(node.left, lists, level + 1);
         createLevelLinkedList(node.right, lists, level + 1);
-    }
-
-    public List<List<TreeNode>> createLevelLinkedList(TreeNode root) {
-        List<List<TreeNode>> lists = new LinkedList<>();
-        createLevelLinkedList(root, lists, 0);
-        return lists;
     }
 
     public TreeNode leftMostchild(TreeNode node) {
@@ -804,10 +809,59 @@ public class BinarySearchTree {
         return root;
     }
 
+    private List<Integer> rightView(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if(root == null) {
+            return results;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while(!queue.isEmpty()) {
+            int len = queue.size();
+            for(int i=0;i<len;i++) {
+                TreeNode node = queue.poll();
+                if(i == len - 1) {
+                    results.add(node.val);
+                }
+                if(node.left != null) {
+                    queue.add(node.left);
+                }
+                if(node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+        }
+        return results;
+    }
+    private List<Integer> leftView(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if(root == null) {
+            return results;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()) {
+            int len = queue.size();
+            for(int i=0;i<len;i++) {
+                TreeNode node = queue.poll();
+                if(i == 0) {
+                    results.add(node.val);
+                }
+                if(node.left != null) {
+                    queue.add(node.left);
+                }
+                if(node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+        }
+        return results;
+    }
     public TreeNode searchBST(TreeNode root, int data) {
         return search(root, data);
     }
-
     public TreeNode search(TreeNode node, int val) {
         if (node == null || node.val == val) {
             return node;
@@ -885,6 +939,29 @@ public class BinarySearchTree {
         }
         dfs(left.left, right.right, !isOdd);
         dfs(left.right, right.left, !isOdd);
+    }
+    public List<Integer> postOrderTraversalIterative(TreeNode root) {
+        List<Integer> traversal = new ArrayList<>();
+        if (root == null) {
+            return traversal;
+        }
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        s1.push(root);
+        while (!s1.isEmpty()) {
+            TreeNode node = s1.pop();
+            s2.push(node);
+            if (node.left != null) {
+                s1.push(node.left);
+            }
+            if (node.right != null) {
+                s1.push(node.right);
+            }
+        }
+        while (!s2.isEmpty()) {
+            traversal.add(s2.pop().val);
+        }
+        return traversal;
     }
 }
 

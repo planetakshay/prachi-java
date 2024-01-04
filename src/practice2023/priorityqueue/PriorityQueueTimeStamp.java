@@ -9,6 +9,7 @@ public class PriorityQueueTimeStamp {
         this.queue = new PriorityQueue<>(new Comparator<Event>() {
             @Override
             public int compare(Event o1, Event o2) {
+
                 return (int) (o1.timestamp - o2.timestamp);
             }
         });

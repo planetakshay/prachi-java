@@ -1,7 +1,5 @@
 package practice2023.stack;
 
-import java.util.Comparator;
-
 /**
  * LinkedIn phone screen.
  * @param <T>

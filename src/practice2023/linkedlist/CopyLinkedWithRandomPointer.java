@@ -8,6 +8,8 @@ public class CopyLinkedWithRandomPointer {
         if (head == null) {
             return head;
         }
+        // Copy/Clone each node and place it next to the original
+        // node.
         Node curr = head;
         while (curr != null) {
             Node copy = new Node(curr.val);

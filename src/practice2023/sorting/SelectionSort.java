@@ -100,22 +100,17 @@ public class SelectionSort {
         if(n < 2) {
             return;
         }
-
         int mid = n / 2;
         List<Integer> left = new ArrayList<>(mid);
         List<Integer> right = new ArrayList<>(n-mid);
-
         for(int i=0;i<mid;i++) {
             left.add(arr.get(i));
         }
-
         for(int j=mid;j<n;j++) {
             right.add(arr.get(j));
         }
-
         mergeSort(left, mid);
         mergeSort(right,n-mid);
-
         merge(arr,left,right,mid, n-mid);
     }
 
@@ -132,7 +127,6 @@ public class SelectionSort {
         while(i < start) {
             arr.set(k++, left.get(i++));
         }
-
         while(j < end) {
             arr.set(k++, right.get(j++));
         }
