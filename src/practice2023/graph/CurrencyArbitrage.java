@@ -35,6 +35,15 @@ public class CurrencyArbitrage {
         currencyArbitrage.populateMap(rates);
         double toInr = currencyArbitrage.findRate("USD", "INR", 100);
         System.out.println(toInr);
+
+        toInr = currencyArbitrage.findRate("USD", "CAD", 100);
+        System.out.println(toInr);
+
+        toInr = currencyArbitrage.findRate("USD", "POUND", 100);
+        System.out.println(toInr);
+
+        toInr = currencyArbitrage.findRate("POUND", "USD", 100);
+        System.out.println(toInr);
     }
 
     public void populateMap(List<ForeignExchange> rates) {
