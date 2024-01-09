@@ -1,4 +1,4 @@
-package practice2023.tree;
+package practice2023.array;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/permutations/description/
+ * covered in IK recursion exercise.
  */
 public class Permute {
 

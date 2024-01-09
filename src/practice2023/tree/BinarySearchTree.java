@@ -207,6 +207,14 @@ public class BinarySearchTree {
         binaryTree = bst.insert(binaryTree, 56);
         binaryTree = bst.insert(binaryTree, 49);
         bst.preOrderTraversal(binaryTree);
+
+        System.out.println("\nConvert tree to string...");
+        binaryTree = null;
+        binaryTree = bst.insert(binaryTree, 10);
+        binaryTree = bst.insert(binaryTree, 12);
+        binaryTree = bst.insert(binaryTree, 3);
+        binaryTree = bst.insert(binaryTree, 4);
+        bst.treeToString(binaryTree);
     }
 
     public static void morrisInorderTraversal(TreeNode root) {
@@ -962,6 +970,38 @@ public class BinarySearchTree {
             traversal.add(s2.pop().val);
         }
         return traversal;
+    }
+
+    /**
+     * Solve using recursive pre-order traversal.
+     * @param root
+     * @return
+     */
+    public void treeToString(TreeNode root) {
+        this.printTreeLayers(root);
+        StringBuilder builder = new StringBuilder();
+        recursivePreOrder(root, builder);
+        System.out.println("\nTree to String: " + builder.toString());
+    }
+
+    private void recursivePreOrder(TreeNode node, StringBuilder builder) {
+        if(node == null) {
+            return;
+        }
+        builder.append(node.val);
+        if(node.left == null && node.right == null) {
+            return;
+        }
+        if(node.left != null) {
+            builder.append("(");
+            recursivePreOrder(node.left, builder);
+            builder.append(")");
+        }
+        if(node.right != null) {
+            builder.append("(");
+            recursivePreOrder(node.right, builder);
+            builder.append(")");
+        }
     }
 }
 
