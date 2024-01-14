@@ -61,6 +61,7 @@ public class CurrencyArbitrage {
     public double findRate(String src, String dest, double amount) {
         double rate = 0.0;
         Queue<Edge> pq = new PriorityQueue<>(Comparator.comparingDouble(e -> e.weight));
+        // distance from src to itself if 0.
         distance.put(src, 0.0);
         pq.add(new Edge(src, 0.0));
 
