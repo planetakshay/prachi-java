@@ -32,7 +32,7 @@ public class CurrencyArbitrage {
         ForeignExchange rate4 = new ForeignExchange("USD", "POUND", 0.79);
         ForeignExchange rate5 = new ForeignExchange("POUND", "INR", 105.59);
         List<ForeignExchange> rates = Arrays.asList(rate1, rate2, rate3, rate4, rate5);
-        currencyArbitrage.populateMap(rates);
+        currencyArbitrage.initializeGraph(rates);
         double toInr = currencyArbitrage.findRate("USD", "INR", 100);
         System.out.println(toInr);
 
@@ -46,7 +46,7 @@ public class CurrencyArbitrage {
         System.out.println(toInr);
     }
 
-    public void populateMap(List<ForeignExchange> rates) {
+    public void initializeGraph(List<ForeignExchange> rates) {
         for (ForeignExchange exc : rates) {
             List<Edge> edges = forexMap.getOrDefault(exc.src, new ArrayList<>());
             edges.add(new Edge(exc.dest, exc.weight));
@@ -76,8 +76,10 @@ public class CurrencyArbitrage {
                     String curr2 = neigh.node;
                     Double weight = neigh.weight;
 
-                    if (!visited.get(curr2) && distance.get(curr1) + weight < distance.get(curr2)) {
-                        distance.put(curr2, distance.get(curr1) + weight);
+                    double currDist =  distance.get(curr1);
+
+                    if (!visited.get(curr2) && currDist + weight < distance.get(curr2)) {
+                        distance.put(curr2, currDist + weight);
                         pq.offer(new Edge(curr2, distance.get(curr2)));
                     }
                 }
