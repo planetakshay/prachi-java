@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Activision Blizzard Onsite interview.
+ */
 public class LoggingService {
     private List<LogMessage> messages;
     private static LoggingService service;
