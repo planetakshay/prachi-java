@@ -34,9 +34,7 @@ public class CourseSchedule2 {
             System.out.println(pair);
             int course = pair.get(0);
             int prereq = pair.get(1);
-
             indegree[course]++;
-
             List<Integer> neighbours = adjMap.getOrDefault(prereq, new ArrayList<>());
             neighbours.add(course);
             adjMap.put(prereq, neighbours);
@@ -63,7 +61,6 @@ public class CourseSchedule2 {
                 }
             }
         }
-
         return index == n ? orderedCourses : new ArrayList<>(List.of(-1));
     }
 
