@@ -13,6 +13,7 @@ public class PossibleBipartition {
         for (int i = 0; i <= n; i++) {
             adjList.add(new ArrayList<>());
         }
+        // Undirected graph hence add bidirectional edges.
         for (int[] dislike : dislikes) {
             adjList.get(dislike[0]).add(dislike[1]);
             adjList.get(dislike[1]).add(dislike[0]);

@@ -30,6 +30,7 @@ public class PathBetweenTwoVertices {
             for (int i = 0; i < noOfVertices; i++) {
                 adjList.add(new ArrayList<>());
             }
+            // Directed graph. No bidirectional edges.
             for (int[] edge : edges) {
                 adjList.get(edge[0]).add(edge[1]);
             }
