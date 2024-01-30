@@ -33,11 +33,14 @@ public class MaxStack {
         System.out.println(stack.peekMax());
         System.out.println(stack.pop());
         System.out.println(stack.peek()); */
-
                 stack = new MaxStack();
         stack.push(5);
-        System.out.println("Peek Max: " + stack.peekMax());
-        System.out.println("Pop Max: " + stack.popMax());
+        try {
+            System.out.println("Peek Max: " + stack.peekMax());
+            System.out.println("Pop Max: " + stack.popMax());
+        } catch(Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
     }
 
     public void push(int num) {
@@ -59,23 +62,23 @@ public class MaxStack {
         return node.val;
     }
 
-    public int peek() {
+    public int peek() throws Exception{
         if (tail.prev == head) {
-            return -1;
+            throw new Exception("Stack is empty.");
         }
         return tail.prev.val;
     }
 
-    public int peekMax() {
+    public int peekMax() throws Exception {
         if (sortedData.isEmpty()) {
-            return -1;
+            throw new Exception("Stack is empty.");
         }
         return sortedData.peek().val;
     }
 
-    public int popMax() {
+    public int popMax() throws Exception {
         if (sortedData.isEmpty()) {
-            return -1;
+            throw new Exception("Stack is empty.");
         }
         DoublyLinkedListNode node = sortedData.poll();
         remove(node);

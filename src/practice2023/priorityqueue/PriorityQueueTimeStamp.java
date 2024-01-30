@@ -3,13 +3,16 @@ package practice2023.priorityqueue;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/**
+ * Crowdstrike onsite interview.
+ */
+
 public class PriorityQueueTimeStamp {
     PriorityQueue<Event> queue;
     public PriorityQueueTimeStamp(PriorityQueue<Event> queue) {
         this.queue = new PriorityQueue<>(new Comparator<Event>() {
             @Override
             public int compare(Event o1, Event o2) {
-
                 return (int) (o1.timestamp - o2.timestamp);
             }
         });
