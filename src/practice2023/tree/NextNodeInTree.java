@@ -65,9 +65,6 @@ public class NextNodeInTree {
     public Tree createTree() {
         Tree node1 = new Tree(2);
         Tree node2 = new Tree(3);
-
-        Tree root = new Tree(1, node1, node2);
-
         Tree node4 = new Tree(4);
         node1.left = node4;
 
@@ -80,6 +77,7 @@ public class NextNodeInTree {
         Tree node7 = new Tree(7);
         node2.right = node7;
 
+        Tree root = new Tree(1, node1, node2);
         return root;
     }
 }
