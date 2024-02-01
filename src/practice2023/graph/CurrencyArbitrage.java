@@ -12,7 +12,9 @@ import java.util.*;
  */
 public class CurrencyArbitrage {
     int noOfVertices;
+    // Adjacency Map
     Map<String, List<Edge>> forexMap;
+    // If a Node has been visited.
     Map<String, Boolean> visited;
     Map<String, Double> distance;
 

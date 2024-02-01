@@ -4,6 +4,9 @@ import java.util.*;
 
 /**
  * Walmart onsite.
+ *
+ * Complexity:
+ * Time Complexity -
  */
 public class NextNodeInTree {
     Tree root;
@@ -20,14 +23,14 @@ public class NextNodeInTree {
 
     public List<Integer> getNodesToTheRight(int target) {
         Tree node = map.get(target);
-        List<Integer> result = new ArrayList<>();
+        List<Integer> nodeToRight = new ArrayList<>();
         while (node != null) {
             node = node.next;
             if (node != null) {
-                result.add(node.value);
+                nodeToRight.add(node.value);
             }
         }
-        return result;
+        return nodeToRight;
     }
 
     public void populateMap(Tree root) {

@@ -40,6 +40,12 @@ public class WordAbbriviation {
             }
             int num = 0;
             while (j < aLen && Character.isDigit(abbr.charAt(j))) {
+                // The number in the abbr from j to end of the abbriviation
+                // represents total number of characters. And hence we need to
+                // increment the offset of the original string by the number in
+                // abbreviation. We can build it as a string and then using
+                // parseInt get a number but below is a better choice AFA performance
+                // is concerned.
                 num = 10 * num + (abbr.charAt(j) - '0');
                 j++;
             }
