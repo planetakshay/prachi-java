@@ -817,15 +817,38 @@ public class BinarySearchTree {
         return root;
     }
 
+    private TreeNode setNoExtraSpace(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        // At root level
+        TreeNode leftMost = root;
+        // Once we reach at the last level (where left and right of the node
+        // will be empty.
+        while(leftMost.left != null) {
+            TreeNode head = leftMost;
+            while(head != null) {
+                head.left.next = head.right;
+                if(head.next != null) {
+                    head.right.next = head.next.left;
+                }
+                // We are moving to the right at the same level.
+                // next pointer will help move along the level
+                // regardless of the parent.
+                head = head.next;
+            }
+            // go down to left most node at the next level.
+            leftMost = leftMost.left;
+        }
+        return root;
+    }
     private List<Integer> rightView(TreeNode root) {
         List<Integer> results = new ArrayList<>();
         if(root == null) {
             return results;
         }
-
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-
         while(!queue.isEmpty()) {
             int len = queue.size();
             for(int i=0;i<len;i++) {

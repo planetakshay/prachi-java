@@ -6,7 +6,7 @@ import java.util.*;
  * Walmart onsite.
  *
  * Complexity:
- * Time Complexity -
+ * Time Complexity - O(N) + O(1)  ( look up for the node in the map)
  */
 public class NextNodeInTree {
     Tree root;
@@ -37,6 +37,47 @@ public class NextNodeInTree {
         if (root != null) {
             bfs(root);
         }
+    }
+
+    /**
+     * for nodes at each level n, set the next pointers for
+     * the nodes at level n + 1.
+     *
+     * Node's left child's next is the node's right child.
+     * Node's child's next will be node's next's left child
+     * as at current level the nodes should have next pointer
+     * set.
+     *
+     * @param root
+     */
+    public void noExtraSpace(Tree root) {
+        Tree leftMost = root;
+        while(leftMost.left != null) {
+            Tree head = leftMost;
+            while(head != null) {
+                head.left.next = head.right;
+                if(head.next != null) {
+                    head.right.next = head.next.left;
+                }
+                head = head.next;
+            }
+            leftMost = leftMost.left;
+        }
+    }
+
+    public void recursive(Tree node) {
+        if(node == null) {
+            return;
+        }
+        if(node.left != null) {
+            node.left.next = node.right;
+        }
+
+        if(node.right != null && node.next != null) {
+            node.right.next = node.next.left;
+        }
+        recursive(node.left);
+        recursive(node.right);
     }
 
     public void bfs(Tree node) {

@@ -1,4 +1,4 @@
-package practice2023;
+package tutor;
 
 /**
  * Tutor.com problems.
