@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.priorityqueue;
 
 import java.util.*;
 import java.util.stream.Collectors;
