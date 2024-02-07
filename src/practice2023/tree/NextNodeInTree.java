@@ -55,7 +55,7 @@ public class NextNodeInTree {
         // Keep moving down at each level having reference to the
         // left most node.
         while(leftMost.left != null) { // This is to stop at the left most leaf node.
-            // From here on tree the node at current level as
+            // From here on treat the node at current level as
             // if they are nodes in a linked list and
             // start connecting node at the right to the next
             // of the current node.
