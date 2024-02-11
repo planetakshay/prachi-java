@@ -6,7 +6,7 @@ import java.util.*;
  * Crowdstrike onsite interview.
  */
 public class PathBetweenTwoVertices {
-    List<List<Integer>> adjList;
+    List<Set<Integer>> adjList;
     boolean[] visited;
     public static void main(String[] args) {
         PathBetweenTwoVertices graph = new PathBetweenTwoVertices();
@@ -28,7 +28,7 @@ public class PathBetweenTwoVertices {
             adjList = new ArrayList<>();
             visited = new boolean[noOfVertices];
             for (int i = 0; i < noOfVertices; i++) {
-                adjList.add(new ArrayList<>());
+                adjList.add(new HashSet<>());
             }
             // Directed graph. No bidirectional edges.
             for (int[] edge : edges) {
@@ -42,10 +42,11 @@ public class PathBetweenTwoVertices {
         visited[src] = true;
         while (!queue.isEmpty()) {
             int node = queue.poll();
-            for (int neighbour : adjList.get(node)) {
-                if (neighbour == dest) {
-                    return true;
-                }
+            Set<Integer> neighbours = adjList.get(node);
+            if(neighbours.contains(dest)) {
+                return true;
+            }
+            for (int neighbour : neighbours) {
                 if (visited[neighbour]) {
                     continue;
                 }
