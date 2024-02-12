@@ -1,7 +1,11 @@
 package practice2023;
 
+/**
+ * Career Cups 6th Edition
+ * https://leetcode.com/problems/one-edit-distance/description/
+ *
+ */
 public class OneEditAway {
-
     public static void main(String[] args) {
         String first = "pale";
         String second = "bale";

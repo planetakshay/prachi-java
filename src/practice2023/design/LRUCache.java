@@ -1,4 +1,4 @@
-package practice2023;
+package practice2023.design;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
