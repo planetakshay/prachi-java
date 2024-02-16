@@ -7,6 +7,8 @@ import java.util.Queue;
  * https://leetcode.com/problems/max-stack/
  * This is a better implementation compared to the
  * Two TreeSet implementation.
+ *
+ * Walmart Global Tech Onsite
  */
 public class MaxStack {
     private final Queue<DoublyLinkedListNode> sortedData;

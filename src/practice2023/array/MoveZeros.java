@@ -2,6 +2,11 @@ package practice2023.array;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode.com/problems/move-zeroes/description/
+ *
+ * Walmart contract
+ */
 public class MoveZeros {
 
     public static void main(String[] args) {
