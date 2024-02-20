@@ -29,20 +29,24 @@ public class RotateArray {
     int[] array;
     int rotation;
     int len = 0;
-
     public RotateArray(int[] input) {
         this.array = input;
         this.len = array.length;
     }
-
     public static void main(String[] args) {
         RotateArray rotateArray = new RotateArray(new int[]{4, 5, 6, 9, 10});
         rotateArray.rotate(1);
         rotateArray.rotate(1);
-        System.out.println(Arrays.toString(rotateArray.array));
-        System.out.println(rotateArray.get(1));
+        try {
+            System.out.println(rotateArray.get(1));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
-    public int get(int index) {
+    public int get(int index) throws Exception {
+        if(index < 0 || index >= len) {
+            throw new IndexOutOfBoundsException();
+        }
         if (rotation != 0) {
             index = len - rotation - index;
         }
@@ -51,7 +55,10 @@ public class RotateArray {
     public void rotate(int rotation) {
         this.rotation += rotation;
     }
-    public void put(int index, int value) {
+    public void put(int index, int value) throws Exception{
+        if(index < 0 || index >= len) {
+            throw new IndexOutOfBoundsException();
+        }
         array[index] = value;
     }
 }
