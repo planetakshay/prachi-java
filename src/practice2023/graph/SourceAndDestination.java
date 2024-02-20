@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ *
+ * IntApp interview.
+ *
  * [11:54 AM] Kate Galichenko
  * Using the solution of choice, find the start and the destination
  * airport from the flight routes below. In each combination,
@@ -21,7 +24,6 @@ import java.util.Set;
  * "MIA - PHX; LAX - DAL; DAL - JFK; CHI - WDC; JFK - MIA; PHX - CHI"
  */
 public class SourceAndDestination {
-
     Map<String, Integer> indegree;
     Map<String, Integer> outdegree;
 
