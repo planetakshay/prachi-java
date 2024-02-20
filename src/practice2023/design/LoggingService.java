@@ -15,6 +15,10 @@ public class LoggingService {
         this.messages = messages;
     }
 
+    /**
+     * Uses double-checked locking.
+     * @return
+     */
     public static LoggingService getInstance() {
         if(service == null) {
             synchronized (LoggingService.class) {

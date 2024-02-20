@@ -1,4 +1,4 @@
-package practice2023.graph;
+package practice2023.design.concurrency;
 
 import java.util.ArrayList;
 import java.util.HashSet;
