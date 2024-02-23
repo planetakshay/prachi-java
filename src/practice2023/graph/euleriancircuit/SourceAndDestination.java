@@ -1,4 +1,4 @@
-package practice2023.graph;
+package practice2023.graph.euleriancircuit;
 
 import java.util.HashMap;
 import java.util.HashSet;

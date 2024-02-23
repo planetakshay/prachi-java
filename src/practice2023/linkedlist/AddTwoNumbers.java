@@ -1,13 +1,12 @@
-package practice2023;
-
-import java.util.List;
+package practice2023.linkedlist;
 
 /**
  * https://leetcode.com/problems/add-two-numbers/
+ * Zscaler phone interview.
+ * Use l1 = [2,4,3], l2 = [1,9,9,9] to test
  */
 
 public class AddTwoNumbers {
-
     public static void main(String[] args) {
         ListNode n1Digit1 = new ListNode(1);
         ListNode n1Digit2 = new ListNode(3);
@@ -29,28 +28,17 @@ public class AddTwoNumbers {
     }
 
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if (l1 == null && l2 == null) {
-            return null;
-        } else if (l1 == null) {
-            return l2;
-        } else if (l2 == null) {
-            return l1;
-        }
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
         int carry = 0;
-        ListNode sumList = new ListNode();
-        ListNode answer = sumList;
-        while (l1 != null || l2 != null) {
+        while (l1 != null || l2 != null || carry != 0) {
+            int a = l1 != null ? l1.val : 0;
+            int b = l2 != null ? l2.val : 0;
 
-            int l1Val = l1 != null ? l1.val : 0;
-            int l2Val = l2 != null ? l2.val : 0;
-            int sum = carry + l1Val + l2Val;
-
+            int sum = carry + a + b;
             carry = sum / 10;
-            ListNode digit = new ListNode();
-            digit.val = sum % 10;
-            sumList.next = digit;
-            sumList = digit;
-
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
             if (l1 != null) {
                 l1 = l1.next;
             }
@@ -58,14 +46,8 @@ public class AddTwoNumbers {
                 l2 = l2.next;
             }
         }
-
-        if (carry > 0) {
-            ListNode carryNode = new ListNode(carry);
-            sumList.next = carryNode;
-        }
-
         // First node will have leading zero which is supposed to be ignored.
-        return answer.next;
+        return dummy.next;
     }
 
     public static int additionUsingBitManipulation(int a, int b) {

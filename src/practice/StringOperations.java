@@ -641,4 +641,23 @@ public class StringOperations {
         return balancedCount == 0;
     }
 
+    /**
+     * No of words in a string with camelcase letters.
+     * @param s
+     * @return
+     */
+    public static int camelcase(String s) {
+        if(s == null || s.length() == 0) {
+            return 0;
+        }
+        int len = s.length();
+        int count = 1;
+        for(int i=0; i < len; i++) {
+            if(!Character.isLowerCase(s.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
