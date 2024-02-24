@@ -15,7 +15,14 @@ public class PhNumberToStrings {
     List<String> ans;
     int len;
 
-    public List<String> letterCombinations(String digits) {
+    public static void main(String[] args) {
+        PhNumberToStrings phNumberToStrings = new PhNumberToStrings();
+        List<String> ans = phNumberToStrings.letterCombinations("6236537");
+        System.out.println(ans.contains("mcdnlds"));
+        assert ans.contains("mcdnlds");
+    }
+
+    public  List<String> letterCombinations(String digits) {
         ans = new ArrayList<>();
         if (digits == null || digits.isEmpty()) {
             return ans;

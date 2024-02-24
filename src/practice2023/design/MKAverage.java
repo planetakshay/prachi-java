@@ -2,6 +2,9 @@ package practice2023.design;
 
 import java.util.TreeSet;
 
+/**
+ *
+ */
 public class MKAverage {
 
     int m;

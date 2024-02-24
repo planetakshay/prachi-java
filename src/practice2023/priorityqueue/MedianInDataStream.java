@@ -16,58 +16,65 @@ public class MedianInDataStream {
     // (i.e. smallest among larger elements at the top)
     // i.e. min Heap.
     Queue<Long> max;
+
     public MedianInDataStream() {
         min = new PriorityQueue<>(Collections.reverseOrder());
         max = new PriorityQueue<>();
     }
-    public Long addEvent(PlayEvent event) {
-        Long median = 0l;
+
+    public static void main(String[] args) {
+        MedianInDataStream medianFinder = new MedianInDataStream();
+        PlayEvent event = new PlayEvent("1", 20L, 40L);
+        assert medianFinder.addEvent(event) == 20L;
+        PlayEvent event1 = new PlayEvent("2", 20L, 80L);
+        assert medianFinder.addEvent(event) == 40L;
+        PlayEvent event2 = new PlayEvent("3", 30L, 180L);
+        assert medianFinder.addEvent(event) == 60L;
+    }
+
+    public double addEvent(PlayEvent event) {
+        double median = 0L;
         Long duration = event.endedAt - event.startedAt;
         min.add(duration);
         balanceHeaps();
         median = findMedian();
         return median;
     }
+
     /**
      * Balance the heaps to ensure we have middle two
      * elements in the sorted data at the peek of both heaps.
      */
     private void balanceHeaps() {
-        if((max.size() < min.size()) || (!max.isEmpty() && min.peek() > max.peek())) {
+        if ((max.size() < min.size()) || (!max.isEmpty() && min.peek() > max.peek())) {
             max.add(min.poll());
         }
-        if(max.size() > min.size()) {
+        if (max.size() > min.size()) {
             min.add(max.poll());
         }
     }
-    private long findMedian() {
+
+    private double findMedian() {
         int minSize = min.size();
         int maxSize = max.size();
-        if(minSize == 0  && maxSize == 0) {
-            return 0l;
+        if (minSize == 0 && maxSize == 0) {
+            return 0L;
         }
-        if(minSize == maxSize) {
-            return (long) (min.peek() + max.peek()) / 2;
-        } else if (minSize > maxSize){
+        if (minSize == maxSize) {
+            return (double) (min.peek() + max.peek()) / 2;
+        } else if (minSize > maxSize) {
             return min.peek();
         } else {
             return max.peek();
         }
     }
-    public static void main(String[] args) {
-        MedianInDataStream medianFinder = new MedianInDataStream();
-        PlayEvent event = new PlayEvent("1", 20l, 40l);
-        assert medianFinder.addEvent(event) == 20l;
-        PlayEvent event1 = new PlayEvent("2", 20l, 80l);
-        assert medianFinder.addEvent(event) == 40l;
-        PlayEvent event2 = new PlayEvent("3", 30l, 180l);
-        assert medianFinder.addEvent(event) == 60l;
-    }
 }
-class PlayEvent{
+
+class PlayEvent {
     String eventId;
     Long startedAt;
     Long endedAt;
+
     public PlayEvent(String eventId, Long startedAt, Long endedAt) {
         this.eventId = eventId;
         this.startedAt = startedAt;
