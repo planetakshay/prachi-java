@@ -1,9 +1,8 @@
 package practice2023.graph.euleriancircuit;
 
-import java.io.StringBufferInputStream;
 import java.util.*;
 
-public class IkReconstructItinery {
+public class IkReconstructItinerary {
 
     // A queue like data structure is used as in this directed graph
     // We use Hierholzer's algorithm to find the Eulerian Path.

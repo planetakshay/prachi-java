@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
  * https://leetcode.com/problems/find-median-from-data-stream/
  *
  * Included in Blind 75 problems.
+ * Apple Ads team onsite.
  */
 public class MedianFinder {
     PriorityQueue<Integer> high;
