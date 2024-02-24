@@ -58,7 +58,7 @@ public class MedianInDataStream {
         int minSize = min.size();
         int maxSize = max.size();
         if (minSize == 0 && maxSize == 0) {
-            return 0L;
+            return 0.0;
         }
         if (minSize == maxSize) {
             return (double) (min.peek() + max.peek()) / 2;
