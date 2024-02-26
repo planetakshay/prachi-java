@@ -7,7 +7,7 @@ import java.util.*;
  * <p>
  * Snowflake phone screen.
  * Nvidia Onsite.
- *
+ * <p>
  * Starting from the root
  * At each level the children map will contain files and folders under it.
  */
@@ -25,20 +25,21 @@ public class InMemoryFileSystem {
             String[] dirs = path.split("/");
             int len = dirs.length;
             for (int i = 1; i < len; i++) {
-                if(file.files.containsKey(dirs[i])) {
+                if (file.files.containsKey(dirs[i])) {
                     file = file.files.get(dirs[i]);
                 } else {
                     throw new Exception("Invalid path.");
                 }
             }
             if (!file.isDir) {
-                if(file.files.containsKey(dirs[len - 1])) {
+                if (file.files.containsKey(dirs[len - 1])) {
                     return Collections.singletonList(dirs[len - 1]);
                 } else {
                     throw new Exception("File doesn't exist");
                 }
             }
         }
+        // The list must be sorted alphabetically.
         Collections.sort(allFiles);
         return allFiles;
     }
@@ -82,7 +83,10 @@ public class InMemoryFileSystem {
     }
 
     class File {
-        boolean isDir = true;
+        // This might create a situation where files is null and
+        // content is null but isDir is set to true.
+        // Treat it as an empty directory in that case.
+        boolean isDir;
         Map<String, File> files = new HashMap<>();
         String content;
     }
