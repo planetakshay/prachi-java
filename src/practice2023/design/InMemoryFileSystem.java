@@ -4,8 +4,12 @@ import java.util.*;
 
 /**
  * https://leetcode.com/problems/design-in-memory-file-system/submissions/
- *
+ * <p>
  * Snowflake phone screen.
+ * Nvidia Onsite.
+ *
+ * Starting from the root
+ * At each level the children map will contain files and folders under it.
  */
 public class InMemoryFileSystem {
     File root;
@@ -14,19 +18,27 @@ public class InMemoryFileSystem {
         root = new File();
     }
 
-    public List<String> ls(String path) {
+    public List<String> ls(String path) throws Exception {
         File file = root;
+        List<String> allFiles = new ArrayList<>();
         if (!path.equals("/")) {
             String[] dirs = path.split("/");
             int len = dirs.length;
             for (int i = 1; i < len; i++) {
-                file = file.files.get(dirs[i]);
+                if(file.files.containsKey(dirs[i])) {
+                    file = file.files.get(dirs[i]);
+                } else {
+                    throw new Exception("Invalid path.");
+                }
             }
             if (!file.isDir) {
-                return Collections.singletonList(dirs[len - 1]);
+                if(file.files.containsKey(dirs[len - 1])) {
+                    return Collections.singletonList(dirs[len - 1]);
+                } else {
+                    throw new Exception("File doesn't exist");
+                }
             }
         }
-        List<String> allFiles = new ArrayList<>(file.files.keySet());
         Collections.sort(allFiles);
         return allFiles;
     }
