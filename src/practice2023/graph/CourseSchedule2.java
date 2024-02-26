@@ -18,7 +18,6 @@ import java.util.*;
 public class CourseSchedule2 {
 
     static ArrayList<Integer> course_schedule(Integer n, ArrayList<ArrayList<Integer>> prerequisites) {
-
         ArrayList<Integer> orderedCourses = new ArrayList<>();
         if (prerequisites == null || prerequisites.size() == 0) {
             for (int i = 0; i < n; i++) {
