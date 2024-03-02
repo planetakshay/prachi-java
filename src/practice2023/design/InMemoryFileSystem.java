@@ -10,6 +10,8 @@ import java.util.*;
  * <p>
  * Starting from the root
  * At each level the children map will contain files and folders under it.
+ *
+ * Design a cloud service like AWS Lambda.
  */
 public class InMemoryFileSystem {
     File root;

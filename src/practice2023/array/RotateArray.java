@@ -48,13 +48,16 @@ public class RotateArray {
             throw new IndexOutOfBoundsException();
         }
         if (rotation != 0) {
-            index = len - rotation - index;
+            // index = len - rotation - index;
+            index = (index + rotation - 1) % len;
+            System.out.println("index : " + index + " rotation: " + rotation);
         }
         return array[index];
     }
     public void rotate(int rotation) {
         this.rotation += rotation;
     }
+    // This is an update operation.
     public void put(int index, int value) throws Exception{
         if(index < 0 || index >= len) {
             throw new IndexOutOfBoundsException();
