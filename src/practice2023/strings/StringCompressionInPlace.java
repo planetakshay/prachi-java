@@ -27,7 +27,6 @@ public class StringCompressionInPlace {
                 String count = String.valueOf(j - i);
                 // Since this is an array each digit in count will take up
                 // one cell in the array.
-
                 for (char c : count.toCharArray()) {
                     chars[index++] = c;
                 }
