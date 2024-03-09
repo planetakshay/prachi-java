@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * https://leetcode.com/problems/number-of-islands/description/
+ *
+ * This is a problem like count no of connected components in a graph.
  */
 public class NumberOfIslands {
     static int[] rowOffset = {0, -1, -1, -1, 0, 1, 1, 1};
@@ -51,16 +53,16 @@ public class NumberOfIslands {
         }
         int nr = grid.length;
         int nc = grid[0].length;
-        int num_islands = 0;
+        int islands = 0;
         for (int r = 0; r < nr; ++r) {
             for (int c = 0; c < nc; ++c) {
                 if (grid[r][c] == '1') {
-                    ++num_islands;
+                    ++islands;
                     dfs(grid, r, c);
                 }
             }
         }
-        return num_islands;
+        return islands;
     }
 
     void dfs(char[][] grid, int r, int c) {

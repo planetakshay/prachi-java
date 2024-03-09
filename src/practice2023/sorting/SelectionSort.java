@@ -6,6 +6,10 @@ import java.util.List;
 
 /**
  * Interview Kickstart Exercise on all sorting algorithms.
+ *
+ * Glean interview asked insertion sort. -
+ * Sort an almost sorted array where only one
+ * element is out of order.
  */
 public class SelectionSort {
 
@@ -16,6 +20,21 @@ public class SelectionSort {
 
         List<Integer> arr = Arrays.asList(5,6,7,2,1,7,42,34,3,2,6,5);
         mergeSort(arr);
+
+        nums = new int[]{2, 3, 4,1};
+        //insertionSort(nums);
+        insertionSortPsuedoCode(nums);
+        System.out.println(Arrays.toString(nums));
+
+        nums = new int[]{4, 1, 2, 3};
+        // insertionSort(nums);
+        insertionSortPsuedoCode(nums);
+        System.out.println(Arrays.toString(nums));
+
+        nums = new int[]{1, 2, 3, 4, 6, 5, 7, 8};
+        // insertionSort(nums);
+        insertionSortPsuedoCode(nums);
+        System.out.println(Arrays.toString(nums));
     }
 
     public static void selectionSort(int[] nums) {
@@ -73,6 +92,20 @@ public class SelectionSort {
                 index--;
             }
             arr[index+1] = temp;
+        }
+    }
+
+    static void insertionSortPsuedoCode(int[] nums) {
+        int i = 0;
+        while(i < nums.length) {
+            int j = i;
+            while(j > 0 && nums[j-1] > nums[j]) {
+                int temp = nums[j-1];
+                nums[j-1] = nums[j];
+                nums[j] = temp;
+                j--;
+            }
+            i++;
         }
     }
 
