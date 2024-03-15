@@ -1,7 +1,7 @@
 package practice;
 
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class StringOperations {
 
@@ -12,7 +12,7 @@ public class StringOperations {
     private static final char l_bracket = '[';
     private static final char r_bracket = ']';
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         StringOperations stringOps = new StringOperations();
 
@@ -77,15 +77,204 @@ public class StringOperations {
         // paran = ")(())((((()()))()()(()))";
         paran = "((()((s((((()";
         long start = System.currentTimeMillis();
-        stringOps.removeInvalidParentheses(paran, new HashSet<>(), minRemovals(paran));
+        removeInvalidParentheses(paran, new HashSet<>(), minRemovals(paran));
         long end = System.currentTimeMillis();
         System.out.println("Time taken: " + (end - start));
         //removeInvalidParanthesisBFS(paran);
-        String[] words = new String[] {"abba","baba","bbaa","cd","cd"};
+        String[] words = new String[]{"abba", "baba", "bbaa", "cd", "cd"};
         stringOps.removeAllAnagrams(words);
     }
 
     // case insensitive comparison.
+
+    public static boolean isBalancedParantheses(String paranthesis) {
+        Stack<Character> stack = new Stack<Character>();
+        char[] paranArray = paranthesis.toCharArray();
+        for (char in : paranArray) {
+            switch (in) {
+                case l_paren:
+                    stack.push(in);
+                    break;
+                case l_brace:
+                    stack.push(in);
+                    break;
+                case l_bracket:
+                    stack.push(in);
+                    break;
+                case r_paren:
+                    if (stack.isEmpty() || stack.pop() != l_paren) {
+                        return false;
+                    }
+                    break;
+                case r_brace:
+                    if (stack.isEmpty() || stack.pop() != l_brace) {
+                        return false;
+                    }
+                    break;
+                case r_bracket:
+                    if (stack.isEmpty() || stack.pop() != l_bracket) {
+                        return false;
+                    }
+                    break;
+                default:
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void removeInvalidParentheses(String input, HashSet<String> output, int minRemovalAllowed) {
+        if (minRemovalAllowed == 0) {
+            int minNow = minRemovals(input);
+            if (minNow == 0) {
+                if (!output.contains(input)) {
+                    System.out.println(input);
+                    output.add(input);
+                }
+            }
+            return;
+        }
+        for (int i = 0; i < input.length(); i++) {
+            String left = input.substring(0, i);
+            String right = input.substring(i + 1);
+            removeInvalidParentheses(left + right, output, minRemovalAllowed - 1);
+        }
+    }
+
+    public static int minRemovals(String paranthesis) {
+        Stack<Character> stack = new Stack<Character>();
+        char[] paranArray = paranthesis.toCharArray();
+        for (int i = 0; i < paranArray.length; i++) {
+            char in = paranArray[i];
+            switch (in) {
+                case l_paren:
+                    stack.push(in);
+                    break;
+                case l_brace:
+                    stack.push(in);
+                    break;
+                case l_bracket:
+                    stack.push(in);
+                    break;
+                case r_paren:
+                    if (stack.size() == 0 || stack.peek() == r_paren) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_paren) {
+                        stack.pop();
+                    }
+                    break;
+                case r_brace:
+                    if (stack.size() == 0 || stack.peek() == r_brace) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_brace) {
+                        stack.pop();
+                    }
+                    break;
+                case r_bracket:
+                    if (stack.size() == 0 || stack.peek() == r_bracket) {
+                        stack.push(in);
+                    } else if (stack.peek() == l_bracket) {
+                        stack.pop();
+                    }
+                    break;
+                default:
+            }
+        }
+        return stack.size();
+    }
+
+    public static int minRemovalsNoSwitch(String paranthesis) {
+        Stack<Character> stack = new Stack<Character>();
+        char[] paranArray = paranthesis.toCharArray();
+        for (int i = 0; i < paranArray.length; i++) {
+            char in = paranArray[i];
+            if (in == l_paren) {
+                stack.push(in);
+            } else if (in == r_paren) {
+                if (stack.size() == 0) {
+                    stack.push(in);
+                } else if (stack.peek() == r_paren) {
+                    stack.push(in);
+                } else if (stack.peek() == l_paren) {
+                    stack.pop();
+                }
+            }
+        }
+        return stack.size();
+    }
+
+    public static List<String> removeInvalidParanthesesBFS(String input) {
+        if (input.isBlank()) {
+            return new ArrayList<>();
+        }
+        Set<String> balancedParanString = new HashSet<>();
+        Queue<String> subStrings = new LinkedList<>();
+        String removedParan = "";
+        boolean level = false;
+
+        subStrings.add(input);
+        balancedParanString.add(input);
+
+        while (!subStrings.isEmpty()) {
+            String curr = subStrings.peek();
+            subStrings.remove();
+
+            if (isBalancedParan(curr)) {
+                System.out.println(curr);
+                level = true;
+            }
+            if (level) {
+                continue;
+            }
+            for (int i = 0; i < curr.length(); i++) {
+                if (curr.charAt(i) == '(' || curr.charAt(i) == ')') {
+                    removedParan = curr.substring(0, i) + curr.substring(i + 1);
+                    if (!balancedParanString.contains(removedParan)) {
+                        subStrings.add(removedParan);
+                        balancedParanString.add(removedParan);
+                    }
+                }
+            }
+        }
+
+        return balancedParanString.stream().toList();
+    }
+
+    static boolean isBalancedParan(String input) {
+        int balancedCount = 0;
+
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '(') {
+                balancedCount++;
+            } else if (input.charAt(i) == ')') {
+                balancedCount--;
+            }
+            if (balancedCount < 0) {
+                return false;
+            }
+        }
+
+        return balancedCount == 0;
+    }
+
+    /**
+     * No of words in a string with camelcase letters.
+     *
+     * @param s
+     * @return
+     */
+    public static int camelcase(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int len = s.length();
+        int count = 1;
+        for (int i = 0; i < len; i++) {
+            if (!Character.isLowerCase(s.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public int countOccurrenceNoRecursion(String s, char c) {
 
@@ -128,7 +317,7 @@ public class StringOperations {
             return 1 + countOccurenceRecursion(s.substring(1), c);
         } else {
 
-            return 0 + countOccurenceRecursion(s.substring(1), c);
+            return countOccurenceRecursion(s.substring(1), c);
         }
     }
 
@@ -168,10 +357,11 @@ public class StringOperations {
         Arrays.sort(charSequenceStr2);
         return Arrays.equals(charSequenceStr1, charSequenceStr2);
     }
+
     /**
      * O(N) time complexity
      * O(N) space complexity.
-     *
+     * <p>
      * When your input has unicode characters instead of ASCII
      * use HashMap for storing frequencies of characters.
      * Using a huge continuous array will be extremely terrible
@@ -182,28 +372,29 @@ public class StringOperations {
      * @return
      */
     public boolean isAnagramEfficient(String s, String t) {
-        if(s.length() != t.length()) {
+        if (s.length() != t.length()) {
             return false;
         }
         // only lowercase english alphabets.
         int[] frequency = new int[26];
         int len = s.length();
 
-        for(int i=0;i<len;i++) {
+        for (int i = 0; i < len; i++) {
             frequency[s.charAt(i) - 'a']++;
             frequency[t.charAt(i) - 'a']--;
         }
 
-        for(int freq : frequency) {
-            if(freq != 0) {
+        for (int freq : frequency) {
+            if (freq != 0) {
                 return false;
             }
         }
         return true;
     }
+
     public List<String> removeAllAnagrams(String[] words) {
         Map<String, List<String>> allAnagrams = new HashMap<>();
-        for(int i=0;i<words.length;i++) {
+        for (int i = 0; i < words.length; i++) {
             String word = words[i];
             char[] chars = word.toCharArray();
             Arrays.sort(chars);
@@ -213,7 +404,7 @@ public class StringOperations {
             allAnagrams.put(key, temp);
         }
         List<String> noAnagrams = new ArrayList<>();
-        for(String key : allAnagrams.keySet()) {
+        for (String key : allAnagrams.keySet()) {
             noAnagrams.add(allAnagrams.get(key).get(0));
         }
         return noAnagrams;
@@ -221,6 +412,7 @@ public class StringOperations {
 
     /**
      * https://leetcode.com/problems/find-resultant-array-after-removing-anagrams/description/
+     *
      * @param words
      * @return
      */
@@ -290,7 +482,7 @@ public class StringOperations {
                 count++;
             } else {
 
-                subStr = "" + count + input.charAt(i - 1);
+                subStr = String.valueOf(count) + input.charAt(i - 1);
 
                 output.append(subStr);
 
@@ -298,7 +490,7 @@ public class StringOperations {
             }
         }
 
-        output.append("" + count + input.charAt(input.length() - 1));
+        output.append(String.valueOf(count) + input.charAt(input.length() - 1));
 
         return output.toString();
     }
@@ -455,195 +647,6 @@ public class StringOperations {
         abc = abc.replaceAll("(^| )us($| )", " them ").trim();
 
         return abc;
-    }
-
-    public static boolean isBalancedParantheses(String paranthesis) {
-        Stack<Character> stack = new Stack<Character>();
-        char[] paranArray = paranthesis.toCharArray();
-        for (char in : paranArray) {
-            switch (in) {
-                case l_paren:
-                    stack.push(in);
-                    break;
-                case l_brace:
-                    stack.push(in);
-                    break;
-                case l_bracket:
-                    stack.push(in);
-                    break;
-                case r_paren:
-                    if (stack.isEmpty() || stack.pop() != l_paren) {
-                        return false;
-                    }
-                    break;
-                case r_brace:
-                    if (stack.isEmpty() || stack.pop() != l_brace) {
-                        return false;
-                    }
-                    break;
-                case r_bracket:
-                    if (stack.isEmpty() || stack.pop() != l_bracket) {
-                        return false;
-                    }
-                    break;
-                default:
-            }
-        }
-        return stack.isEmpty();
-    }
-
-    public static void removeInvalidParentheses(String input, HashSet<String> output, int minRemovalAllowed) {
-        if (minRemovalAllowed == 0) {
-            int minNow = minRemovals(input);
-            if (minNow == 0) {
-                if (!output.contains(input)) {
-                    System.out.println(input);
-                    output.add(input);
-                }
-            }
-            return;
-        }
-        for (int i = 0; i < input.length(); i++) {
-            String left = input.substring(0, i);
-            String right = input.substring(i + 1);
-            removeInvalidParentheses(left + right, output, minRemovalAllowed - 1);
-        }
-    }
-
-    public static int minRemovals(String paranthesis) {
-        Stack<Character> stack = new Stack<Character>();
-        char[] paranArray = paranthesis.toCharArray();
-        for (int i = 0; i < paranArray.length; i++) {
-            char in = paranArray[i];
-            switch (in) {
-                case l_paren:
-                    stack.push(in);
-                    break;
-                case l_brace:
-                    stack.push(in);
-                    break;
-                case l_bracket:
-                    stack.push(in);
-                    break;
-                case r_paren:
-                    if (stack.size() == 0 || stack.peek() == r_paren) {
-                        stack.push(in);
-                    } else if (stack.peek() == l_paren) {
-                        stack.pop();
-                    }
-                    break;
-                case r_brace:
-                    if (stack.size() == 0 || stack.peek() == r_brace) {
-                        stack.push(in);
-                    } else if (stack.peek() == l_brace) {
-                        stack.pop();
-                    }
-                    break;
-                case r_bracket:
-                    if (stack.size() == 0 || stack.peek() == r_bracket) {
-                        stack.push(in);
-                    } else if (stack.peek() == l_bracket) {
-                        stack.pop();
-                    }
-                    break;
-                default:
-            }
-        }
-        return stack.size();
-    }
-
-    public static int minRemovalsNoSwitch(String paranthesis) {
-        Stack<Character> stack = new Stack<Character>();
-        char[] paranArray = paranthesis.toCharArray();
-        for (int i = 0; i < paranArray.length; i++) {
-            char in = paranArray[i];
-            if (in == l_paren) {
-                stack.push(in);
-            } else if (in == r_paren) {
-                if (stack.size() == 0) {
-                    stack.push(in);
-                } else if (stack.peek() == r_paren) {
-                    stack.push(in);
-                } else if (stack.peek() == l_paren) {
-                    stack.pop();
-                }
-            }
-        }
-        return stack.size();
-    }
-
-    public static List<String> removeInvalidParanthesesBFS(String input) {
-        if(input.isBlank()) {
-            return new ArrayList<>();
-        }
-        Set<String> balancedParanString = new HashSet<>();
-        Queue<String> subStrings = new LinkedList<>();
-        String removedParan = "";
-        boolean level = false;
-
-        subStrings.add(input);
-        balancedParanString.add(input);
-
-        while (!subStrings.isEmpty()) {
-            String curr = subStrings.peek();
-            subStrings.remove();
-
-            if (isBalancedParan(curr)) {
-                System.out.println(curr);
-                level = true;
-            }
-            if (level) {
-                continue;
-            }
-            for (int i = 0; i < curr.length(); i++) {
-                if (curr.charAt(i) == '(' || curr.charAt(i) == ')') {
-                    removedParan = curr.substring(0, i) + curr.substring(i + 1);
-                    if (!balancedParanString.contains(removedParan)) {
-                        subStrings.add(removedParan);
-                        balancedParanString.add(removedParan);
-                    }
-                }
-            }
-        }
-
-        return balancedParanString.stream().toList();
-    }
-
-    static boolean isBalancedParan(String input) {
-        int balancedCount = 0;
-
-        for(int i = 0;i<input.length();i++) {
-            if(input.charAt(i) == '(') {
-                balancedCount++;
-            }
-            else if(input.charAt(i) == ')') {
-                balancedCount--;
-            }
-            if(balancedCount < 0) {
-                return false;
-            }
-        }
-
-        return balancedCount == 0;
-    }
-
-    /**
-     * No of words in a string with camelcase letters.
-     * @param s
-     * @return
-     */
-    public static int camelcase(String s) {
-        if(s == null || s.length() == 0) {
-            return 0;
-        }
-        int len = s.length();
-        int count = 1;
-        for(int i=0; i < len; i++) {
-            if(!Character.isLowerCase(s.charAt(i))) {
-                count++;
-            }
-        }
-        return count;
     }
 
 }
