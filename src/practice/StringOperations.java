@@ -458,13 +458,9 @@ public class StringOperations {
     }
 
     public static boolean isBalancedParantheses(String paranthesis) {
-
         Stack<Character> stack = new Stack<Character>();
-
         char[] paranArray = paranthesis.toCharArray();
-
         for (char in : paranArray) {
-
             switch (in) {
                 case l_paren:
                     stack.push(in);
@@ -476,26 +472,17 @@ public class StringOperations {
                     stack.push(in);
                     break;
                 case r_paren:
-                    if (stack.size() > 0) {
-
-                        if (stack.pop() != l_paren) return false;
-                    } else {
+                    if (stack.isEmpty() || stack.pop() != l_paren) {
                         return false;
                     }
                     break;
                 case r_brace:
-                    if (stack.size() > 0) {
-
-                        if (stack.pop() != l_brace) return false;
-                    } else {
+                    if (stack.isEmpty() || stack.pop() != l_brace) {
                         return false;
                     }
                     break;
                 case r_bracket:
-                    if (stack.size() > 0) {
-
-                        if (stack.pop() != l_bracket) return false;
-                    } else {
+                    if (stack.isEmpty() || stack.pop() != l_bracket) {
                         return false;
                     }
                     break;
@@ -585,11 +572,10 @@ public class StringOperations {
         return stack.size();
     }
 
-    public static List<String> removeInvalidParanthesisBFS(String input) {
+    public static List<String> removeInvalidParanthesesBFS(String input) {
         if(input.isBlank()) {
             return new ArrayList<>();
         }
-
         Set<String> balancedParanString = new HashSet<>();
         Queue<String> subStrings = new LinkedList<>();
         String removedParan = "";

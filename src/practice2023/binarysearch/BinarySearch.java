@@ -20,7 +20,7 @@ public class BinarySearch {
         int[] range = binarySearchRange(array, 0, array.length - 1, 8);
         System.out.println("range = " + Arrays.toString(range)); */
 
-        array = new int[] {2,2};
+        array = new int[]{2, 2};
         Arrays.sort(array, 0, array.length - 1);
         int[] range = searchRange(array, 2);
         System.out.println("range = " + Arrays.toString(range));
@@ -33,6 +33,9 @@ public class BinarySearch {
                         + searchInRotatedArray(rotatedArray, 0,
                         rotatedArray.length, 9));
 
+        range = new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+        int target = 4;
+        System.out.println("First and last occurrence of " + target + " : " + Arrays.toString(searchRangeOneMethod(range, target)));
     }
 
     public static int binarySearch(int[] array, int start, int end, int item) {
@@ -49,35 +52,36 @@ public class BinarySearch {
         }
     }
 
-    public static int[] searchRangeOneMethod(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length - 1;
+    public static int binarySearchCommon(int[] nums, int start, int end, int target) {
         while (start <= end) {
             int mid = start + (end - start) / 2;
-            if(nums[mid] < target) {
+            if (nums[mid] < target) {
                 start = mid + 1;
             } else {
                 end = mid - 1;
             }
         }
-        if(start == nums.length || nums[start] != target) {
+        return start;
+    }
+
+    public static int[] searchRangeOneMethod(int[] nums, int target) {
+        int end = nums.length - 1;
+        int start = binarySearchCommon(nums, 0, end, target);
+        if (start == nums.length || nums[start] != target) {
             return new int[]{-1, -1};
         }
+
+        // Now start is at the first occurrence of target.
+        // We can begin the search for last occurrence of target
+        // from start.
         int first = start; // preserve the first index.
         end = nums.length - 1;
-        while(start <= end) {
-            int mid = start + (end - start) / 2;
-            if(nums[mid] <= target) {
-                start = mid + 1;
-            } else {
-                end = mid - 1;
-            }
-        }
+        start = binarySearchCommon(nums, start, end, target);
         return new int[]{first, end};
     }
 
     public static int[] searchRange(int[] nums, int target) {
-        if(nums == null || nums.length == 0) {
+        if (nums == null || nums.length == 0) {
             return new int[]{-1, -1};
         }
         int[] range = new int[2];
@@ -91,14 +95,14 @@ public class BinarySearch {
         int end = nums.length - 1;
         int index = -1;
 
-        while(start <= end) {
+        while (start <= end) {
             int mid = start + (end - start) / 2;
-            if(nums[mid] >= target) {
+            if (nums[mid] >= target) {
                 end = mid - 1;
             } else {
                 start = mid + 1;
             }
-            if(nums[mid] == target){
+            if (nums[mid] == target) {
                 index = mid;
             }
         }
@@ -110,14 +114,14 @@ public class BinarySearch {
         int end = nums.length - 1;
         int index = -1;
 
-        while(start <= end) {
+        while (start <= end) {
             int mid = start + (end - start) / 2;
-            if(nums[mid] <= target) {
+            if (nums[mid] <= target) {
                 start = mid + 1;
             } else {
                 end = mid - 1;
             }
-            if(nums[mid] == target){
+            if (nums[mid] == target) {
                 index = mid;
             }
         }
