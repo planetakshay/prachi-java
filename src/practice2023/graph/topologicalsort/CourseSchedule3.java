@@ -1,4 +1,4 @@
-package practice2023.graph;
+package practice2023.graph.topologicalsort;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;

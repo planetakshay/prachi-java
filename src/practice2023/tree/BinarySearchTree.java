@@ -207,6 +207,8 @@ public class BinarySearchTree {
         binaryTree = bst.insert(binaryTree, 56);
         binaryTree = bst.insert(binaryTree, 49);
         bst.preOrderTraversal(binaryTree);
+        System.out.println("\nPreorder Traversal with Indentation: ");
+        bst.preOrderTraversalWithIndentation(binaryTree, 0);
 
         System.out.println("\nConvert tree to string...");
         binaryTree = null;
@@ -291,6 +293,18 @@ public class BinarySearchTree {
         System.out.print(root.val + "\t");
         preOrderTraversal(root.left);
         preOrderTraversal(root.right);
+    }
+
+    public void preOrderTraversalWithIndentation(TreeNode root, int level) {
+        if (root == null) {
+            return;
+        }
+        for(int i=1;i<=level;i++) {
+            System.out.print(" ");
+        }
+        System.out.print(root.val + " \n");
+        preOrderTraversalWithIndentation(root.left, level + 1);
+        preOrderTraversalWithIndentation(root.right, level + 1);
     }
 
     public void postOrderTraversal(TreeNode root) {
@@ -1026,6 +1040,8 @@ public class BinarySearchTree {
             builder.append(")");
         }
     }
+
+
 }
 
 class TreeNode {

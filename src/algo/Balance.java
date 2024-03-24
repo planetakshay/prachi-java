@@ -22,7 +22,8 @@ public class Balance {
             return true;
         }
         Stack<Character> stack = new Stack<>();
-        for (char ch : s.toCharArray()) {
+        char[] array = s.toCharArray();
+        for (char ch : array) {
             if (ch == '(' || ch == '[' || ch == '{') {
                 stack.push(ch);
             } else if (ch == ')') {
