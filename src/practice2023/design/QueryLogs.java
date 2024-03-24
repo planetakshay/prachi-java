@@ -6,10 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Apple on-site interview Feb 23rd, 2024
+ * Input:
+ *
+ * messageId: "msg1"  timestamp: 1000
+ *
+ * messageId: "msg1"  timestamp: 1100
+ *
+ * messageId: "msg2"  timestamp: 1000;
+ *
+ * messageId: "msg1"  timestamp: 2000;
+ *
+ * messageId: "msg2"  timestamp: 3000;
  */
+
 public class QueryLogs {
     Map<String, List<Long>> logMap;
+    Map<Long, List<String>> timestampToLog;
 
     public QueryLogs() {
         this.logMap = new HashMap<>();
@@ -18,6 +30,7 @@ public class QueryLogs {
     public static void main(String[] args) {
         QueryLogs queryLogs = new QueryLogs();
         queryLogs.insert("msg1", 1000);
+        queryLogs.insert("msg5", 1000);
         queryLogs.insert("msg2", 2000);
         queryLogs.insert("msg3", 4000);
         queryLogs.insert("msg1", 1010);
